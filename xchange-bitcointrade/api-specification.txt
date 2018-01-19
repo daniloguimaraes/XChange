@@ -1,0 +1,9 @@
+BitcoinTrade Exchange API specification
+================================
+
+Documentation
+-------------
+https://apidocs.bitcointrade.com.br/
+
+Support email:
+suporte@bitcointrade.com.br
