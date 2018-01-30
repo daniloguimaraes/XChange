@@ -11,6 +11,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
+import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 
@@ -43,7 +44,7 @@ public interface Bitcointrade {
    */
   @GET
   @Path("{currency}/orders")
-  BitcointradeOrderBook getOrderBook(@PathParam("currency") String currency) throws BitcointradeException, IOException;
+  BitcointradeOrderBookResponse getOrderBook(@PathParam("currency") String currency) throws BitcointradeException, IOException;
 
   /**
    * List all public trades made at Bitcointrade Exchange.

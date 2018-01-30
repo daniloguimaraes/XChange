@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeAdapters;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
+import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -41,8 +42,8 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
   @Override
   public OrderBook getOrderBook(CurrencyPair currencyPair, Object... args) throws ExchangeException, IOException {
 
-    BitcointradeOrderBook ob = getBitcointradeOrderBook();
-    return BitcointradeAdapters.adaptBitcointradeOrderBook(ob, currencyPair);
+    BitcointradeOrderBookResponse ob = getBitcointradeOrderBook();
+    return BitcointradeAdapters.adaptBitcointradeOrderBook(ob.getData(), currencyPair);
   }
 
   @Override
@@ -50,24 +51,34 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
 
     String startTime = null;
     String endTime = null;
+    Integer pageSize = null;
+    Integer currentPage = null;
 
     if (args != null) {
       switch (args.length) {
-      case 2:
-        if (args[1] != null && args[1] instanceof String) {
-          endTime = (String) args[1];
+        case 4:
+          if (args[3] != null && args[3] instanceof Integer) {
+            currentPage = (Integer) args[4];
+          }
+        case 3:
+          if (args[2] != null && args[2] instanceof Integer) {
+            pageSize = (Integer) args[2];
+          }
+        case 2:
+          if (args[1] != null && args[1] instanceof String) {
+            endTime = (String) args[1];
+          }
+        case 1:
+          if (args[0] != null && args[0] instanceof String) {
+            startTime = (String) args[0];
+          }
         }
-      case 1:
-        if (args[0] != null && args[0] instanceof String) {
-          startTime = (String) args[0];
-        }
-      }
     }
     BitcointradePublicTradeResponse bitcointradePublicTradeResponse;
     if (startTime == null && endTime == null) {
       bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair);
     } else {
-      bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair, startTime, endTime);
+      bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair, startTime, endTime, pageSize, currentPage);
     }
     return BitcointradeAdapters.adaptBitcointradePublicTrades(bitcointradePublicTradeResponse, currencyPair);
   }

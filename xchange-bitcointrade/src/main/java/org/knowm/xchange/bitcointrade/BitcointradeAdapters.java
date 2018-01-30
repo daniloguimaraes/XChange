@@ -36,7 +36,7 @@ public final class BitcointradeAdapters {
 
   public static Ticker adaptBitcointradeTicker(BitcointradeTickerResponse bitcointradeTickerResponse, CurrencyPair currencyPair) {
 
-    return adaptBitcointradeTicker(bitcointradeTickerResponse.getTicker(), currencyPair);
+    return adaptBitcointradeTicker(bitcointradeTickerResponse.getData(), currencyPair);
   }
 
   static Ticker adaptBitcointradeTicker(BitcointradeTicker ticker, CurrencyPair currencyPair) {

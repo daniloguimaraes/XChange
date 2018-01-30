@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeException;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
+import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 import org.knowm.xchange.currency.Currency;
@@ -56,10 +57,10 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * To get a different currency order book, use {@link #getBitcointradeOrderBook(Currency)}.
    * </p>
    *
-   * @return an instance of {@link BitcointradeOrderBook}
+   * @return an instance of {@link BitcointradeOrderBookResponse}
    * @throws IOException
    */
-  BitcointradeOrderBook getBitcointradeOrderBook() throws IOException {
+  BitcointradeOrderBookResponse getBitcointradeOrderBook() throws IOException {
 
       return getBitcointradeOrderBook(Currency.BTC);
   }
@@ -68,10 +69,10 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * Get a specific currency order book at Bitcointrade Exchange.
    *
    * @param currency the order book currency
-   * @return an instance of {@link BitcointradeOrderBook}
+   * @return an instance of {@link BitcointradeOrderBookResponse}
    * @throws IOException
    */
-  BitcointradeOrderBook getBitcointradeOrderBook(Currency currency) throws IOException {
+  BitcointradeOrderBookResponse getBitcointradeOrderBook(Currency currency) throws IOException {
 
     try {
       return bitcointrade.getOrderBook(currency.toString());

@@ -39,7 +39,7 @@ public class BitcointradeTickerResponseTest {
 
     final SoftAssertions softly = new SoftAssertions();
 
-    BitcointradeTicker ticker = sut.getTicker();
+    BitcointradeTicker ticker = sut.getData();
     softly.assertThat(ticker).isNotNull();
 
     softly.assertThat(ticker.getHigh()).isEqualTo(new BigDecimal("36749.99"));

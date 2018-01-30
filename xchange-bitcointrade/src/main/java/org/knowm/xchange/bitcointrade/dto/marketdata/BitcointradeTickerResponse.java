@@ -1,6 +1,5 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.knowm.xchange.bitcointrade.dto.BitcointradeBaseResponse;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -25,17 +24,6 @@ public class BitcointradeTickerResponse extends BitcointradeBaseResponse<Bitcoin
   public BitcointradeTickerResponse(@JsonProperty("message") Object message, @JsonProperty("data") BitcointradeTicker ticker) {
 
     super(message, ticker);
-  }
-
-  public BitcointradeTicker getTicker() {
-
-    return getData();
-  }
-
-  @Override
-  public String toString() {
-
-    return new ToStringBuilder(this).append("message", message).append("data", data).append("additionalProperties", additionalProperties).toString();
   }
 
 }
