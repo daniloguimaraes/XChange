@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderType;
 import org.knowm.xchange.bitcointrade.dto.PaginatedTest;
-import org.knowm.xchange.bitcointrade.dto.Pagination;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,7 +27,6 @@ public class BitcointradePublicTradeResponseTest extends PaginatedTest {
   public static void setUp() throws Exception {
 
     sut = loadBitcointradePublicTradeFromExampleData();
-    pagination = sut.getData().getPagination();
   }
 
   private static BitcointradePublicTradeResponse loadBitcointradePublicTradeFromExampleData() throws IOException {
@@ -42,7 +40,7 @@ public class BitcointradePublicTradeResponseTest extends PaginatedTest {
   @Test
   public void testPagination() throws Exception {
 
-    testPagination(8829, 1 , 20, 176564);
+    testPagination(sut.getData().getPagination(), 8829, 1, 20, 176564);
   }
 
   @Test

@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Danilo Guimaraes
- * @since 29/01/2018
  */
 public class BitcointradeUserOrder {
 

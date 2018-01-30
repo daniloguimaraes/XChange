@@ -15,8 +15,9 @@ import org.knowm.xchange.bitcointrade.dto.PaginatedTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * Tests {@link BitcointradeDepositListResponse} class.
+ *
  * @author Danilo Guimaraes
- * @since 28/01/2018
  */
 public class BitcointradeDepositListResponseTest extends PaginatedTest {
 
@@ -26,8 +27,6 @@ public class BitcointradeDepositListResponseTest extends PaginatedTest {
   public static void setUp() throws Exception {
 
     sut = loadBitcointradeDepositListFromExampleData();
-    pagination = sut.getData().getPagination();
-
   }
 
   private static BitcointradeDepositListResponse loadBitcointradeDepositListFromExampleData() throws IOException {
@@ -41,7 +40,7 @@ public class BitcointradeDepositListResponseTest extends PaginatedTest {
   @Test
   public void testPagination() throws Exception {
 
-    testPagination(1,1,10,2);
+    testPagination(sut.getData().getPagination(), 1, 1, 10, 2);
   }
 
   @Test

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Danilo Guimaraes
- * @since 28/01/2018
  */
 public class BitcointradeDeposit {
 

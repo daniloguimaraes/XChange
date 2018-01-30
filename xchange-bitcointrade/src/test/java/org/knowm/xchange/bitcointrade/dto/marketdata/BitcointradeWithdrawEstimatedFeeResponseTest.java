@@ -14,8 +14,9 @@ import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * Tests {@link BitcointradeWithdrawEstimatedFeeResponse} class.
+ *
  * @author Danilo Guimaraes
- * @since 29/01/2018
  */
 public class BitcointradeWithdrawEstimatedFeeResponseTest {
 

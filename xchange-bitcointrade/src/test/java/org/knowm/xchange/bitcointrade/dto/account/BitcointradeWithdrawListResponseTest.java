@@ -12,13 +12,13 @@ import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
 import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
 import org.knowm.xchange.bitcointrade.BitcointradeWithdrawStatus;
 import org.knowm.xchange.bitcointrade.dto.PaginatedTest;
-import org.knowm.xchange.bitcointrade.dto.Pagination;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * Tests {@link BitcointradeWithdrawListResponse} class.
+ *
  * @author Danilo Guimaraes
- * @since 28/01/2018
  */
 public class BitcointradeWithdrawListResponseTest extends PaginatedTest {
 
@@ -28,7 +28,6 @@ public class BitcointradeWithdrawListResponseTest extends PaginatedTest {
   public static void setUp() throws Exception {
 
     sut = loadBitcointradeWithdrawListFromExampleData();
-    pagination = sut.getData().getPagination();
   }
 
   private static BitcointradeWithdrawListResponse loadBitcointradeWithdrawListFromExampleData() throws IOException {
@@ -42,7 +41,7 @@ public class BitcointradeWithdrawListResponseTest extends PaginatedTest {
   @Test
   public void testPagination() throws Exception {
 
-    testPagination(1, 1, 10 , 2);
+    testPagination(sut.getData().getPagination(), 1, 1, 10, 2);
   }
 
   @Test

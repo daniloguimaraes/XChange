@@ -18,7 +18,7 @@ import org.knowm.xchange.currency.Currency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Tests {@link BitcointradeUserOrdersResponse} enum.
+ * Tests {@link BitcointradeUserOrdersResponse} class.
  *
  * @author Danilo Guimaraes
  */
@@ -30,7 +30,6 @@ public class BitcointradeUserOrdersResponseTest extends PaginatedTest {
   public static void setUp() throws Exception {
 
     sut = loadBitcointradeUserOrdersFromExampleData();
-    pagination = sut.getData().getPagination();
   }
 
   private static BitcointradeUserOrdersResponse loadBitcointradeUserOrdersFromExampleData() throws IOException {
@@ -44,7 +43,7 @@ public class BitcointradeUserOrdersResponseTest extends PaginatedTest {
   @Test
   public void testPagination() throws Exception {
 
-    testPagination(1, 1, 100, 21);
+    testPagination(sut.getData().getPagination(), 1, 1, 100, 21);
   }
 
   @Test

@@ -6,7 +6,6 @@ import org.junit.Test;
 
 /**
  * @author Danilo Guimaraes
- * @since 29/01/2018
  */
 public class BitcointradeDepositStatusTest {
 

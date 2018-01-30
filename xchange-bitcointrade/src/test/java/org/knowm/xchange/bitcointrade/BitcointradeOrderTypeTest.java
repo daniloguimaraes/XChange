@@ -6,8 +6,9 @@ import org.junit.Test;
 import org.knowm.xchange.dto.Order;
 
 /**
+ * Tests {@link BitcointradeOrderType} enum.
+ *
  * @author Danilo Guimaraes
- * @since 29/01/2018
  */
 public class BitcointradeOrderTypeTest {
 

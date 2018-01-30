@@ -16,7 +16,6 @@ import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
 
 /**
  * @author Danilo Guimaraes
- * @since 29/01/2018
  */
 public class BitcointradeTradeService extends BitcointradeTradeServiceRaw implements TradeService {
 

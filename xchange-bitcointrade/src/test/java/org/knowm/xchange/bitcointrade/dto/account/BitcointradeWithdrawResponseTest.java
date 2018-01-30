@@ -14,6 +14,8 @@ import org.knowm.xchange.bitcointrade.BitcointradeWithdrawStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * Tests {@lunk BitcointradeWithdrawResponse} class.
+ *
  * @author Danilo Guimaraes
  */
 public class BitcointradeWithdrawResponseTest {

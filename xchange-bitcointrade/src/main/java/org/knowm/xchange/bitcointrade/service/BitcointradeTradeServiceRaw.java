@@ -4,7 +4,6 @@ import org.knowm.xchange.Exchange;
 
 /**
  * @author Danilo Guimaraes
- * @since 29/01/2018
  */
 public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService {
 

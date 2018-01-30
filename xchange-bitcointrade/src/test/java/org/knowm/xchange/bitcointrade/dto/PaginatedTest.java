@@ -3,13 +3,13 @@ package org.knowm.xchange.bitcointrade.dto;
 import org.assertj.core.api.SoftAssertions;
 
 /**
+ * Helper class for testing objects that have {@link Pagination} object..
+ *
  * @author Danilo Guimaraes
  */
 public class PaginatedTest {
 
-  protected static Pagination pagination;
-
-  protected void testPagination(int totalPages, int currentPage, int pageSize, int registersCount) {
+  protected void testPagination(Pagination pagination, int totalPages, int currentPage, int pageSize, int registersCount) {
     final SoftAssertions softly = new SoftAssertions();
 
     softly.assertThat(pagination).isNotNull();
