@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Danilo Guimaraes
+ * @see <a href="https://apidocs.bitcointrade.com.br/#34810ae9-69e0-8c83-5c61-01d81162be10">Bitcointrade API - Deposit List Documentation
+ * (Brazilian Portuguese)</a>
  */
 public class BitcointradeDeposit {
 

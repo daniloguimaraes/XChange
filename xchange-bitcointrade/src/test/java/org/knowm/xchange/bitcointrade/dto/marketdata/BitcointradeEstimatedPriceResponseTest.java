@@ -36,7 +36,7 @@ public class BitcointradeEstimatedPriceResponseTest {
 
 
   @Test
-  public void testTrades() throws Exception {
+  public void testEstimatedPrice() throws Exception {
 
     final SoftAssertions softly = new SoftAssertions();
 

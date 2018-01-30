@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Danilo Guimaraes
+ * @see <a href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">Bitcointrade API - User Orders Documentation
+ * (Brazilian Portuguese)</a>
  */
 public class BitcointradeUserOrder {
 
@@ -37,20 +39,22 @@ public class BitcointradeUserOrder {
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
-   * @param id
-   * @param code
-   * @param type
-   * @param subtype
-   * @param requestedAmount
-   * @param remainingAmount
-   * @param unitPrice
-   * @param status
-   * @param createDate
-   * @param updateDate
-   * @param currencyCode
-   * @param totalPrice
-   * @param executedAmount
-   * @param remainingPrice
+   * Constructor
+   *
+   * @param id the order ID
+   * @param code the order code
+   * @param type the order type (buy/sell)
+   * @param subtype the order subtype (limited/market)
+   * @param requestedAmount the requested amount
+   * @param remainingAmount the remaining amount
+   * @param unitPrice the order unit price
+   * @param status the order status
+   * @param createDate the order creation date
+   * @param updateDate the order update date
+   * @param currencyCode the currency code (e.g. BTC)
+   * @param totalPrice the total price (requestedAmount times unitPrice)
+   * @param executedAmount executed amonut
+   * @param remainingPrice remaining price
    */
   public BitcointradeUserOrder(@JsonProperty("id") String id, @JsonProperty("code") String code, @JsonProperty("type") String type,
       @JsonProperty("subtype") String subtype, @JsonProperty("requested_amount") BigDecimal requestedAmount,

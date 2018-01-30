@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * @author Danilo Guimaraes
@@ -22,12 +24,12 @@ public class BitcointradeDepositListResponse extends BitcointradeBaseResponse<Bi
 
   @JsonCreator
   public BitcointradeDepositListResponse(@JsonProperty("message") Object message, @JsonProperty("data") Data data) {
+
     super(message, data);
   }
 
-  /**
-   *
-   */
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @JsonPropertyOrder({ "pagination", "deposits" })
   public static class Data {
 
     private final Pagination pagination;

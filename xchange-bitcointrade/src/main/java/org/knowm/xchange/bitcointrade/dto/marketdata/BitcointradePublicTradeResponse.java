@@ -39,13 +39,6 @@ public class BitcointradePublicTradeResponse extends BitcointradeBaseResponse<Bi
     super(message, data);
   }
 
-
-  @Override
-  public String toString() {
-
-    return new ToStringBuilder(this).append("message", message).append("data", data).append("additionalProperties", additionalProperties).toString();
-  }
-
   /**
    *
    */

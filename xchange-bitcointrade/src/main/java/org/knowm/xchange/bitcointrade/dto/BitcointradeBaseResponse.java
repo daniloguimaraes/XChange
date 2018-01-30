@@ -3,6 +3,8 @@ package org.knowm.xchange.bitcointrade.dto;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -74,5 +76,11 @@ public abstract class BitcointradeBaseResponse<T> {
   public void setAdditionalProperty(String name, Object value) {
 
     this.additionalProperties.put(name, value);
+  }
+
+  @Override
+  public String toString() {
+
+    return new ToStringBuilder(this).append("message", message).append("data", data).append("additionalProperties", additionalProperties).toString();
   }
 }

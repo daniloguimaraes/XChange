@@ -12,10 +12,14 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * @author Danilo Guimaraes
+ * @see <a href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">Bitcointrade API - User Orders Documentation
+ * (Brazilian Portuguese)</a>
  */
 public class BitcointradeUserOrdersResponse extends BitcointradeBaseResponse<BitcointradeUserOrdersResponse.Data> {
 
@@ -28,6 +32,8 @@ public class BitcointradeUserOrdersResponse extends BitcointradeBaseResponse<Bit
   /**
    *
    */
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @JsonPropertyOrder({ "pagination", "orders" })
   public static class Data {
 
     private final Pagination pagination;
