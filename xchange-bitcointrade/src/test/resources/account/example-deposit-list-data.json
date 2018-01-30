@@ -1,0 +1,29 @@
+{
+  "message": null,
+  "data": {
+    "pagination": {
+      "total_pages": 1,
+      "current_page": 1,
+      "page_size": 10,
+      "registers_count": 2
+    },
+    "deposits": [
+      {
+        "code": "SJbLkdTh_",
+        "hash": "4f87d009d88524e627b60c6fbe4ebe671a99lk9ad72aab17e0963c5fbef118e2",
+        "amount": 2.29999999,
+        "status": "confirmed",
+        "create_date": "2017-10-12T22:40:08.273Z",
+        "confirmation_date": "2017-10-12T22:40:08.273Z"
+      },
+      {
+        "code": "rkxHPorahb",
+        "hash": "181378774394ec47b9861d9facfcd4d4ea11a447tr82532c654d5ee1306b4857",
+        "amount": 2.29999999,
+        "status": "confirmed",
+        "create_date": "2017-10-12T20:06:52.983Z",
+        "confirmation_date": "2017-10-12T20:06:52.983Z"
+      }
+    ]
+  }
+}

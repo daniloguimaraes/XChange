@@ -1,0 +1,18 @@
+{
+  "currency_pairs": {
+    "BTC/BRL": {
+      "price_scale": 8,
+      "trading_fee": 0.001
+    }
+  },
+  "currencies": {
+    "BTC": {
+      "scale": 8,
+      "withdrawal_fee" : 0
+    },
+    "BRL": {
+      "withdrawal_fee" : 0.99
+    }
+  },
+  "share_rate_limits": false
+}

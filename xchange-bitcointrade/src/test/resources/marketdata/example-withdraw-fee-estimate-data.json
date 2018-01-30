@@ -1,0 +1,17 @@
+{
+  "message": null,
+  "data": [
+    {
+      "name": "fast",
+      "amount": 0.0010074
+    },
+    {
+      "name": "regular",
+      "amount": 0.00075774
+    },
+    {
+      "name": "slow",
+      "amount": 0.0005037
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "message": null,
+  "data": {
+    "pagination": {
+      "total_pages": 8829,
+      "current_page": 1,
+      "page_size": 20,
+      "registers_count": 176564
+    },
+    "trades": [
+      {
+        "type": "buy",
+        "amount": 0.19525906,
+        "unit_price": 36919.93,
+        "active_order_code": "Sy9XFpjBM",
+        "passive_order_code": "B1mQqKjSM",
+        "date": "2018-01-28T22:05:21.740Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.01125725,
+        "unit_price": 36919.92,
+        "active_order_code": "Sy9XFpjBM",
+        "passive_order_code": "BkD21pjBG",
+        "date": "2018-01-28T22:05:21.737Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00624684,
+        "unit_price": 36849.99,
+        "active_order_code": "Sy9XFpjBM",
+        "passive_order_code": "r1lBeToSG",
+        "date": "2018-01-28T22:05:21.733Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.05669086,
+        "unit_price": 36848,
+        "active_order_code": "Sy9XFpjBM",
+        "passive_order_code": "HJKjgTorG",
+        "date": "2018-01-28T22:05:21.727Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00142056,
+        "unit_price": 36847,
+        "active_order_code": "Sy9XFpjBM",
+        "passive_order_code": "BJBU76sBz",
+        "date": "2018-01-28T22:05:21.717Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00653379,
+        "unit_price": 36850,
+        "active_order_code": "H1z4g6jSz",
+        "passive_order_code": "Bk7RChjHG",
+        "date": "2018-01-28T21:27:06.167Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.01355381,
+        "unit_price": 36890,
+        "active_order_code": "Ske5RnjBG",
+        "passive_order_code": "Hy8Mtiorf",
+        "date": "2018-01-28T21:20:08.200Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00652779,
+        "unit_price": 36890,
+        "active_order_code": "SJHPAnsBM",
+        "passive_order_code": "Hy8Mtiorf",
+        "date": "2018-01-28T21:19:25.283Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00172516,
+        "unit_price": 36890,
+        "active_order_code": "SJIe0hsSz",
+        "passive_order_code": "Hy8Mtiorf",
+        "date": "2018-01-28T21:17:33.960Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00450959,
+        "unit_price": 36890,
+        "active_order_code": "SJIe0hsSz",
+        "passive_order_code": "Sy_b19oSz",
+        "date": "2018-01-28T21:17:33.957Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.00230813,
+        "unit_price": 36621,
+        "active_order_code": "rkn3i3irM",
+        "passive_order_code": "rkpOchjrz",
+        "date": "2018-01-28T21:08:03.807Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00445304,
+        "unit_price": 36890,
+        "active_order_code": "ryBLY2iHf",
+        "passive_order_code": "Sy_b19oSz",
+        "date": "2018-01-28T20:57:48.740Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.00166786,
+        "unit_price": 36880,
+        "active_order_code": "ryBLY2iHf",
+        "passive_order_code": "rkbHSnoSM",
+        "date": "2018-01-28T20:57:48.737Z"
+      },
+      {
+        "type": "buy",
+        "amount": 0.0027115,
+        "unit_price": 36880,
+        "active_order_code": "Hy0xPnoHG",
+        "passive_order_code": "rkbHSnoSM",
+        "date": "2018-01-28T20:47:50.130Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.01927923,
+        "unit_price": 36610,
+        "active_order_code": "B13p0oirf",
+        "passive_order_code": "S1MWNKoBf",
+        "date": "2018-01-28T20:12:52.063Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.00657564,
+        "unit_price": 36620.01,
+        "active_order_code": "B13p0oirf",
+        "passive_order_code": "rJelBYsSz",
+        "date": "2018-01-28T20:12:52.060Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.00821731,
+        "unit_price": 36630,
+        "active_order_code": "B13p0oirf",
+        "passive_order_code": "HyxG2qorG",
+        "date": "2018-01-28T20:12:52.057Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.01344547,
+        "unit_price": 36651,
+        "active_order_code": "B13p0oirf",
+        "passive_order_code": "HkG5CcoHM",
+        "date": "2018-01-28T20:12:52.053Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.00272829,
+        "unit_price": 36653,
+        "active_order_code": "B13p0oirf",
+        "passive_order_code": "rJ48MosBf",
+        "date": "2018-01-28T20:12:52.053Z"
+      },
+      {
+        "type": "sell",
+        "amount": 0.0027248,
+        "unit_price": 36700,
+        "active_order_code": "B13p0oirf",
+        "passive_order_code": "SyrIYjiSM",
+        "date": "2018-01-28T20:12:52.050Z"
+      }
+    ]
+  }
+}
