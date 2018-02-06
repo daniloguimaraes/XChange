@@ -1,6 +1,8 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
+ * Bitcointrade Exchange deposit status
+ *
  * @author Danilo Guimaraes
  */
 public enum BitcointradeDepositStatus {
@@ -12,10 +14,12 @@ public enum BitcointradeDepositStatus {
   private final String depositStatus;
 
   BitcointradeDepositStatus(String depositStatus) {
+
     this.depositStatus = depositStatus;
   }
 
   public String getDepositStatus() {
+
     return depositStatus;
   }
 

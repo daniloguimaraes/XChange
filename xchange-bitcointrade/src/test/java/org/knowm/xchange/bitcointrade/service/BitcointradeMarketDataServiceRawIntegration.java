@@ -23,6 +23,7 @@ public class BitcointradeMarketDataServiceRawIntegration {
 
   @BeforeClass
   public static void setUp() throws Exception {
+
     Exchange bitcointradeExchange = ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
     bitcointradeExchange.remoteInit();
     sut = new BitcointradeMarketDataService(bitcointradeExchange);
@@ -30,6 +31,7 @@ public class BitcointradeMarketDataServiceRawIntegration {
 
   @Test
   public void testValidTicker() throws Exception {
+
     BitcointradeTickerResponse bitcointradeTickerResponse = sut.getBitcointradeTicker(new CurrencyPair("BTC", "BRL"));
 
     final SoftAssertions softly = new SoftAssertions();
@@ -56,6 +58,7 @@ public class BitcointradeMarketDataServiceRawIntegration {
 
   @Test
   public void testGetTickerWithAnInvalidCurrency() {
+
     exception.expect(ExchangeException.class);
     exception.expectMessage("Moeda inválida");
 

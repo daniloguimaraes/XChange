@@ -1,7 +1,6 @@
 package org.knowm.xchange.bitcointrade;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,10 +23,13 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 @Produces(MediaType.APPLICATION_JSON)
 public interface Bitcointrade {
 
+  Integer DEFAULT_PAGE_SIZE = 200;
+  Integer DEFAULT_CURRENT_PAGE = 1;
+
   /**
    * Get the Bitcointrade Exchange ticker
    *
-   * @return a {@link Map} containing an instance of {@link BitcointradeTickerResponse}
+   * @return an instance of {@link BitcointradeTickerResponse}
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
    */
@@ -38,6 +40,7 @@ public interface Bitcointrade {
   /**
    * Get the public order book at Bitcointrade Exchange
    *
+   * @param currency the currency (eg. BTC)
    * @return an instance of {@link BitcointradeOrderBook}
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
@@ -50,8 +53,8 @@ public interface Bitcointrade {
    * List all public trades made at Bitcointrade Exchange.
    *
    * @param currency the currency. BTC or LTC. Optional
-   * @param startTime start trade time, in ISO 8601 date/time format. Optional
-   * @param endTime end trade time, in ISO -8601 date/time format. Optional
+   * @param startTime start trade time, in ISO-8601 date/time format. Optional
+   * @param endTime end trade time, in ISO-8601 date/time format. Optional
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @return an array of {@link BitcointradePublicTradeResponse}

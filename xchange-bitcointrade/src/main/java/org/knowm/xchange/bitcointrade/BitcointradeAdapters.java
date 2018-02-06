@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.knowm.xchange.bitcointrade.dto.account.BitcointradeUserOrdersResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTrade;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
@@ -18,6 +19,7 @@ import org.knowm.xchange.dto.marketdata.Trade;
 import org.knowm.xchange.dto.marketdata.Trades;
 import org.knowm.xchange.dto.marketdata.Trades.TradeSortType;
 import org.knowm.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.dto.trade.OpenOrders;
 import org.knowm.xchange.utils.DateUtils;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -27,7 +29,6 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
  *
  * @author Danilo Guimaraes
  */
-
 public final class BitcointradeAdapters {
 
   private BitcointradeAdapters() {
@@ -116,5 +117,10 @@ public final class BitcointradeAdapters {
     } catch (InvalidFormatException e) {
       return null;
     }
+  }
+
+  public static OpenOrders adaptBitcointradeOpenOrders(BitcointradeUserOrdersResponse bitcointradeUserOrdersResponse) {
+
+    return null;
   }
 }

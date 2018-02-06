@@ -1,6 +1,8 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
+ * Bitcointrade Exchange withdraw status
+ *
  * @author Danilo Guimaraes
  */
 public enum BitcointradeWithdrawStatus {

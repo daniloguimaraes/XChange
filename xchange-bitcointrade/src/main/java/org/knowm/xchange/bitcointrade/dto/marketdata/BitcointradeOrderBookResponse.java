@@ -1,6 +1,5 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.knowm.xchange.bitcointrade.dto.BitcointradeBaseResponse;
 
 import com.fasterxml.jackson.annotation.JsonCreator;

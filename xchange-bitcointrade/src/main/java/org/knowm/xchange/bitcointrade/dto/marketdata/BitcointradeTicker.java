@@ -36,6 +36,8 @@ public class BitcointradeTicker {
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
+   * Constructor
+   *
    * @param high
    * @param low
    * @param volume
@@ -59,24 +61,6 @@ public class BitcointradeTicker {
     this.sell = sell;
     this.date = date;
   }
-
-//  /**
-//   *
-//   * @param map
-//   */
-//  @JsonCreator
-//  public BitcointradeTicker(Map<String, Map<String, String>> map) {
-//    super();
-//    Map<String, String> ticker = map.get("ticker");
-//    this.high = new BigDecimal(ticker.get("high"));
-//    this.low = new BigDecimal(ticker.get("low"));
-//    this.volume = new BigDecimal(ticker.get("volume"));
-//    this.tradesQuantity = new Integer(ticker.get("trades_quantity"));
-//    this.last = new BigDecimal(ticker.get("last"));
-//    this.buy = new BigDecimal(ticker.get("buy"));
-//    this.sell = new BigDecimal(ticker.get("sell"));
-//    this.date = ticker.get("date");
-//  }
 
   public BigDecimal getHigh() {
 

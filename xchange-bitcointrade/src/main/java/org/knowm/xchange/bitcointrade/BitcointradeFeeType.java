@@ -17,16 +17,22 @@ public enum BitcointradeFeeType {
     this.name = name;
   }
 
-  public String getName() {
+  public String getFeeType() {
 
     return name;
   }
 
-  public static BitcointradeFeeType from(String name) {
+  /**
+   * Create an instance of (@link BitcointradeFeeType} based on a String.
+   *
+   * @param feeType the fee type
+   * @return an instance of {@link BitcointradeFeeType} or {@code null}
+   */
+  public static BitcointradeFeeType from(String feeType) {
 
-    for (BitcointradeFeeType bitcointradeFeeType : values()) {
-      if (bitcointradeFeeType.getName().equals(name)) {
-        return bitcointradeFeeType;
+    for (BitcointradeFeeType bitcointradeFeeTypeEnum : values()) {
+      if (bitcointradeFeeTypeEnum.getFeeType().equals(feeType)) {
+        return bitcointradeFeeTypeEnum;
       }
     }
     return null;

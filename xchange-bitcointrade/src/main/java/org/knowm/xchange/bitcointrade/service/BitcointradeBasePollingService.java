@@ -32,7 +32,7 @@ public class BitcointradeBasePollingService extends BaseExchangeService implemen
 
     super(exchange);
 
-    this.apiToken = exchange.getExchangeSpecification().getApiKey();
+    this.apiToken = "ApiToken " + exchange.getExchangeSpecification().getApiKey();
     this.bitcointrade = RestProxyFactory.createProxy(Bitcointrade.class, exchange.getExchangeSpecification().getSslUri());
     this.bitcointradeAuthenticated = RestProxyFactory.createProxy(BitcointradeAuthenticated.class, exchange.getExchangeSpecification().getSslUri());
   }

@@ -1,6 +1,8 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
+ * Bitcointrade Exchange order sub-type
+ *
  * @author Danilo Guimaraes
  */
 public enum BitcointradeOrderSubtype {
@@ -20,6 +22,12 @@ public enum BitcointradeOrderSubtype {
     return subtype;
   }
 
+  /**
+   * Create an instance of {@link BitcointradeOrderSubtype} based on a String.
+   *
+   * @param subtype the order sub type
+   * @return an instance of {@link BitcointradeOrderSubtype} or {@code null}
+   */
   public static BitcointradeOrderSubtype from(String subtype) {
 
     for (BitcointradeOrderSubtype subtypeEnum : values()) {

@@ -3,6 +3,8 @@ package org.knowm.xchange.bitcointrade;
 import org.knowm.xchange.dto.Order;
 
 /**
+ * Bitcointrade Exchange order status.
+ *
  * @author Danilo Guimaraes
  */
 public enum BitcointradeOrderStatus {
@@ -25,7 +27,7 @@ public enum BitcointradeOrderStatus {
   }
 
   /**
-   * Create an instance of {@link BitcointradeOrderStatus} based on the String.
+   * Create an instance of {@link BitcointradeOrderStatus} based on a String.
    *
    * @param orderStatus the order status
    * @return an instance of {@link BitcointradeOrderStatus} or {@code null}
@@ -43,7 +45,7 @@ public enum BitcointradeOrderStatus {
   /**
    * Create an instance of {@link Order.OrderStatus} based on {@link BitcointradeOrderStatus}.
    *
-   * @param orderStatus
+   * @param orderStatus an instance of {@link BitcointradeOrderStatus}
    * @return an instance of {@link Order.OrderStatus} or {@code null}.
    */
   public static Order.OrderStatus from(BitcointradeOrderStatus orderStatus) {
