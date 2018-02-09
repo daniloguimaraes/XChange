@@ -1,10 +1,11 @@
 package org.knowm.xchange.bitcointrade.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeAdapters;
-import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
+import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeEstimatedPriceResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
@@ -81,6 +82,18 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
       bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair, startTime, endTime, pageSize, currentPage);
     }
     return BitcointradeAdapters.adaptBitcointradePublicTrades(bitcointradePublicTradeResponse, currencyPair);
+  }
+
+  /**
+   * Get a {@code currency} estimated price at Bitcointrade Exchange.
+   *
+   * @param amount the amount
+   * @param currency the currency (eg. BTC)
+   * @param type the type  (buy or sell)
+   * @return
+   */
+  public BitcointradeEstimatedPriceResponse getEstimatedPrice(BigDecimal amount, String currency, String type) {
+    return estimatedPrice(amount, currency, type);
   }
 
 }

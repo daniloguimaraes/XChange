@@ -20,7 +20,7 @@ import org.knowm.xchange.service.marketdata.MarketDataService;
  *
  * @author Danilo Guimaraes
  */
-public class OrderBookFecthIntegration {
+public class OrderBookFetchIntegration {
 
   private static OrderBook orderBook;
 

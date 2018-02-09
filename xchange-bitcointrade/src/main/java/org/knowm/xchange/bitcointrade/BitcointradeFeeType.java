@@ -14,6 +14,7 @@ public enum BitcointradeFeeType {
   private final String name;
 
   BitcointradeFeeType(String name) {
+
     this.name = name;
   }
 

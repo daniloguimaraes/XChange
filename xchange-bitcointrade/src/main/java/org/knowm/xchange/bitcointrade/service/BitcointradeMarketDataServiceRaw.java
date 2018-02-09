@@ -1,10 +1,11 @@
 package org.knowm.xchange.bitcointrade.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeException;
-import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
+import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeEstimatedPriceResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
@@ -127,6 +128,37 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
 
     try {
       return bitcointrade.getTrades(currency, startTime, endTime, pageSize, currentPage);
+    } catch (BitcointradeException e) {
+      throw new ExchangeException(e.getError());
+    } catch (IOException e) {
+      throw new ExchangeException(e.getMessage());
+    }
+  }
+
+  /**
+   * Get the Bitcoin (BTC) estimated price at Bitcointrade Exchange.
+   *
+   * @param amount the amount
+   * @param type the type  (buy or sell)
+   * @return an instance of {@link BitcointradeEstimatedPriceResponse}
+   * @throws ExchangeException
+   */
+  BitcointradeEstimatedPriceResponse estimatedPrice(BigDecimal amount, String type) throws ExchangeException {
+    return estimatedPrice(amount, Currency.BTC.toString(), type);
+  }
+
+  /**
+   * Get a {@code currency} estimated price at Bitcointrade Exchange.
+   *
+   * @param amount the amount
+   * @param currency the currency (eg. BTC)
+   * @param type the type  (buy or sell)
+   * @return an instance of {@link BitcointradeEstimatedPriceResponse}
+   * @throws ExchangeException
+   */
+  BitcointradeEstimatedPriceResponse estimatedPrice(BigDecimal amount, String currency, String type) throws ExchangeException {
+    try {
+      return bitcointradeAuthenticated.estimatedPrice(apiToken, amount, currency, type);
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {

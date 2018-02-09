@@ -10,7 +10,6 @@ import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
-import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.marketdata.Trade;
 import org.knowm.xchange.dto.marketdata.Trades;
 import org.knowm.xchange.service.marketdata.MarketDataService;
@@ -20,7 +19,7 @@ import org.knowm.xchange.service.marketdata.MarketDataService;
  *
  * @author Danilo Guimaraes
  */
-public class TradesFecthIntegration {
+public class TradesFetchIntegration {
 
   private static Trades trades;
 
@@ -40,7 +39,7 @@ public class TradesFecthIntegration {
 
     softly.assertThat(trades).isNotNull();
 
-    final List<Trade> tradeList = TradesFecthIntegration.trades.getTrades();
+    final List<Trade> tradeList = TradesFetchIntegration.trades.getTrades();
     softly.assertThat(tradeList).isNotNull();
     softly.assertThat(tradeList).isNotEmpty();
 
