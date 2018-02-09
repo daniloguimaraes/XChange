@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.knowm.xchange.bitcointrade.dto.account.BitcointradeDepositListResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeUserOrdersResponse;
+import org.knowm.xchange.bitcointrade.dto.account.BitcointradeWithdrawListResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTrade;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
@@ -13,6 +15,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTicker;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.account.FundingRecord;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.dto.marketdata.Trade;
@@ -120,6 +123,11 @@ public final class BitcointradeAdapters {
   }
 
   public static OpenOrders adaptBitcointradeOpenOrders(BitcointradeUserOrdersResponse bitcointradeUserOrdersResponse) {
+
+    return null;
+  }
+
+  public static List<FundingRecord> adaptFundingRecords(BitcointradeDepositListResponse deposits, BitcointradeWithdrawListResponse withdrawals) {
 
     return null;
   }

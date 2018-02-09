@@ -19,6 +19,8 @@ import org.knowm.xchange.service.trade.params.TradeHistoryParams;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
 
 /**
+ * {@link TradeService} implementation for Bitcointrade Exchange.
+ *
  * @author Danilo Guimaraes
  */
 public class BitcointradeTradeService extends BitcointradeTradeServiceRaw implements TradeService {
@@ -94,7 +96,7 @@ public class BitcointradeTradeService extends BitcointradeTradeServiceRaw implem
   @Override
   public Collection<Order> getOrder(String... orderIds) throws IOException {
 
-    // Bitcointrade API doesn't support listing orders by ID.
+    // Bitcointrade Exchange API doesn't support listing orders by ID.
     throw new NotAvailableFromExchangeException();
   }
 }

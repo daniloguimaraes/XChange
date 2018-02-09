@@ -25,7 +25,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeSummaryResponse
  *
  * @author Danilo Guimaraes
  */
-@Path("v1/market/")
+@Path("v1/")
 @Produces(MediaType.APPLICATION_JSON)
 public interface BitcointradeAuthenticated {
 
@@ -39,7 +39,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("summary")
+  @Path("market/summary")
   BitcointradeSummaryResponse getSummary(@HeaderParam("Authorization") String apiToken, @QueryParam("currency") String currency)
       throws BitcointradeException, IOException;
 
@@ -55,7 +55,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @POST
-  @Path("create_order")
+  @Path("market/create_order")
   void createOrder(@HeaderParam("Authorization") String apiToken, @FormParam("currency") String currency, @FormParam("type") String type,
       @FormParam("subtype") String subtype, @FormParam("amount") BigDecimal amount, @FormParam("unit_price") Integer unitPrice)
       throws BitcointradeException, IOException;
@@ -76,7 +76,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("user_orders")
+  @Path("market/user_orders")
   BitcointradeUserOrdersResponse getUserOrders(@HeaderParam("Authorization") String apiToken, @QueryParam("status") BitcointradeOrderStatus status,
       @QueryParam("start_date") String startDate, @QueryParam("end_date") String endDate, @QueryParam("currency") String currency,
       @QueryParam ("type") String type, @QueryParam("page_size") Integer pageSize, @QueryParam("current_page") Integer currentPage)
@@ -91,7 +91,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @DELETE
-  @Path("user_orders")
+  @Path("market/user_orders")
   String cancelOrder(@HeaderParam("Authorization") String apiToken, @FormParam("id") String orderId) throws BitcointradeException, IOException;
 
   /**
@@ -106,7 +106,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("estimated_price")
+  @Path("market/estimated_price")
   BitcointradeEstimatedPriceResponse estimatedPrice(@HeaderParam("Authorization") String apiToken, @QueryParam("amount") BigDecimal amount,
       @QueryParam("currency") String currency, @QueryParam("type") String type) throws BitcointradeException, IOException;
 
@@ -119,7 +119,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("withdraw/fee")
+  @Path("bitcoin/withdraw/fee")
   BitcointradeWithdrawListResponse getWithdrawEstimatedFee(@HeaderParam("Authorization") String apiToken) throws BitcointradeException, IOException;
 
   /**
@@ -135,7 +135,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("withdraw")
+  @Path("bitcoin/withdraw")
   BitcointradeWithdrawListResponse getWithdrawList(@HeaderParam("Authorization") String apiToken, @FormParam("page_size") Integer pageSize,
       @FormParam("current_page") Integer currentPage, @FormParam("status") BitcointradeOrderStatus orderStatus,
       @FormParam("start_date") String startDate, @FormParam("end_date") String endDate) throws BitcointradeException, IOException;
@@ -153,7 +153,7 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @POST
-  @Path("withdraw")
+  @Path("bitcoin/withdraw")
   BitcointradeWithdrawResponse withdraw(@HeaderParam("Authorization") String apiToken, @FormParam("destination") String address,
       @FormParam("fee") BigDecimal fee, @FormParam("fee_type") BitcointradeFeeType feeType, @FormParam("amount") BigDecimal amount)
       throws BitcointradeException, IOException;
@@ -172,8 +172,8 @@ public interface BitcointradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("deposits")
+  @Path("bitcoin/deposits")
   BitcointradeDepositListResponse getDepositList(@HeaderParam("Authorization") String apiToken, @QueryParam("page_size") Integer pageSize,
       @QueryParam("current_page") Integer currentPage, @QueryParam("status") BitcointradeDepositStatus status,
-      @QueryParam("start_date") String  startDate, @QueryParam("end_date") String endDate) throws BitcointradeException, IOException;
+      @QueryParam("start_date") String startDate, @QueryParam("end_date") String endDate) throws BitcointradeException, IOException;
 }

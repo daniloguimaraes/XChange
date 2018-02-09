@@ -15,6 +15,8 @@ import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.exceptions.ExchangeException;
 
 /**
+ * Integration tests for {@link BitcointradeMarketDataServiceRaw}
+ *
  * @author Danilo Guimaraes
  */
 public class BitcointradeMarketDataServiceRawIntegration {

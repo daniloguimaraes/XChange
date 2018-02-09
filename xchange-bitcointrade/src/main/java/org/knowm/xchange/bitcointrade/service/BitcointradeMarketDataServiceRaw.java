@@ -140,10 +140,10 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    *
    * @param amount the amount
    * @param type the type  (buy or sell)
-   * @return an instance of {@link BitcointradeEstimatedPriceResponse}
+   * @return the currency price or {@code null}
    * @throws ExchangeException
    */
-  BitcointradeEstimatedPriceResponse estimatedPrice(BigDecimal amount, String type) throws ExchangeException {
+  BigDecimal estimatedPrice(BigDecimal amount, String type) throws ExchangeException {
     return estimatedPrice(amount, Currency.BTC.toString(), type);
   }
 
@@ -153,12 +153,22 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * @param amount the amount
    * @param currency the currency (eg. BTC)
    * @param type the type  (buy or sell)
-   * @return an instance of {@link BitcointradeEstimatedPriceResponse}
+   * @return the currency price or {@code null}
    * @throws ExchangeException
    */
-  BitcointradeEstimatedPriceResponse estimatedPrice(BigDecimal amount, String currency, String type) throws ExchangeException {
+  BigDecimal estimatedPrice(BigDecimal amount, String currency, String type) throws ExchangeException {
     try {
-      return bitcointradeAuthenticated.estimatedPrice(apiToken, amount, currency, type);
+      final BitcointradeEstimatedPriceResponse response = bitcointradeAuthenticated.estimatedPrice(apiToken, amount, currency, type);
+
+      if (response != null) {
+        if (response.getData() != null) {
+          return response.getData().getPrice();
+        } else if (response.getMessage() != null) {
+          throw new ExchangeException(response.getMessage().toString());
+        }
+      }
+
+      return null;
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {

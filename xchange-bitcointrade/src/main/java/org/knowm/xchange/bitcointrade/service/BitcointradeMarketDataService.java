@@ -90,9 +90,9 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
    * @param amount the amount
    * @param currency the currency (eg. BTC)
    * @param type the type  (buy or sell)
-   * @return
+   * @return the currency price or {@code null}
    */
-  public BitcointradeEstimatedPriceResponse getEstimatedPrice(BigDecimal amount, String currency, String type) {
+  public BigDecimal getEstimatedPrice(BigDecimal amount, String currency, String type) {
     return estimatedPrice(amount, currency, type);
   }
 
