@@ -1,24 +1,18 @@
 package org.knowm.xchange.bitso;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.knowm.xchange.exceptions.ExchangeException;
 
-/**
- * A central place for shared Bitso properties
- */
+/** A central place for shared Bitso properties */
 public final class BitsoUtils {
 
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  private static final FastDateFormat DATE_FORMAT =
+      FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
 
-  /**
-   * private Constructor
-   */
-  private BitsoUtils() {
-
-  }
+  /** private Constructor */
+  private BitsoUtils() {}
 
   /**
    * Format a date String for Bitso
@@ -34,5 +28,4 @@ public final class BitsoUtils {
       throw new ExchangeException("Illegal date/time format", e);
     }
   }
-
 }

@@ -10,7 +10,7 @@ public class BitflyerDemoUtils {
   public static Exchange createExchange() {
 
     // Use the factory to get BitFlyer exchange API using default settings
-    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BitflyerExchange.class.getName());
+    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BitflyerExchange.class);
 
     ExchangeSpecification bfxSpec = exchange.getDefaultExchangeSpecification();
 
@@ -21,5 +21,4 @@ public class BitflyerDemoUtils {
 
     return exchange;
   }
-
 }

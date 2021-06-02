@@ -1,25 +1,27 @@
 package org.knowm.xchange.btcmarkets.service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.btcmarkets.BTCMarketsAdapters;
+import org.knowm.xchange.btcmarkets.dto.v3.account.BTCMarketsAddressesResponse;
+import org.knowm.xchange.btcmarkets.dto.v3.account.BTCMarketsTradingFeesResponse;
 import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.account.AccountInfo;
+import org.knowm.xchange.dto.account.Fee;
 import org.knowm.xchange.dto.account.FundingRecord;
-import org.knowm.xchange.exceptions.NotAvailableFromExchangeException;
-import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.service.account.AccountService;
 import org.knowm.xchange.service.trade.params.DefaultWithdrawFundsParams;
+import org.knowm.xchange.service.trade.params.RippleWithdrawFundsParams;
 import org.knowm.xchange.service.trade.params.TradeHistoryParams;
 import org.knowm.xchange.service.trade.params.WithdrawFundsParams;
 
-/**
- * @author Matija Mazi
- */
-public class BTCMarketsAccountService extends BTCMarketsAccountServiceRaw implements AccountService {
+/** @author Matija Mazi */
+public class BTCMarketsAccountService extends BTCMarketsAccountServiceRaw
+    implements AccountService {
 
   public BTCMarketsAccountService(Exchange exchange) {
     super(exchange);
@@ -27,36 +29,58 @@ public class BTCMarketsAccountService extends BTCMarketsAccountServiceRaw implem
 
   @Override
   public AccountInfo getAccountInfo() throws IOException {
-    return new AccountInfo(exchange.getExchangeSpecification().getUserName(), BTCMarketsAdapters.adaptWallet(getBTCMarketsBalance()));
-  }
-
-  @Override
-  public String withdrawFunds(Currency currency, BigDecimal amount, String address) throws IOException {
-    throw new NotYetImplementedForExchangeException();
+    return new AccountInfo(
+        exchange.getExchangeSpecification().getUserName(),
+        BTCMarketsAdapters.adaptWallet(getBTCMarketsBalance()));
   }
 
   @Override
   public String withdrawFunds(WithdrawFundsParams params) throws IOException {
     if (params instanceof DefaultWithdrawFundsParams) {
       DefaultWithdrawFundsParams defaultWithdrawFundsParams = (DefaultWithdrawFundsParams) params;
-      return withdrawCrypto(defaultWithdrawFundsParams.address, defaultWithdrawFundsParams.amount, defaultWithdrawFundsParams.currency);
+      String address = defaultWithdrawFundsParams.address;
+      if (params instanceof RippleWithdrawFundsParams) {
+        address = address + "?dt=" + ((RippleWithdrawFundsParams) params).tag;
+      }
+      return withdrawCrypto(
+          address,
+          defaultWithdrawFundsParams.getAmount(),
+          defaultWithdrawFundsParams.getCurrency());
     }
     throw new IllegalStateException("Cannot process " + params);
   }
 
   @Override
-  public String requestDepositAddress(Currency currency, String... arguments) throws IOException {
-    throw new NotYetImplementedForExchangeException();
-  }
-
-  @Override
   public TradeHistoryParams createFundingHistoryParams() {
-    throw new NotAvailableFromExchangeException();
+    return new BTCMarketsTradeHistoryParams();
   }
 
   @Override
-  public List<FundingRecord> getFundingHistory(
-      TradeHistoryParams params) throws IOException {
-    throw new NotYetImplementedForExchangeException();
+  public List<FundingRecord> getFundingHistory(TradeHistoryParams params) throws IOException {
+    return BTCMarketsAdapters.adaptFundingHistory(super.fundtransferHistory());
+  }
+
+  @Override
+  public String requestDepositAddress(Currency currency, String... args) throws IOException {
+    BTCMarketsAddressesResponse response = depositAddress(currency);
+    if (response != null) {
+      return response.address;
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public Map<CurrencyPair, Fee> getDynamicTradingFees() throws IOException {
+    BTCMarketsTradingFeesResponse response = tradingFees();
+    Map<CurrencyPair, Fee> dynamicTradingFees = new HashMap<>();
+    for (BTCMarketsTradingFeesResponse.FeeByMarket feeByMarket : response.feeByMarkets) {
+      String[] splitMarketId = feeByMarket.marketId.split("-"); // BTC-AUD
+      CurrencyPair cp = new CurrencyPair(splitMarketId[0], splitMarketId[1]);
+      Fee fee = new Fee(feeByMarket.makerFeeRate, feeByMarket.takerFeeRate);
+
+      dynamicTradingFees.put(cp, fee);
+    }
+    return dynamicTradingFees;
   }
 }

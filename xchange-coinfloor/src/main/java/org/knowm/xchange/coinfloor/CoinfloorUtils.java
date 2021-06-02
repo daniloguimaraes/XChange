@@ -1,22 +1,17 @@
 package org.knowm.xchange.coinfloor;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.knowm.xchange.exceptions.ExchangeException;
 
 public final class CoinfloorUtils {
 
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  private static final FastDateFormat DATE_FORMAT =
+      FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("UTC"));
 
-  static {
-    DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-  }
-
-  private CoinfloorUtils() {
-  }
+  private CoinfloorUtils() {}
 
   public static Date parseDate(final String date) {
     try {

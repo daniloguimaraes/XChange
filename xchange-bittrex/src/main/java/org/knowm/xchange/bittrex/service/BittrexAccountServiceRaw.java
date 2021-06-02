@@ -1,23 +1,27 @@
 package org.knowm.xchange.bittrex.service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-
-import org.knowm.xchange.Exchange;
+import java.util.Map;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.knowm.xchange.bittrex.BittrexAuthenticated;
+import org.knowm.xchange.bittrex.BittrexConstants;
+import org.knowm.xchange.bittrex.BittrexExchange;
+import org.knowm.xchange.bittrex.dto.account.BittrexAccountVolume;
+import org.knowm.xchange.bittrex.dto.account.BittrexAddress;
 import org.knowm.xchange.bittrex.dto.account.BittrexBalance;
-import org.knowm.xchange.bittrex.dto.account.BittrexBalanceResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexBalancesResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexDepositAddressResponse;
+import org.knowm.xchange.bittrex.dto.account.BittrexBalances;
 import org.knowm.xchange.bittrex.dto.account.BittrexDepositHistory;
-import org.knowm.xchange.bittrex.dto.account.BittrexDepositsHistoryResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexOrder;
-import org.knowm.xchange.bittrex.dto.account.BittrexOrderResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexWithdrawResponse;
+import org.knowm.xchange.bittrex.dto.account.BittrexNewAddress;
 import org.knowm.xchange.bittrex.dto.account.BittrexWithdrawalHistory;
-import org.knowm.xchange.bittrex.dto.account.BittrexWithdrawalsHistoryResponse;
+import org.knowm.xchange.bittrex.dto.trade.BittrexOrder;
+import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.currency.Currency;
-import org.knowm.xchange.exceptions.ExchangeException;
+import org.knowm.xchange.dto.account.Balance;
 
 public class BittrexAccountServiceRaw extends BittrexBaseService {
 
@@ -26,82 +30,110 @@ public class BittrexAccountServiceRaw extends BittrexBaseService {
    *
    * @param exchange
    */
-  public BittrexAccountServiceRaw(Exchange exchange) {
-
-    super(exchange);
+  public BittrexAccountServiceRaw(
+      BittrexExchange exchange,
+      BittrexAuthenticated bittrex,
+      ResilienceRegistries resilienceRegistries) {
+    super(exchange, bittrex, resilienceRegistries);
   }
 
-  public List<BittrexBalance> getBittrexBalances() throws IOException {
+  public Collection<BittrexBalance> getBittrexBalances() throws IOException {
+    return bittrexAuthenticated.getBalances(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator);
+  }
 
-    BittrexBalancesResponse response = bittrexAuthenticated.getBalances(apiKey, signatureCreator, exchange.getNonceFactory());
+  public SequencedBalances getBittrexSequencedBalances() throws IOException {
+    BittrexBalances bittrexBalances =
+        bittrexAuthenticated.getBalances(
+            apiKey, System.currentTimeMillis(), contentCreator, signatureCreator);
 
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+    Map<Currency, Balance> balances =
+        bittrexBalances.stream()
+            .collect(
+                Collectors.toMap(
+                    BittrexBalance::getCurrencySymbol,
+                    balance ->
+                        new Balance.Builder()
+                            .available(balance.getAvailable())
+                            .total(balance.getTotal())
+                            .currency(balance.getCurrencySymbol())
+                            .timestamp(balance.getUpdatedAt())
+                            .build()));
+
+    return new SequencedBalances(
+        bittrexBalances.getHeaders().get(BittrexConstants.SEQUENCE).get(0), balances);
   }
 
   public BittrexBalance getBittrexBalance(Currency currency) throws IOException {
-    BittrexBalanceResponse response = bittrexAuthenticated.getBalance(apiKey, signatureCreator, exchange.getNonceFactory(), currency == null ? null
-        : currency.getCurrencyCode());
-    System.out.println(currency.getCurrencyCode());
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+    return bittrexAuthenticated.getBalance(
+        apiKey,
+        System.currentTimeMillis(),
+        contentCreator,
+        signatureCreator,
+        currency.getCurrencyCode());
   }
 
-  public BittrexOrder getBittrexOrder(String uuid) throws IOException {
-    BittrexOrderResponse response = bittrexAuthenticated.getOrder(apiKey, signatureCreator, exchange.getNonceFactory(), uuid);
-
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
+  public List<BittrexAddress> getBittrexDepositAddresses(String currency) throws IOException {
+    if (currency == null) {
+      return bittrexAuthenticated.getAddresses(
+          apiKey, System.currentTimeMillis(), contentCreator, signatureCreator);
     }
+    return Arrays.asList(
+        bittrexAuthenticated.getAddress(
+            apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, currency));
   }
 
-  public String getBittrexDepositAddress(String currency) throws IOException {
-
-    BittrexDepositAddressResponse response = bittrexAuthenticated.getdepositaddress(apiKey, signatureCreator, exchange.getNonceFactory(), currency);
-    if (response.getSuccess()) {
-      return response.getResult().getAddress();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public BittrexAddress generateBittrexDepositAddress(String currency) throws IOException {
+    return bittrexAuthenticated.generateAddress(
+        apiKey,
+        System.currentTimeMillis(),
+        contentCreator,
+        signatureCreator,
+        new BittrexNewAddress(new Currency(currency)));
   }
 
-  public List<BittrexWithdrawalHistory> getWithdrawalsHistory(Currency currency) throws IOException {
-
-    BittrexWithdrawalsHistoryResponse response = bittrexAuthenticated.getwithdrawalhistory(apiKey, signatureCreator, exchange.getNonceFactory(), currency == null ? null : currency.getCurrencyCode());
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public BittrexAccountVolume getBittrexAccountVolume() throws IOException {
+    return bittrexAuthenticated.getAccountVolume(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator);
   }
 
-  public List<BittrexDepositHistory> getDepositsHistory(Currency currency) throws IOException {
-
-    BittrexDepositsHistoryResponse response = bittrexAuthenticated.getdeposithistory(apiKey, signatureCreator, exchange.getNonceFactory(), currency == null ? null : currency.getCurrencyCode());
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public BittrexOrder getBittrexOrder(String orderId) throws IOException {
+    return bittrexAuthenticated.getOrder(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, orderId);
   }
 
-  public String withdraw(String currencyCode, BigDecimal amount, String address, String paymentId) throws IOException {
-
-    BittrexWithdrawResponse response = bittrexAuthenticated.withdraw(apiKey, signatureCreator, exchange.getNonceFactory(), currencyCode,
-        amount.toPlainString(), address, paymentId);
-    if (response.getSuccess()) {
-      return response.getResult().getUuid();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public List<BittrexDepositHistory> getBittrexDepositsClosed(
+      String currencySymbol, String nextPageToken, String previousPageToken, Integer pageSize)
+      throws IOException {
+    return bittrexAuthenticated.getDepositsClosed(
+        apiKey,
+        System.currentTimeMillis(),
+        contentCreator,
+        signatureCreator,
+        currencySymbol,
+        nextPageToken,
+        previousPageToken,
+        pageSize);
   }
 
+  public List<BittrexWithdrawalHistory> getBittrexWithdrawalsClosed(
+      String currencySymbol, String nextPageToken, String previousPageToken, Integer pageSize)
+      throws IOException {
+    return bittrexAuthenticated.getWithdrawalsClosed(
+        apiKey,
+        System.currentTimeMillis(),
+        contentCreator,
+        signatureCreator,
+        currencySymbol,
+        nextPageToken,
+        previousPageToken,
+        pageSize);
+  }
+
+  @AllArgsConstructor
+  @Getter
+  public static class SequencedBalances {
+    private final String sequence;
+    private final Map<Currency, Balance> balances;
+  }
 }

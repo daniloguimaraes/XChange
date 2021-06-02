@@ -1,8 +1,8 @@
 package org.knowm.xchange.coinfloor.service;
 
 import java.io.IOException;
-
 import org.knowm.xchange.Exchange;
+import org.knowm.xchange.client.ExchangeRestProxyBuilder;
 import org.knowm.xchange.coinfloor.CoinfloorPublic;
 import org.knowm.xchange.coinfloor.dto.markedata.CoinfloorOrderBook;
 import org.knowm.xchange.coinfloor.dto.markedata.CoinfloorTicker;
@@ -11,8 +11,6 @@ import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.service.BaseExchangeService;
 
-import si.mazi.rescu.RestProxyFactory;
-
 public class CoinfloorMarketDataServiceRaw extends BaseExchangeService {
 
   private final CoinfloorPublic coinfloor;
@@ -20,7 +18,10 @@ public class CoinfloorMarketDataServiceRaw extends BaseExchangeService {
   protected CoinfloorMarketDataServiceRaw(Exchange exchange) {
     super(exchange);
 
-    coinfloor = RestProxyFactory.createProxy(CoinfloorPublic.class, exchange.getExchangeSpecification().getSslUri(), getClientConfig());
+    coinfloor =
+        ExchangeRestProxyBuilder.forInterface(
+                CoinfloorPublic.class, exchange.getExchangeSpecification())
+            .build();
   }
 
   public CoinfloorTicker getCoinfloorTicker(CurrencyPair pair) throws IOException {
@@ -31,7 +32,8 @@ public class CoinfloorMarketDataServiceRaw extends BaseExchangeService {
     return coinfloor.getOrderBook(normalise(pair.base), normalise(pair.counter));
   }
 
-  public CoinfloorTransaction[] getCoinfloorTransactions(CurrencyPair pair, CoinfloorInterval interval) throws IOException {
+  public CoinfloorTransaction[] getCoinfloorTransactions(
+      CurrencyPair pair, CoinfloorInterval interval) throws IOException {
     return coinfloor.getTransactions(normalise(pair.base), normalise(pair.counter), interval);
   }
 
@@ -44,7 +46,9 @@ public class CoinfloorMarketDataServiceRaw extends BaseExchangeService {
   }
 
   public enum CoinfloorInterval {
-    DAY, HOUR, MINUTE;
+    DAY,
+    HOUR,
+    MINUTE;
 
     @Override
     public String toString() {

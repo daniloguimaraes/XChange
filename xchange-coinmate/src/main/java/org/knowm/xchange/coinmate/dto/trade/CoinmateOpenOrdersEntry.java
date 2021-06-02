@@ -23,13 +23,10 @@
  */
 package org.knowm.xchange.coinmate.dto.trade;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-/**
- * @author Martin Stachon
- */
+/** @author Martin Stachon */
 public class CoinmateOpenOrdersEntry {
 
   private final long id;
@@ -38,9 +35,20 @@ public class CoinmateOpenOrdersEntry {
   private final String currencyPair;
   private final BigDecimal price;
   private final BigDecimal amount;
+  private final String orderTradeType;
+  private final BigDecimal stopPrice;
+  private final BigDecimal originalStopPrice;
 
-  public CoinmateOpenOrdersEntry(@JsonProperty("id") long id, @JsonProperty("timestamp") long timestamp, @JsonProperty("type") String type,
-      @JsonProperty("currencyPair") String currencyPair, @JsonProperty("price") BigDecimal price, @JsonProperty("amount") BigDecimal amount) {
+  public CoinmateOpenOrdersEntry(
+      @JsonProperty("id") long id,
+      @JsonProperty("timestamp") long timestamp,
+      @JsonProperty("type") String type,
+      @JsonProperty("currencyPair") String currencyPair,
+      @JsonProperty("price") BigDecimal price,
+      @JsonProperty("amount") BigDecimal amount,
+      @JsonProperty("orderTradeType") String orderTradeType,
+      @JsonProperty("stopPrice") BigDecimal stopPrice,
+      @JsonProperty("originalStopPrice") BigDecimal originalStopPrice) {
 
     this.id = id;
     this.timestamp = timestamp;
@@ -48,48 +56,50 @@ public class CoinmateOpenOrdersEntry {
     this.currencyPair = currencyPair;
     this.price = price;
     this.amount = amount;
+    this.orderTradeType = orderTradeType;
+    this.stopPrice = stopPrice;
+    this.originalStopPrice = originalStopPrice;
   }
 
-  /**
-   * @return the id
-   */
+  /** @return the id */
   public long getId() {
     return id;
   }
 
-  /**
-   * @return the timestamp
-   */
+  /** @return the timestamp */
   public long getTimestamp() {
     return timestamp;
   }
 
-  /**
-   * @return the type
-   */
+  /** @return the type */
   public String getType() {
     return type;
   }
 
-  /**
-   * @return the currency pair
-   */
+  /** @return the currency pair */
   public String getCurrencyPair() {
     return currencyPair;
   }
 
-  /**
-   * @return the price
-   */
+  /** @return the price */
   public BigDecimal getPrice() {
     return price;
   }
 
-  /**
-   * @return the amount
-   */
+  /** @return the amount */
   public BigDecimal getAmount() {
     return amount;
   }
 
+  public String getOrderTradeType() {
+    return orderTradeType;
+  }
+
+  public BigDecimal getStopPrice() {
+    return stopPrice;
+  }
+
+  public BigDecimal getOriginalStopPrice() {
+    return originalStopPrice;
+  }
 }

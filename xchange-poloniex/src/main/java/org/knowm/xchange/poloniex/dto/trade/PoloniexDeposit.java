@@ -1,9 +1,8 @@
 package org.knowm.xchange.poloniex.dto.trade;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PoloniexDeposit {
 
@@ -14,10 +13,19 @@ public class PoloniexDeposit {
   private final String txid;
   private final Date timestamp;
   private final String status;
+  private final long depositNumber;
+  private final String category;
 
-  public PoloniexDeposit(@JsonProperty("currency") String currency, @JsonProperty("address") String address,
-      @JsonProperty("amount") BigDecimal amount, @JsonProperty("confirmations") int confirmations, @JsonProperty("txid") String txid,
-      @JsonProperty("timestamp") long timestamp, @JsonProperty("status") String status) {
+  public PoloniexDeposit(
+      @JsonProperty("currency") String currency,
+      @JsonProperty("address") String address,
+      @JsonProperty("amount") BigDecimal amount,
+      @JsonProperty("confirmations") int confirmations,
+      @JsonProperty("txid") String txid,
+      @JsonProperty("timestamp") long timestamp,
+      @JsonProperty("status") String status,
+      @JsonProperty("depositNumber") long depositNumber,
+      @JsonProperty("category") String category) {
     super();
     this.currency = currency;
     this.address = address;
@@ -26,6 +34,8 @@ public class PoloniexDeposit {
     this.txid = txid;
     this.timestamp = new Date(timestamp * 1000);
     this.status = status;
+    this.depositNumber = depositNumber;
+    this.category = category;
   }
 
   public String getCurrency() {
@@ -56,9 +66,34 @@ public class PoloniexDeposit {
     return status;
   }
 
+  public long getDepositNumber() {
+    return depositNumber;
+  }
+
+  public String getCategory() {
+    return category;
+  }
+
   @Override
   public String toString() {
-    return "PoloniexDeposit [currency=" + currency + ", address=" + address + ", amount=" + amount + ", confirmations=" + confirmations + ", txid="
-        + txid + ", timestamp=" + timestamp + ", status=" + status + "]";
+    return "PoloniexDeposit [currency="
+        + currency
+        + ", address="
+        + address
+        + ", amount="
+        + amount
+        + ", confirmations="
+        + confirmations
+        + ", txid="
+        + txid
+        + ", timestamp="
+        + timestamp
+        + ", status="
+        + status
+        + ", depositNumber="
+        + depositNumber
+        + ", category="
+        + category
+        + "]";
   }
 }

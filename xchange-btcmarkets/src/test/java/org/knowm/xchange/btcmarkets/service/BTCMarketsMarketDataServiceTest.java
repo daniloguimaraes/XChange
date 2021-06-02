@@ -1,57 +1,29 @@
 package org.knowm.xchange.btcmarkets.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.knowm.xchange.ExchangeFactory;
-import org.knowm.xchange.ExchangeSpecification;
-import org.knowm.xchange.btcmarkets.BTCMarkets;
-import org.knowm.xchange.btcmarkets.BTCMarketsExchange;
 import org.knowm.xchange.btcmarkets.BtcMarketsAssert;
 import org.knowm.xchange.btcmarkets.dto.marketdata.BTCMarketsOrderBook;
+import org.knowm.xchange.btcmarkets.dto.v3.marketdata.BTCMarketsTrade;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.dto.trade.LimitOrder;
-import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
-import org.mockito.internal.util.reflection.Whitebox;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(BTCMarkets.class)
-public class BTCMarketsMarketDataServiceTest extends BTCMarketsTestSupport {
-
-  private BTCMarketsMarketDataService marketDataService;
-
-  @Before
-  public void setUp() {
-    BTCMarketsExchange exchange = (BTCMarketsExchange) ExchangeFactory.INSTANCE.createExchange(BTCMarketsExchange.class.getCanonicalName());
-    ExchangeSpecification specification = exchange.getExchangeSpecification();
-    specification.setUserName(SPECIFICATION_USERNAME);
-    specification.setApiKey(SPECIFICATION_API_KEY);
-    specification.setSecretKey(SPECIFICATION_SECRET_KEY);
-
-    marketDataService = new BTCMarketsMarketDataService(exchange);
-  }
+public class BTCMarketsMarketDataServiceTest extends BTCMarketsServiceTest {
 
   @Test
   public void shouldGetTicker() throws IOException {
     // given
-    BTCMarkets btcmarkets = mock(BTCMarkets.class);
-    PowerMockito.when(btcmarkets.getTicker("BTC", "AUD")).thenReturn(EXPECTED_BTC_MARKETS_TICKER);
-    Whitebox.setInternalState(marketDataService, "btcmarkets", btcmarkets);
+    when(btcMarkets.getTicker("BTC", "AUD")).thenReturn(EXPECTED_BTC_MARKETS_TICKER);
 
     // when
-    Ticker ticker = marketDataService.getTicker(CurrencyPair.BTC_AUD);
+    Ticker ticker = btcMarketsMarketDataService.getTicker(CurrencyPair.BTC_AUD);
 
     // then
     BtcMarketsAssert.assertEquals(ticker, EXPECTED_TICKER);
@@ -63,14 +35,13 @@ public class BTCMarketsMarketDataServiceTest extends BTCMarketsTestSupport {
     final LimitOrder[] expectedAsks = expectedAsks();
     final LimitOrder[] expectedBids = expectedBids();
 
-    BTCMarketsOrderBook orderBookMock = parse("ShortOrderBook", BTCMarketsOrderBook.class);
+    BTCMarketsOrderBook orderBookMock =
+        parse("org/knowm/xchange/btcmarkets/dto/" + "ShortOrderBook", BTCMarketsOrderBook.class);
 
-    BTCMarkets btcmarkets = mock(BTCMarkets.class);
-    PowerMockito.when(btcmarkets.getOrderBook("BTC", "AUD")).thenReturn(orderBookMock);
-    Whitebox.setInternalState(marketDataService, "btcmarkets", btcmarkets);
+    when(btcMarkets.getOrderBook("BTC", "AUD")).thenReturn(orderBookMock);
 
     // when
-    OrderBook orderBook = marketDataService.getOrderBook(CurrencyPair.BTC_AUD);
+    OrderBook orderBook = btcMarketsMarketDataService.getOrderBook(CurrencyPair.BTC_AUD);
 
     // then
     assertThat(orderBook.getTimeStamp().getTime()).isEqualTo(1442997827000L);
@@ -88,13 +59,18 @@ public class BTCMarketsMarketDataServiceTest extends BTCMarketsTestSupport {
     }
   }
 
-  @Test(expected = NotYetImplementedForExchangeException.class)
-  public void shouldFailWhenGetTrades() throws IOException {
-    // when
-    marketDataService.getTrades(CurrencyPair.BTC_AUD);
+  @Test
+  public void shouldGetTrades() throws IOException {
 
-    // then
-    fail("BTCMarketsMarketDataService should throw NotYetImplementedForExchangeException when call getTrades");
+    List<BTCMarketsTrade> tradesMock = Arrays.asList(parse(BTCMarketsTrade[].class, "v3"));
+
+    when(btcMarkets.getTrades("BTC-AUD")).thenReturn(tradesMock);
+
+    List<BTCMarketsTrade> trades = btcMarkets.getTrades("BTC-AUD");
+
+    assertThat(trades).hasSize(2);
+    for (int i = 0; i < trades.size(); i++) {
+      BtcMarketsAssert.assertEquals(trades.get(i), EXCPECTED_BTC_AUD_MARKET_TRADES.get(i));
+    }
   }
-
 }

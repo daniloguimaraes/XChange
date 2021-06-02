@@ -1,21 +1,20 @@
 package org.knowm.xchange.bleutrade.service;
 
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.powermock.api.mockito.PowerMockito.mock;
 
+import java.lang.annotation.Annotation;
+import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
+import org.mockito.runners.MockitoJUnitRunner;
+import si.mazi.rescu.RequestWriterResolver;
 import si.mazi.rescu.RestInvocation;
+import si.mazi.rescu.RestMethodMetadata;
+import si.mazi.rescu.serialization.ToStringRequestWriter;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(RestInvocation.class)
-@PowerMockIgnore("javax.crypto.*")
+@RunWith(MockitoJUnitRunner.class)
 public class BleutradeDigestTest {
 
   private BleutradeDigest bleutradeDigest;
@@ -28,9 +27,27 @@ public class BleutradeDigestTest {
   @Test
   public void shouldEncodeRestInvocation() throws Exception {
     // given
-    RestInvocation invocation = mock(RestInvocation.class);
-    PowerMockito.when(invocation, "getInvocationUrl").thenReturn("rest body");
-    String expected = "6372f349eea659b26f5e01bc76e1485de744a1894d5e036b98eca724a8104719ea8767518286863d1becd0a1313ad5e7e507749f7cdb98a4dee92fec055643c4";
+    RequestWriterResolver requestWriterResolver = new RequestWriterResolver();
+    requestWriterResolver.addWriter(TEXT_PLAIN, new ToStringRequestWriter());
+    RestInvocation invocation =
+        RestInvocation.create(
+            requestWriterResolver,
+            new RestMethodMetadata(
+                null,
+                null,
+                "rest body",
+                null,
+                null,
+                null,
+                TEXT_PLAIN,
+                TEXT_PLAIN,
+                null,
+                new HashMap<>(),
+                new Annotation[][] {}),
+            new Object[] {},
+            null);
+    String expected =
+        "6372f349eea659b26f5e01bc76e1485de744a1894d5e036b98eca724a8104719ea8767518286863d1becd0a1313ad5e7e507749f7cdb98a4dee92fec055643c4";
 
     // when
     String encoded = bleutradeDigest.digestParams(invocation);
@@ -38,5 +55,4 @@ public class BleutradeDigestTest {
     // then
     assertThat(encoded).isEqualTo(expected);
   }
-
 }

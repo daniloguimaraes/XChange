@@ -1,43 +1,31 @@
 package org.knowm.xchange.independentreserve.service;
 
 import java.io.IOException;
-
 import org.knowm.xchange.Exchange;
+import org.knowm.xchange.client.ExchangeRestProxyBuilder;
 import org.knowm.xchange.independentreserve.IndependentReserve;
 import org.knowm.xchange.independentreserve.dto.marketdata.IndependentReserveOrderBook;
 import org.knowm.xchange.independentreserve.dto.marketdata.IndependentReserveTicker;
 
-import si.mazi.rescu.RestProxyFactory;
-
-/**
- * Author: Kamil Zbikowski Date: 4/9/15
- */
+/** Author: Kamil Zbikowski Date: 4/9/15 */
 public class IndependentReserveMarketDataServiceRaw extends IndependentReserveBaseService {
   private final IndependentReserve independentReserve;
 
   public IndependentReserveMarketDataServiceRaw(Exchange exchange) {
     super(exchange);
-    this.independentReserve = RestProxyFactory.createProxy(IndependentReserve.class, exchange.getExchangeSpecification().getSslUri(),
-        getClientConfig());
+    this.independentReserve =
+        ExchangeRestProxyBuilder.forInterface(
+                IndependentReserve.class, exchange.getExchangeSpecification())
+            .build();
   }
 
-  public IndependentReserveTicker getIndependentReserveTicker(String baseSymbol, String counterSymbol) throws IOException {
-
-    // Independent Reserve works with Xbt
-    if (baseSymbol.equals("BTC")) {
-      baseSymbol = "Xbt";
-    }
-
+  public IndependentReserveTicker getIndependentReserveTicker(
+      String baseSymbol, String counterSymbol) throws IOException {
     return independentReserve.getMarketSummary(baseSymbol, counterSymbol);
   }
 
-  public IndependentReserveOrderBook getIndependentReserveOrderBook(String baseSymbol, String counterSymbol) throws IOException {
-
-    // Independent Reserve works with Xbt
-    if (baseSymbol.equals("BTC")) {
-      baseSymbol = "Xbt";
-    }
-
+  public IndependentReserveOrderBook getIndependentReserveOrderBook(
+      String baseSymbol, String counterSymbol) throws IOException {
     return independentReserve.getOrderBook(baseSymbol, counterSymbol);
   }
 }

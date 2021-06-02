@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order.OrderType;
@@ -42,24 +41,30 @@ public class QuoineAdapters {
     return builder.build();
   }
 
-  public static OrderBook adaptOrderBook(QuoineOrderBook quoineOrderBook, CurrencyPair currencyPair) {
+  public static OrderBook adaptOrderBook(
+      QuoineOrderBook quoineOrderBook, CurrencyPair currencyPair) {
 
-    List<LimitOrder> asks = createOrders(currencyPair, OrderType.ASK, quoineOrderBook.getSellPriceLevels());
-    List<LimitOrder> bids = createOrders(currencyPair, OrderType.BID, quoineOrderBook.getBuyPriceLevels());
+    List<LimitOrder> asks =
+        createOrders(currencyPair, OrderType.ASK, quoineOrderBook.getSellPriceLevels());
+    List<LimitOrder> bids =
+        createOrders(currencyPair, OrderType.BID, quoineOrderBook.getBuyPriceLevels());
     return new OrderBook(null, asks, bids);
   }
 
-  public static List<LimitOrder> createOrders(CurrencyPair currencyPair, OrderType orderType, List<BigDecimal[]> orders) {
+  public static List<LimitOrder> createOrders(
+      CurrencyPair currencyPair, OrderType orderType, List<BigDecimal[]> orders) {
 
     List<LimitOrder> limitOrders = new ArrayList<>();
     for (BigDecimal[] ask : orders) {
-      checkArgument(ask.length == 2, "Expected a pair (price, amount) but got {0} elements.", ask.length);
+      checkArgument(
+          ask.length == 2, "Expected a pair (price, amount) but got {0} elements.", ask.length);
       limitOrders.add(createOrder(currencyPair, ask, orderType));
     }
     return limitOrders;
   }
 
-  public static LimitOrder createOrder(CurrencyPair currencyPair, BigDecimal[] priceAndAmount, OrderType orderType) {
+  public static LimitOrder createOrder(
+      CurrencyPair currencyPair, BigDecimal[] priceAndAmount, OrderType orderType) {
 
     return new LimitOrder(orderType, priceAndAmount[1], currencyPair, "", null, priceAndAmount[0]);
   }
@@ -77,11 +82,11 @@ public class QuoineAdapters {
     for (int i = 0; i < quoineWallet.length; i++) {
       QuoineTradingAccountInfo info = quoineWallet[i];
 
-      balances.add(new Balance(Currency.getInstance(info.getFundingCurrency()), info.getFreeMargin()));
-
+      balances.add(
+          new Balance(Currency.getInstance(info.getFundingCurrency()), info.getFreeMargin()));
     }
 
-    return new Wallet(balances);
+    return Wallet.Builder.from(balances).build();
   }
 
   public static Wallet adaptFiatAccountWallet(FiatAccount[] fiatAccounts) {
@@ -89,12 +94,15 @@ public class QuoineAdapters {
     List<Balance> balances = new ArrayList<>();
 
     for (FiatAccount fiatAccount : fiatAccounts) {
-      Balance fiatBalance = new Balance(Currency.getInstance(fiatAccount.getCurrency()), fiatAccount.getBalance(), fiatAccount.getBalance());
+      Balance fiatBalance =
+          new Balance(
+              Currency.getInstance(fiatAccount.getCurrency()),
+              fiatAccount.getBalance(),
+              fiatAccount.getBalance());
       balances.add(fiatBalance);
     }
 
-    return new Wallet(balances);
-
+    return Wallet.Builder.from(balances).build();
   }
 
   public static Wallet adaptWallet(QuoineAccountInfo quoineWallet) {
@@ -102,17 +110,23 @@ public class QuoineAdapters {
     List<Balance> balances = new ArrayList<>();
 
     // Adapt to XChange DTOs
-    Balance btcBalance = new Balance(Currency.getInstance(quoineWallet.getBitcoinAccount().getCurrency()),
-        quoineWallet.getBitcoinAccount().getBalance(), quoineWallet.getBitcoinAccount().getFreeBalance());
+    Balance btcBalance =
+        new Balance(
+            Currency.getInstance(quoineWallet.getBitcoinAccount().getCurrency()),
+            quoineWallet.getBitcoinAccount().getBalance(),
+            quoineWallet.getBitcoinAccount().getFreeBalance());
     balances.add(btcBalance);
 
     for (FiatAccount fiatAccount : quoineWallet.getFiatAccounts()) {
-      Balance fiatBalance = new Balance(Currency.getInstance(fiatAccount.getCurrency()), fiatAccount.getBalance(), fiatAccount.getBalance());
+      Balance fiatBalance =
+          new Balance(
+              Currency.getInstance(fiatAccount.getCurrency()),
+              fiatAccount.getBalance(),
+              fiatAccount.getBalance());
       balances.add(fiatBalance);
     }
 
-    return new Wallet(balances);
-
+    return Wallet.Builder.from(balances).build();
   }
 
   public static OpenOrders adapteOpenOrders(QuoineOrdersList quoineOrdersList) {
@@ -122,8 +136,8 @@ public class QuoineAdapters {
       if (model.getStatus().equals("live")) {
 
         // currencey pair
-        String baseSymbol = model.getCurrencyPairCode().substring(0, 3);
-        String counterSymbol = model.getCurrencyPairCode().substring(3, 6);
+        String baseSymbol = model.getCurrencyPairCode().replace(model.getFundingCurrency(), "");
+        String counterSymbol = model.getFundingCurrency();
         CurrencyPair currencyPair = new CurrencyPair(baseSymbol, counterSymbol);
 
         // OrderType
@@ -132,7 +146,15 @@ public class QuoineAdapters {
         // Timestamp
         Date timestamp = new Date(model.getCreatedAt().longValue() * 1000L);
 
-        LimitOrder limitOrder = new LimitOrder(orderType, model.getQuantity(), currencyPair, model.getId(), timestamp, model.getPrice());
+        LimitOrder limitOrder =
+            new LimitOrder(
+                orderType,
+                model.getQuantity(),
+                model.getFilledQuantity(),
+                currencyPair,
+                model.getId(),
+                timestamp,
+                model.getPrice());
 
         openOrders.add(limitOrder);
       }
@@ -141,38 +163,45 @@ public class QuoineAdapters {
     return new OpenOrders(openOrders);
   }
 
-  public static List<Wallet> adapt(FiatAccount[] balances) {
-    List<Wallet> res = new ArrayList<>();
-    for (FiatAccount nativeBalance : balances) {
-      Balance balance = new Balance(Currency.getInstance(nativeBalance.getCurrency()), nativeBalance.getBalance());
-      res.add(new Wallet(String.valueOf(nativeBalance.getId()), balance));
+  public static Wallet adapt(FiatAccount[] fiatBalances, BitcoinAccount[] cryptoBalances) {
+    List<Balance> balanceList = new ArrayList<>();
+
+    for (FiatAccount nativeBalance : fiatBalances) {
+      balanceList.add(
+          new Balance(
+              Currency.getInstance(nativeBalance.getCurrency()), nativeBalance.getBalance()));
     }
-    return res;
+    for (BitcoinAccount cryptoBalance : cryptoBalances) {
+      balanceList.add(
+          new Balance(
+              Currency.getInstance(cryptoBalance.getCurrency()), cryptoBalance.getBalance()));
+    }
+    return Wallet.Builder.from(balanceList).build();
   }
 
-  public static List<Wallet> adapt(BitcoinAccount[] balances) {
-    List<Wallet> res = new ArrayList<>();
-    for (BitcoinAccount nativeBalance : balances) {
-      Balance balance = new Balance(Currency.getInstance(nativeBalance.getCurrency()), nativeBalance.getBalance());
-      res.add(new Wallet(String.valueOf(nativeBalance.getId()), balance));
-    }
-    return res;
-  }
+  //  public static Wallet adapt(BitcoinAccount[] balances) {
+  //    List<Balance> balanceList = new ArrayList<>();
+  //    for (BitcoinAccount nativeBalance : balances) {
+  //     balanceList.add(
+  //          new Balance(
+  //              Currency.getInstance(nativeBalance.getCurrency()), nativeBalance.getBalance()));
+  //    }
+  //    return new Wallet("crypto",balanceList);
+  //  }
 
   public static List<UserTrade> adapt(List<QuoineExecution> executions, CurrencyPair currencyPair) {
     List<UserTrade> res = new ArrayList<>();
     for (QuoineExecution execution : executions) {
-      res.add(new UserTrade(
-          execution.mySide.equals("sell") ? OrderType.ASK : OrderType.BID,
-          execution.quantity,
-          currencyPair,
-          execution.price,
-          DateUtils.fromUnixTime(execution.createdAt),
-          execution.id,
-          execution.orderId,
-          null,
-          null
-      ));
+      res.add(
+          new UserTrade.Builder()
+              .type(execution.mySide.equals("sell") ? OrderType.ASK : OrderType.BID)
+              .originalAmount(execution.quantity)
+              .currencyPair(currencyPair)
+              .price(execution.price)
+              .timestamp(DateUtils.fromUnixTime(execution.createdAt))
+              .id(execution.id)
+              .orderId(execution.orderId)
+              .build());
     }
     return res;
   }
@@ -181,10 +210,10 @@ public class QuoineAdapters {
     return currencyPair.base.getCurrencyCode() + currencyPair.counter.getCurrencyCode();
   }
 
-  public static FundingRecord adaptFunding(Currency currency, QuoineTransaction transaction, FundingRecord.Type deposit) {
+  public static FundingRecord adaptFunding(
+      Currency currency, QuoineTransaction transaction, FundingRecord.Type deposit) {
     BigDecimal fee = null;
-    if (transaction.exchange_fee != null)
-      fee = transaction.exchange_fee;
+    if (transaction.exchange_fee != null) fee = transaction.exchange_fee;
 
     if (transaction.network_fee != null) {
       fee = fee == null ? transaction.network_fee : fee.add(transaction.network_fee);
@@ -201,7 +230,6 @@ public class QuoineAdapters {
         FundingRecord.Status.COMPLETE,
         null,
         fee,
-        transaction.notes
-    );
+        transaction.notes);
   }
 }

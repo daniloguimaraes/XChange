@@ -11,6 +11,8 @@ public class BinanceExchangeInfo {
 
   private String[] exchangeFilters;
 
+  private String[] permissions;
+
   public String getTimezone() {
     return timezone;
   }
@@ -51,8 +53,28 @@ public class BinanceExchangeInfo {
     this.exchangeFilters = exchangeFilters;
   }
 
+  public String[] getPermissions() {
+    return permissions;
+  }
+
+  public void setPermissions(String[] permissions) {
+    this.permissions = permissions;
+  }
+
   @Override
   public String toString() {
-    return "ClassPojo [timezone = " + timezone + ", symbols = " + symbols + ", serverTime = " + serverTime + ", rateLimits = " + rateLimits + ", exchangeFilters = " + exchangeFilters + "]";
+    return "ClassPojo [timezone = "
+        + timezone
+        + ", symbols = "
+        + symbols
+        + ", serverTime = "
+        + serverTime
+        + ", rateLimits = "
+        + rateLimits
+        + ", exchangeFilters = "
+        + exchangeFilters
+        + ", permissions = "
+        + permissions
+        + "]";
   }
 }

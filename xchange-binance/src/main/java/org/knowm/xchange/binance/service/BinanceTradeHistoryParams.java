@@ -1,35 +1,36 @@
 package org.knowm.xchange.binance.service;
 
+import java.util.Date;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.service.trade.params.TradeHistoryParamCurrencyPair;
 import org.knowm.xchange.service.trade.params.TradeHistoryParamLimit;
 import org.knowm.xchange.service.trade.params.TradeHistoryParamsIdSpan;
+import org.knowm.xchange.service.trade.params.TradeHistoryParamsTimeSpan;
 
-public class BinanceTradeHistoryParams implements TradeHistoryParamCurrencyPair, TradeHistoryParamLimit, TradeHistoryParamsIdSpan {
+public class BinanceTradeHistoryParams
+    implements TradeHistoryParamCurrencyPair,
+        TradeHistoryParamLimit,
+        TradeHistoryParamsIdSpan,
+        TradeHistoryParamsTimeSpan {
 
-  /**
-   * mandatory
-   */
+  /** mandatory */
   private CurrencyPair currencyPair;
-  /**
-   * optional
-   */
+  /** optional */
   private Integer limit;
-  /**
-   * optional
-   */
+  /** optional */
   private String startId;
-  /**
-   * ignored
-   */
+  /** ignored */
   private String endId;
+  /** optional */
+  private Date startTime;
+  /** optional */
+  private Date endTime;
 
   public BinanceTradeHistoryParams(CurrencyPair currencyPair) {
     this.currencyPair = currencyPair;
   }
 
-  public BinanceTradeHistoryParams() {
-  }
+  public BinanceTradeHistoryParams() {}
 
   public CurrencyPair getCurrencyPair() {
     return currencyPair;
@@ -61,5 +62,21 @@ public class BinanceTradeHistoryParams implements TradeHistoryParamCurrencyPair,
 
   public void setEndId(String endId) {
     this.endId = endId;
+  }
+
+  public Date getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
+
+  public Date getEndTime() {
+    return endTime;
+  }
+
+  public void setEndTime(Date endTime) {
+    this.endTime = endTime;
   }
 }

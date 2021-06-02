@@ -1,37 +1,50 @@
 package org.knowm.xchange.bitfinex.v1.dto.marketdata;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 
 public class BitfinexTicker {
 
   private final BigDecimal mid;
   private final BigDecimal bid;
+  private final BigDecimal bidSize;
   private final BigDecimal ask;
+  private final BigDecimal askSize;
   private final BigDecimal high;
   private final BigDecimal low;
   private final BigDecimal last;
   private final BigDecimal volume;
-  private final float timestamp;
+  private final double timestamp;
 
   /**
    * @param mid
    * @param bid
+   * @param bidSize
    * @param ask
+   * @param askSize
    * @param low
    * @param high
    * @param last
    * @param timestamp
    * @param volume
    */
-  public BitfinexTicker(@JsonProperty("mid") BigDecimal mid, @JsonProperty("bid") BigDecimal bid, @JsonProperty("ask") BigDecimal ask,
-      @JsonProperty("low") BigDecimal low, @JsonProperty("high") BigDecimal high, @JsonProperty("last_price") BigDecimal last,
-      @JsonProperty("timestamp") float timestamp, @JsonProperty("volume") BigDecimal volume) {
+  public BitfinexTicker(
+      @JsonProperty("mid") BigDecimal mid,
+      @JsonProperty("bid") BigDecimal bid,
+      @JsonProperty("bidSize") BigDecimal bidSize,
+      @JsonProperty("ask") BigDecimal ask,
+      @JsonProperty("askSize") BigDecimal askSize,
+      @JsonProperty("low") BigDecimal low,
+      @JsonProperty("high") BigDecimal high,
+      @JsonProperty("last_price") BigDecimal last,
+      @JsonProperty("timestamp") double timestamp,
+      @JsonProperty("volume") BigDecimal volume) {
 
     this.mid = mid;
     this.bid = bid;
+    this.bidSize = bidSize;
     this.ask = ask;
+    this.askSize = askSize;
     this.last = last;
     this.volume = volume;
     this.high = high;
@@ -49,9 +62,19 @@ public class BitfinexTicker {
     return bid;
   }
 
+  public BigDecimal getBidSize() {
+
+    return bidSize;
+  }
+
   public BigDecimal getAsk() {
 
     return ask;
+  }
+
+  public BigDecimal getAskSize() {
+
+    return askSize;
   }
 
   public BigDecimal getLow() {
@@ -74,7 +97,7 @@ public class BitfinexTicker {
     return volume;
   }
 
-  public float getTimestamp() {
+  public double getTimestamp() {
 
     return timestamp;
   }
@@ -82,8 +105,24 @@ public class BitfinexTicker {
   @Override
   public String toString() {
 
-    return "BitfinexTicker [mid=" + mid + ", bid=" + bid + ", ask=" + ask + ", low=" + low + ", high=" + high + ", last=" + last + ", timestamp="
-        + timestamp + "]";
+    return "BitfinexTicker [mid="
+        + mid
+        + ", bid="
+        + bid
+        + ", bidSize="
+        + bidSize
+        + ", ask="
+        + ask
+        + ", askSize="
+        + askSize
+        + ", low="
+        + low
+        + ", high="
+        + high
+        + ", last="
+        + last
+        + ", timestamp="
+        + timestamp
+        + "]";
   }
-
 }

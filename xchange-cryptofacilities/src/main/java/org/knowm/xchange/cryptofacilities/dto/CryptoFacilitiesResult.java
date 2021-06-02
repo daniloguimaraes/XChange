@@ -1,11 +1,10 @@
 package org.knowm.xchange.cryptofacilities.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Data;
 
-/**
- * @author Jean-Christophe Laruelle
- */
-
+/** @author Jean-Christophe Laruelle */
+@Data
 public class CryptoFacilitiesResult {
 
   private final String result;
@@ -19,31 +18,18 @@ public class CryptoFacilitiesResult {
    */
   @JsonCreator
   public CryptoFacilitiesResult(String result, String error) {
-
     this.result = result;
     this.error = error;
   }
 
   public boolean isSuccess() {
-
     return result.equalsIgnoreCase("success");
-  }
-
-  public String getResult() {
-
-    return result;
-  }
-
-  public String getError() {
-    return error;
   }
 
   @Override
   public String toString() {
 
-    if (isSuccess())
-      return result;
-    else
-      return result + " : " + error;
+    if (isSuccess()) return result;
+    else return result + " : " + error;
   }
 }

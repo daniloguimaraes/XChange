@@ -6,13 +6,11 @@ import org.knowm.xchange.okcoin.OkCoinExchange;
 
 public class OkCoinExampleUtils {
 
-  private OkCoinExampleUtils() {
-
-  }
+  private OkCoinExampleUtils() {}
 
   public static Exchange createTestExchange() {
 
-    Exchange okcoinExchange = ExchangeFactory.INSTANCE.createExchange(OkCoinExchange.class.getName());
+    Exchange okcoinExchange = ExchangeFactory.INSTANCE.createExchange(OkCoinExchange.class);
     okcoinExchange.getExchangeSpecification().setApiKey("");
     okcoinExchange.getExchangeSpecification().setSecretKey("");
     okcoinExchange.getExchangeSpecification().setUserName("");

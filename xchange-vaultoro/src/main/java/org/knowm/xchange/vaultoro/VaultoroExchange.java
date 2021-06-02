@@ -1,23 +1,18 @@
 package org.knowm.xchange.vaultoro;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-
 import org.knowm.xchange.BaseExchange;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeSpecification;
-import org.knowm.xchange.utils.nonce.CurrentTime250NonceFactory;
 import org.knowm.xchange.vaultoro.service.VaultoroAccountService;
 import org.knowm.xchange.vaultoro.service.VaultoroMarketDataService;
 import org.knowm.xchange.vaultoro.service.VaultoroTradeService;
-
 import si.mazi.rescu.SynchronizedValueFactory;
 
 public class VaultoroExchange extends BaseExchange implements Exchange {
 
-  private SynchronizedValueFactory<Long> nonceFactory = new CurrentTime250NonceFactory();
-  public static BigDecimal latest;
-  public static long latestTimestamp;
+  private final SynchronizedValueFactory<Long> nonceFactory =
+      () -> getNonceFactory().createValue() / 250L;
 
   @Override
   public void applySpecification(ExchangeSpecification exchangeSpecification) {
@@ -35,7 +30,7 @@ public class VaultoroExchange extends BaseExchange implements Exchange {
   @Override
   public ExchangeSpecification getDefaultExchangeSpecification() {
 
-    ExchangeSpecification exchangeSpecification = new ExchangeSpecification(this.getClass().getCanonicalName());
+    ExchangeSpecification exchangeSpecification = new ExchangeSpecification(this.getClass());
     exchangeSpecification.setSslUri("https://api.vaultoro.com");
     exchangeSpecification.setExchangeName("Vaultoro");
 
@@ -44,7 +39,6 @@ public class VaultoroExchange extends BaseExchange implements Exchange {
 
   @Override
   public SynchronizedValueFactory<Long> getNonceFactory() {
-
     return nonceFactory;
   }
 
@@ -55,7 +49,8 @@ public class VaultoroExchange extends BaseExchange implements Exchange {
     // List<Blah>  currencies = ((VaultoroMarketDataServiceRaw) marketDataService).getBlah();
     // other endpoints?
     // hard-coded meta data from json file not available at an endpoint?
-    // TODO take all the info gathered above and create a `ExchangeMetaData` object via a new method in `*Adapters` class
+    // TODO take all the info gathered above and create a `ExchangeMetaData` object via a new method
+    // in `*Adapters` class
     // exchangeMetaData = *Adapters.adaptToExchangeMetaData(blah, blah);
 
     super.remoteInit();

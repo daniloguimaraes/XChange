@@ -1,9 +1,9 @@
 package org.knowm.xchange.okcoin.service;
 
-import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 import org.junit.Test;
 import org.knowm.xchange.BaseExchange;
 import org.knowm.xchange.Exchange;
@@ -21,18 +21,24 @@ public class MetaDataFileTest {
     Exchange exchange = ExchangeFactory.INSTANCE.createExchange(exSpec);
 
     String metaDataFileName = ((BaseExchange) exchange).getMetaDataFileName(exSpec);
-    Assert.isTrue("okcoin_china".equals(metaDataFileName), "the meta data file name not equal \"okcoin_china\" ???");
+    Assert.isTrue(
+        "okcoin_china".equals(metaDataFileName),
+        "the meta data file name not equal \"okcoin_china\" ???");
     System.out.println("metaDataFileName=" + metaDataFileName);
 
     exSpec.setExchangeSpecificParametersItem("Use_Intl", true);
     metaDataFileName = ((BaseExchange) exchange).getMetaDataFileName(exSpec);
-    Assert.isTrue("okcoin_intl".equals(metaDataFileName), "the meta data file name not equal \"okcoin_intl\" ???");
+    Assert.isTrue(
+        "okcoin_intl".equals(metaDataFileName),
+        "the meta data file name not equal \"okcoin_intl\" ???");
     System.out.println("metaDataFileName=" + metaDataFileName);
 
     exSpec.setExchangeSpecificParametersItem("Use_Intl", true);
     exSpec.setExchangeSpecificParametersItem("Use_Futures", true);
     metaDataFileName = ((BaseExchange) exchange).getMetaDataFileName(exSpec);
-    Assert.isTrue("okcoin_futures".equals(metaDataFileName), "the meta data file name not equal \"okcoin_futures\" ???");
+    Assert.isTrue(
+        "okcoin_futures".equals(metaDataFileName),
+        "the meta data file name not equal \"okcoin_futures\" ???");
     System.out.println("metaDataFileName=" + metaDataFileName);
   }
 
@@ -55,16 +61,14 @@ public class MetaDataFileTest {
   }
 
   private void loadMetaDataFileContents(String metaDataFileName) {
-    InputStream inputStream = BaseExchangeService.class.getClassLoader().getResourceAsStream(metaDataFileName + ".json");
-    byte[] contents = new byte[2048];
-    try {
-      IOUtils.read(inputStream, contents);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      IOUtils.closeQuietly(inputStream);
-    }
+    InputStream inputStream =
+        BaseExchangeService.class.getClassLoader().getResourceAsStream(metaDataFileName + ".json");
 
-    System.out.println(new String(contents));
+    String strContents =
+        new BufferedReader(new InputStreamReader(inputStream))
+            .lines()
+            .collect(Collectors.joining("\n"));
+
+    System.out.println(strContents);
   }
 }

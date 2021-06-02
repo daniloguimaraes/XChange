@@ -1,7 +1,6 @@
 package org.knowm.xchange.service;
 
 import java.math.BigDecimal;
-
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.meta.CurrencyPairMetaData;
@@ -9,22 +8,17 @@ import org.knowm.xchange.dto.meta.ExchangeMetaData;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.dto.trade.MarketOrder;
 
-import si.mazi.rescu.ClientConfig;
-
-/**
- * Top of the hierarchy abstract class for an "exchange service"
- */
-public abstract class BaseExchangeService {
+/** Top of the hierarchy abstract class for an "exchange service" */
+public abstract class BaseExchangeService<E extends Exchange> {
 
   /**
-   * The base Exchange. Every service has access to the containing exchange class, which hold meta data and the exchange specification
+   * The base Exchange. Every service has access to the containing exchange class, which hold meta
+   * data and the exchange specification
    */
-  protected final Exchange exchange;
+  protected final E exchange;
 
-  /**
-   * Constructor
-   */
-  protected BaseExchangeService(Exchange exchange) {
+  /** Constructor */
+  protected BaseExchangeService(E exchange) {
 
     this.exchange = exchange;
   }
@@ -35,7 +29,8 @@ public abstract class BaseExchangeService {
     verifyOrder(limitOrder, exchangeMetaData);
     BigDecimal price = limitOrder.getLimitPrice().stripTrailingZeros();
 
-    if (price.scale() > exchangeMetaData.getCurrencyPairs().get(limitOrder.getCurrencyPair()).getPriceScale()) {
+    if (price.scale()
+        > exchangeMetaData.getCurrencyPairs().get(limitOrder.getCurrencyPair()).getPriceScale()) {
       throw new IllegalArgumentException("Unsupported price scale " + price.scale());
     }
   }
@@ -45,37 +40,10 @@ public abstract class BaseExchangeService {
     verifyOrder(marketOrder, exchange.getExchangeMetaData());
   }
 
-  /**
-   * Get a ClientConfig object which contains exchange-specific timeout values (<i>httpConnTimeout</i> and <i>httpReadTimeout</i>) if they were
-   * present in the ExchangeSpecification of this instance. Subclasses are encouraged to use this config object when creating a RestCU proxy.
-   *
-   * @return a rescu client config object
-   */
-  public ClientConfig getClientConfig() {
+  protected final void verifyOrder(Order order, ExchangeMetaData exchangeMetaData) {
 
-    ClientConfig rescuConfig = new ClientConfig(); // create default rescu config
-
-    // set per exchange connection- and read-timeout (if they have been set in the ExchangeSpecification)
-    int customHttpConnTimeout = exchange.getExchangeSpecification().getHttpConnTimeout();
-    if (customHttpConnTimeout > 0) {
-      rescuConfig.setHttpConnTimeout(customHttpConnTimeout);
-    }
-    int customHttpReadTimeout = exchange.getExchangeSpecification().getHttpReadTimeout();
-    if (customHttpReadTimeout > 0) {
-      rescuConfig.setHttpReadTimeout(customHttpReadTimeout);
-    }
-    if (exchange.getExchangeSpecification().getProxyHost() != null) {
-      rescuConfig.setProxyHost(exchange.getExchangeSpecification().getProxyHost());
-    }
-    if (exchange.getExchangeSpecification().getProxyPort() != null) {
-      rescuConfig.setProxyPort(exchange.getExchangeSpecification().getProxyPort());
-    }
-    return rescuConfig;
-  }
-
-  final protected void verifyOrder(Order order, ExchangeMetaData exchangeMetaData) {
-
-    CurrencyPairMetaData metaData = exchangeMetaData.getCurrencyPairs().get(order.getCurrencyPair());
+    CurrencyPairMetaData metaData =
+        exchangeMetaData.getCurrencyPairs().get(order.getCurrencyPair());
     if (metaData == null) {
       throw new IllegalArgumentException("Invalid CurrencyPair");
     }

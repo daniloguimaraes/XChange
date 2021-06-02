@@ -3,17 +3,28 @@ package org.knowm.xchange.service.trade.params;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.stream.Collectors;
 import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.instrument.Instrument;
 import org.knowm.xchange.service.trade.TradeService;
 
 /**
- * Generic {@link TradeHistoryParams} implementation that implements all the interfaces in the hierarchy and can be safely (without getting
- * exceptions, if that all the required fields are non-null) passed to any implementation of {@link TradeService#getTradeHistory(TradeHistoryParams)}
- * .
+ * Generic {@link TradeHistoryParams} implementation that implements all the interfaces in the
+ * hierarchy and can be safely (without getting exceptions, if that all the required fields are
+ * non-null) passed to any implementation of {@link
+ * TradeService#getTradeHistory(TradeHistoryParams)} .
  */
-public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeHistoryParamPaging, TradeHistoryParamsIdSpan, TradeHistoryParamOffset,
-    TradeHistoryParamCurrencyPair, TradeHistoryParamMultiCurrencyPair {
+public class TradeHistoryParamsAll
+    implements TradeHistoryParamsTimeSpan,
+        TradeHistoryParamPaging,
+        TradeHistoryParamsIdSpan,
+        TradeHistoryParamOffset,
+        TradeHistoryParamCurrencyPair,
+        TradeHistoryParamMultiCurrencyPair,
+        TradeHistoryParamInstrument,
+        TradeHistoryParamMultiInstrument,
+        TradeHistoryParamLimit {
 
   private Integer pageLength;
   private Integer pageNumber;
@@ -22,19 +33,20 @@ public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeH
   private Date startTime;
   private Date endTime;
   private Long offset;
-  private CurrencyPair pair;
-  private Collection<CurrencyPair> pairs = Collections.emptySet();
-
-  @Override
-  public void setPageLength(Integer count) {
-
-    this.pageLength = count;
-  }
+  private Instrument instrument;
+  private Collection<Instrument> instruments = Collections.emptySet();
+  private Integer limit;
 
   @Override
   public Integer getPageLength() {
 
     return pageLength;
+  }
+
+  @Override
+  public void setPageLength(Integer count) {
+
+    this.pageLength = count;
   }
 
   @Override
@@ -44,9 +56,9 @@ public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeH
   }
 
   @Override
-  public void setEndId(String endId) {
+  public void setStartId(String from) {
 
-    this.endId = endId;
+    startId = from;
   }
 
   @Override
@@ -56,15 +68,9 @@ public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeH
   }
 
   @Override
-  public void setStartId(String from) {
+  public void setEndId(String endId) {
 
-    startId = from;
-  }
-
-  @Override
-  public void setEndTime(Date to) {
-
-    endTime = to;
+    this.endId = endId;
   }
 
   @Override
@@ -74,9 +80,9 @@ public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeH
   }
 
   @Override
-  public void setStartTime(Date startTime) {
+  public void setEndTime(Date to) {
 
-    this.startTime = startTime;
+    endTime = to;
   }
 
   @Override
@@ -86,18 +92,22 @@ public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeH
   }
 
   @Override
-  public void setOffset(Long offset) {
+  public void setStartTime(Date startTime) {
 
-    this.offset = offset;
+    this.startTime = startTime;
   }
 
   @Override
   public Long getOffset() {
 
-    if (offset != null || pageLength == null || pageNumber == null)
-      return offset;
-    else
-      return (long) pageLength * pageNumber;
+    if (offset != null || pageLength == null || pageNumber == null) return offset;
+    else return (long) pageLength * pageNumber;
+  }
+
+  @Override
+  public void setOffset(Long offset) {
+
+    this.offset = offset;
   }
 
   @Override
@@ -114,25 +124,61 @@ public class TradeHistoryParamsAll implements TradeHistoryParamsTimeSpan, TradeH
 
   @Override
   public CurrencyPair getCurrencyPair() {
+    if (instrument instanceof CurrencyPair) {
+      return (CurrencyPair) instrument;
+    }
 
-    return pair;
+    return null;
   }
 
   @Override
   public void setCurrencyPair(CurrencyPair pair) {
-
-    this.pair = pair;
-  }
-
-  @Override
-  public void setCurrencyPairs(Collection<CurrencyPair> value) {
-
-    pairs = value;
+    this.instrument = pair;
   }
 
   @Override
   public Collection<CurrencyPair> getCurrencyPairs() {
+    if (!instruments.isEmpty()) {
+      return instruments.stream()
+          .filter(instrument -> instrument instanceof CurrencyPair)
+          .map(instrument -> (CurrencyPair) instrument)
+          .collect(Collectors.toSet());
+    }
+    return Collections.emptySet();
+  }
 
-    return pairs;
+  @Override
+  public void setCurrencyPairs(Collection<CurrencyPair> value) {
+    this.instruments = new HashSet<>(value);
+  }
+
+  @Override
+  public Instrument getInstrument() {
+    return instrument;
+  }
+
+  @Override
+  public void setInstrument(final Instrument instrument) {
+    this.instrument = instrument;
+  }
+
+  @Override
+  public Collection<Instrument> getInstruments() {
+    return instruments;
+  }
+
+  @Override
+  public void setInstruments(final Collection<Instrument> instruments) {
+    this.instruments = instruments;
+  }
+
+  @Override
+  public Integer getLimit() {
+    return limit;
+  }
+
+  @Override
+  public void setLimit(Integer limit) {
+    this.limit = limit;
   }
 }

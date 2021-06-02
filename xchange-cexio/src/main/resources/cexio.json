@@ -83,9 +83,17 @@
       "scale": 8,
       "withdrawal_fee": 0.001
     },
-    "BTC": {
+    "BTG": {
       "scale": 8,
       "withdrawal_fee": 0.001
+    },
+    "BTC": {
+      "scale": 8,
+      "withdrawal_fee": 0.0005
+    },
+    "DASH": {
+      "scale": 8,
+      "withdrawal_fee": 0.01
     },
     "ETH": {
       "scale": 8,
@@ -102,11 +110,13 @@
     "USD": {
       "scale": 2
     },
-    "BTG": {
-      "scale": 8
+    "XLM": {
+      "scale": 8,
+      "withdrawal_fee": 0.00001
     },
     "XRP": {
-      "scale": 8
+      "scale": 8,
+      "withdrawal_fee": 0.02
     }
   },
   "private_rate_limits": [

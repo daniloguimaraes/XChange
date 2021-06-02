@@ -1,107 +1,182 @@
 package org.knowm.xchange.bittrex;
 
 import java.io.IOException;
-
+import java.util.Date;
+import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import org.knowm.xchange.bittrex.dto.account.BittrexBalanceResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexBalancesResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexDepositAddressResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexDepositsHistoryResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexOrderResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexWithdrawResponse;
-import org.knowm.xchange.bittrex.dto.account.BittrexWithdrawalsHistoryResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexCancelOrderResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexOpenOrdersResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexTradeHistoryResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexTradeResponse;
-
+import org.knowm.xchange.bittrex.dto.BittrexException;
+import org.knowm.xchange.bittrex.dto.account.BittrexAccountVolume;
+import org.knowm.xchange.bittrex.dto.account.BittrexAddress;
+import org.knowm.xchange.bittrex.dto.account.BittrexBalance;
+import org.knowm.xchange.bittrex.dto.account.BittrexBalances;
+import org.knowm.xchange.bittrex.dto.account.BittrexDepositHistory;
+import org.knowm.xchange.bittrex.dto.account.BittrexNewAddress;
+import org.knowm.xchange.bittrex.dto.account.BittrexWithdrawalHistory;
+import org.knowm.xchange.bittrex.dto.batch.BatchResponse;
+import org.knowm.xchange.bittrex.dto.batch.order.BatchOrder;
+import org.knowm.xchange.bittrex.dto.trade.BittrexNewOrder;
+import org.knowm.xchange.bittrex.dto.trade.BittrexOrder;
+import org.knowm.xchange.bittrex.dto.trade.BittrexOrders;
 import si.mazi.rescu.ParamsDigest;
-import si.mazi.rescu.SynchronizedValueFactory;
 
-@Path("v1.1")
+@Path("v3")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public interface BittrexAuthenticated extends Bittrex {
 
   @GET
-  @Path("account/getdepositaddress")
-  BittrexDepositAddressResponse getdepositaddress(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("currency") String currency) throws IOException;
+  @Path("account/volume")
+  BittrexAccountVolume getAccountVolume(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature)
+      throws IOException, BittrexException;
+
+  @POST
+  @Path("batch")
+  @Consumes(MediaType.APPLICATION_JSON)
+  BatchResponse[] executeOrdersBatch(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      BatchOrder[] batchOrders)
+      throws IOException, BittrexException;
+
+  @DELETE
+  @Path("orders/{order_id}")
+  BittrexOrder cancelOrder(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @PathParam("order_id") String accountId)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("account/getbalances")
-  BittrexBalancesResponse getBalances(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce) throws IOException;
+  @Path("balances")
+  BittrexBalances getBalances(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("/account/getbalance")
-  BittrexBalanceResponse getBalance(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("currency") String currency) throws IOException;
+  @Path("balances/{currencySymbol}")
+  BittrexBalance getBalance(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @PathParam("currencySymbol") String currencySymbol)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("market/buylimit")
-  BittrexTradeResponse buylimit(@QueryParam("apikey") String apikey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("market") String market, @QueryParam("quantity") String quantity,
-      @QueryParam("rate") String rate) throws IOException;
+  @Path("addresses")
+  List<BittrexAddress> getAddresses(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("market/selllimit")
-  BittrexTradeResponse selllimit(@QueryParam("apikey") String apikey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("market") String market, @QueryParam("quantity") String quantity,
-      @QueryParam("rate") String rate) throws IOException;
+  @Path("addresses/{currencySymbol}")
+  BittrexAddress getAddress(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @PathParam("currencySymbol") String currencySymbol)
+      throws IOException, BittrexException;
+
+  @POST
+  @Path("addresses")
+  BittrexAddress generateAddress(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      BittrexNewAddress newAddress)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("market/buymarket")
-  BittrexTradeResponse buymarket(@QueryParam("apikey") String apikey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("market") String market,
-      @QueryParam("quantity") String quantity) throws IOException;
+  @Path("orders/{orderId}")
+  BittrexOrder getOrder(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @PathParam("orderId") String orderId)
+      throws IOException, BittrexException;
+
+  @POST
+  @Path("orders")
+  @Consumes(MediaType.APPLICATION_JSON)
+  BittrexOrder placeOrder(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      BittrexNewOrder newOrderPayload)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("market/sellmarket")
-  BittrexTradeResponse sellmarket(@QueryParam("apikey") String apikey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("market") String market,
-      @QueryParam("quantity") String quantity) throws IOException;
+  @Path("orders/open")
+  BittrexOrders getOpenOrders(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature)
+      throws IOException, BittrexException;
+
+  // V3 replacement for get order history
+  @GET
+  @Path("orders/closed")
+  List<BittrexOrder> getClosedOrders(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @QueryParam("marketSymbol") String marketSymbol,
+      @QueryParam("pageSize") Integer pageSize,
+      @QueryParam("startDate") Date startDate,
+      @QueryParam("endDate") Date endDate)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("market/cancel")
-  BittrexCancelOrderResponse cancel(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("uuid") String uuid) throws IOException;
+  @Path("deposits/closed")
+  List<BittrexDepositHistory> getDepositsClosed(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @QueryParam("currencySymbol") String currencySymbol,
+      @QueryParam("nextPageToken") String nextPageToken,
+      @QueryParam("previousPageToken") String previousPageToken,
+      @QueryParam("pageSize") Integer pageSize)
+      throws IOException, BittrexException;
 
   @GET
-  @Path("market/getopenorders")
-  BittrexOpenOrdersResponse openorders(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("market") String market) throws IOException;
-
-  @GET
-  @Path("/account/getorder")
-  BittrexOrderResponse getOrder(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("uuid") String uuid) throws IOException;
-
-  @GET
-  @Path("account/getorderhistory")
-  BittrexTradeHistoryResponse getorderhistory(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("market") String market) throws IOException;
-
-  @GET
-  @Path("account/withdraw")
-  BittrexWithdrawResponse withdraw(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("currency") String currency, @QueryParam("quantity") String quantity,
-      @QueryParam("address") String address, @QueryParam("paymentid") String paymentId) throws IOException;
-
-  @GET
-  @Path("account/getwithdrawalhistory")
-  BittrexWithdrawalsHistoryResponse getwithdrawalhistory(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("currency") String currency) throws IOException;
-
-  @GET
-  @Path("account/getdeposithistory")
-  BittrexDepositsHistoryResponse getdeposithistory(@QueryParam("apikey") String apiKey, @HeaderParam("apisign") ParamsDigest signature,
-      @QueryParam("nonce") SynchronizedValueFactory<Long> nonce, @QueryParam("currency") String currency) throws IOException;
+  @Path("withdrawals/closed")
+  List<BittrexWithdrawalHistory> getWithdrawalsClosed(
+      @HeaderParam("Api-Key") String apiKey,
+      @HeaderParam("Api-Timestamp") Long timestamp,
+      @HeaderParam("Api-Content-Hash") ParamsDigest hash,
+      @HeaderParam("Api-Signature") ParamsDigest signature,
+      @QueryParam("currencySymbol") String currencySymbol,
+      @QueryParam("nextPageToken") String nextPageToken,
+      @QueryParam("previousPageToken") String previousPageToken,
+      @QueryParam("pageSize") Integer pageSize)
+      throws IOException, BittrexException;
 }

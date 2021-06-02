@@ -1,27 +1,26 @@
 package org.knowm.xchange.bittrex.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import static org.knowm.xchange.bittrex.BittrexResilience.GET_ORDER_BOOKS_RATE_LIMITER;
+import static org.knowm.xchange.bittrex.BittrexResilience.PUBLIC_ENDPOINTS_RATE_LIMITER;
 
-import org.knowm.xchange.Exchange;
+import java.io.IOException;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.knowm.xchange.bittrex.BittrexAdapters;
+import org.knowm.xchange.bittrex.BittrexAuthenticated;
+import org.knowm.xchange.bittrex.BittrexExchange;
 import org.knowm.xchange.bittrex.BittrexUtils;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexChartData;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexChartDataResponse;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexCurrenciesResponse;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexCurrency;
 import org.knowm.xchange.bittrex.dto.marketdata.BittrexDepth;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexDepthResponse;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexMarketSummariesResponse;
 import org.knowm.xchange.bittrex.dto.marketdata.BittrexMarketSummary;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexMarketSummaryResponse;
 import org.knowm.xchange.bittrex.dto.marketdata.BittrexSymbol;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexSymbolsResponse;
 import org.knowm.xchange.bittrex.dto.marketdata.BittrexTicker;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexTickerResponse;
 import org.knowm.xchange.bittrex.dto.marketdata.BittrexTrade;
-import org.knowm.xchange.bittrex.dto.marketdata.BittrexTradesResponse;
+import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.currency.CurrencyPair;
-import org.knowm.xchange.exceptions.ExchangeException;
+import org.knowm.xchange.dto.Order;
+import org.knowm.xchange.dto.marketdata.OrderBook;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 public class BittrexMarketDataServiceRaw extends BittrexBaseService {
 
@@ -30,112 +29,79 @@ public class BittrexMarketDataServiceRaw extends BittrexBaseService {
    *
    * @param exchange
    */
-  public BittrexMarketDataServiceRaw(Exchange exchange) {
-
-    super(exchange);
+  public BittrexMarketDataServiceRaw(
+      BittrexExchange exchange,
+      BittrexAuthenticated bittrex,
+      ResilienceRegistries resilienceRegistries) {
+    super(exchange, bittrex, resilienceRegistries);
   }
 
-  public BittrexCurrency[] getBittrexCurrencies() throws IOException {
-
-    BittrexCurrenciesResponse response = bittrexAuthenticated.getCurrencies();
-
-    if (response.isSuccess()) {
-      return response.getCurrencies();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-
-  }
-
-  public BittrexTicker getBittrexTicker(CurrencyPair currencyPair) throws IOException {
-    BittrexTickerResponse response = bittrexAuthenticated.getTicker(BittrexUtils.toPairString(currencyPair));
-
-    if (response.getSuccess()) {
-      return response.getTicker();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-  }
-
-  public ArrayList<BittrexSymbol> getBittrexSymbols() throws IOException {
-
-    BittrexSymbolsResponse response = bittrexAuthenticated.getSymbols();
-
-    if (response.isSuccess()) {
-      return response.getSymbols();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-
+  public List<BittrexSymbol> getBittrexSymbols() throws IOException {
+    return decorateApiCall(bittrexAuthenticated::getMarkets)
+        .withRetry(retry("getMarkets"))
+        .withRateLimiter(rateLimiter(PUBLIC_ENDPOINTS_RATE_LIMITER))
+        .call();
   }
 
   public BittrexMarketSummary getBittrexMarketSummary(String pair) throws IOException {
-
-    BittrexMarketSummaryResponse response = bittrexAuthenticated.getMarketSummary(pair);
-
-    if (response.getSuccess()) {
-      return response.getMarketSummary();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-
+    return decorateApiCall(() -> bittrexAuthenticated.getMarketSummary(pair))
+        .withRetry(retry("getMarkets"))
+        .withRateLimiter(rateLimiter(PUBLIC_ENDPOINTS_RATE_LIMITER))
+        .call();
   }
 
-  public ArrayList<BittrexMarketSummary> getBittrexMarketSummaries() throws IOException {
-
-    BittrexMarketSummariesResponse response = bittrexAuthenticated.getMarketSummaries();
-
-    if (response.isSuccess()) {
-      return response.getMarketSummaries();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-
+  public List<BittrexMarketSummary> getBittrexMarketSummaries() throws IOException {
+    return decorateApiCall(bittrexAuthenticated::getMarketSummaries)
+        .withRetry(retry("getMarketSummaries"))
+        .withRateLimiter(rateLimiter(PUBLIC_ENDPOINTS_RATE_LIMITER))
+        .call();
   }
 
-  public BittrexDepth getBittrexOrderBook(String pair, int depth) throws IOException {
-
-    BittrexDepthResponse response = bittrexAuthenticated.getBook(pair, "both", depth);
-
-    if (response.getSuccess()) {
-
-      BittrexDepth bittrexDepth = response.getDepth();
-      return bittrexDepth;
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public BittrexTicker getBittrexTicker(String pair) throws IOException {
+    return decorateApiCall(() -> bittrexAuthenticated.getTicker(pair))
+        .withRetry(retry("getTicker"))
+        .withRateLimiter(rateLimiter(PUBLIC_ENDPOINTS_RATE_LIMITER))
+        .call();
   }
 
-  public BittrexTrade[] getBittrexTrades(String pair, int count) throws IOException {
-
-    BittrexTradesResponse response = bittrexAuthenticated.getTrades(pair, count);
-
-    if (response.getSuccess()) {
-
-      BittrexTrade[] bittrexTrades = response.getTrades();
-      return bittrexTrades;
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public List<BittrexTicker> getBittrexTickers() throws IOException {
+    return decorateApiCall(bittrexAuthenticated::getTickers)
+        .withRetry(retry("getTickers"))
+        .withRateLimiter(rateLimiter(PUBLIC_ENDPOINTS_RATE_LIMITER))
+        .call();
   }
 
-  public ArrayList<BittrexChartData> getBittrexChartData(CurrencyPair currencyPair, BittrexChartDataPeriodType periodType) throws IOException {
+  public SequencedOrderBook getBittrexSequencedOrderBook(String market, int depth)
+      throws IOException {
+    BittrexDepth bittrexDepth =
+        decorateApiCall(() -> bittrexAuthenticated.getOrderBook(market, depth))
+            .withRetry(retry("getOrderBook"))
+            .withRateLimiter(rateLimiter(GET_ORDER_BOOKS_RATE_LIMITER))
+            .call();
 
-    BittrexChartDataResponse response = bittrexV2.getChartData(BittrexUtils.toPairString(currencyPair), periodType.getPeriod());
+    CurrencyPair currencyPair = BittrexUtils.toCurrencyPair(market);
+    List<LimitOrder> asks =
+        BittrexAdapters.adaptOrders(
+            bittrexDepth.getAsks(), currencyPair, Order.OrderType.ASK, depth);
+    List<LimitOrder> bids =
+        BittrexAdapters.adaptOrders(
+            bittrexDepth.getBids(), currencyPair, Order.OrderType.BID, depth);
 
-    if (response.getSuccess()) {
-      return response.getChartData();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+    OrderBook orderBook = new OrderBook(null, asks, bids);
+    return new SequencedOrderBook(bittrexDepth.getSequence(), orderBook);
   }
 
-  public ArrayList<BittrexChartData> getBittrexLatestTick(CurrencyPair currencyPair, BittrexChartDataPeriodType periodType, Long timeStamp) throws IOException {
-    BittrexChartDataResponse response = bittrexV2.getLatestTick(BittrexUtils.toPairString(currencyPair), periodType.getPeriod(), timeStamp);
-    if (response.getSuccess()) {
-      return response.getChartData();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public List<BittrexTrade> getBittrexTrades(String pair) throws IOException {
+    return decorateApiCall(() -> bittrexAuthenticated.getTrades(pair))
+        .withRetry(retry("getTrades"))
+        .withRateLimiter(rateLimiter(PUBLIC_ENDPOINTS_RATE_LIMITER))
+        .call();
+  }
+
+  @AllArgsConstructor
+  @Getter
+  public static class SequencedOrderBook {
+    private final String sequence;
+    private final OrderBook orderBook;
   }
 }

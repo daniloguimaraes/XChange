@@ -1,24 +1,28 @@
 package org.knowm.xchange.bittrex.service;
 
-import java.io.IOException;
-import java.util.List;
+import static org.knowm.xchange.bittrex.BittrexResilience.GET_CLOSED_ORDERS_RATE_LIMITER;
 
-import org.knowm.xchange.Exchange;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.knowm.xchange.bittrex.BittrexAdapters;
+import org.knowm.xchange.bittrex.BittrexAuthenticated;
+import org.knowm.xchange.bittrex.BittrexConstants;
+import org.knowm.xchange.bittrex.BittrexExchange;
 import org.knowm.xchange.bittrex.BittrexUtils;
-import org.knowm.xchange.bittrex.dto.account.BittrexOrder;
-import org.knowm.xchange.bittrex.dto.account.BittrexOrderResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexCancelOrderResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexOpenOrder;
-import org.knowm.xchange.bittrex.dto.trade.BittrexOpenOrdersResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexTradeHistoryResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexTradeResponse;
-import org.knowm.xchange.bittrex.dto.trade.BittrexUserTrade;
+import org.knowm.xchange.bittrex.dto.batch.BatchResponse;
+import org.knowm.xchange.bittrex.dto.batch.order.BatchOrder;
+import org.knowm.xchange.bittrex.dto.batch.order.neworder.TimeInForce;
+import org.knowm.xchange.bittrex.dto.trade.BittrexNewOrder;
+import org.knowm.xchange.bittrex.dto.trade.BittrexOrder;
+import org.knowm.xchange.bittrex.dto.trade.BittrexOrders;
+import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order.OrderType;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.dto.trade.MarketOrder;
-import org.knowm.xchange.exceptions.ExchangeException;
-import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
 
 public class BittrexTradeServiceRaw extends BittrexBaseService {
@@ -28,119 +32,121 @@ public class BittrexTradeServiceRaw extends BittrexBaseService {
    *
    * @param exchange
    */
-  public BittrexTradeServiceRaw(Exchange exchange) {
-
-    super(exchange);
-  }
-
-  public String placeBittrexMarketOrder(MarketOrder marketOrder) throws IOException {
-
-    String pair = BittrexUtils.toPairString(marketOrder.getCurrencyPair());
-
-    if (marketOrder.getType() == OrderType.BID) {
-
-      BittrexTradeResponse response = bittrexAuthenticated.buymarket(apiKey, signatureCreator, exchange.getNonceFactory(), pair,
-          marketOrder.getOriginalAmount().toPlainString());
-
-      if (response.getSuccess()) {
-        return response.getResult().getUuid();
-      } else {
-        throw new ExchangeException(response.getMessage());
-      }
-
-    } else {
-
-      BittrexTradeResponse response = bittrexAuthenticated.sellmarket(apiKey, signatureCreator, exchange.getNonceFactory(), pair,
-          marketOrder.getOriginalAmount().toPlainString());
-
-      if (response.getSuccess()) {
-        return response.getResult().getUuid();
-      } else {
-        throw new ExchangeException(response.getMessage());
-      }
-
-    }
+  public BittrexTradeServiceRaw(
+      BittrexExchange exchange,
+      BittrexAuthenticated bittrex,
+      ResilienceRegistries resilienceRegistries) {
+    super(exchange, bittrex, resilienceRegistries);
   }
 
   public String placeBittrexLimitOrder(LimitOrder limitOrder) throws IOException {
-
-    String pair = BittrexUtils.toPairString(limitOrder.getCurrencyPair());
-
-    if (limitOrder.getType() == OrderType.BID) {
-      BittrexTradeResponse response = bittrexAuthenticated.buylimit(apiKey, signatureCreator, exchange.getNonceFactory(), pair,
-          limitOrder.getOriginalAmount().toPlainString(), limitOrder.getLimitPrice().toPlainString());
-
-      if (response.getSuccess()) {
-        return response.getResult().getUuid();
-      } else {
-        throw new ExchangeException(response.getMessage());
-      }
-
-    } else {
-      BittrexTradeResponse response = bittrexAuthenticated.selllimit(apiKey, signatureCreator, exchange.getNonceFactory(), pair,
-          limitOrder.getOriginalAmount().toPlainString(), limitOrder.getLimitPrice().toPlainString());
-
-      if (response.getSuccess()) {
-        return response.getResult().getUuid();
-      } else {
-        throw new ExchangeException(response.getMessage());
-      }
-    }
+    return placeBittrexLimitOrder(limitOrder, TimeInForce.GOOD_TIL_CANCELLED);
   }
 
-  public boolean cancelBittrexLimitOrder(String uuid) throws IOException {
-
-    BittrexCancelOrderResponse response = bittrexAuthenticated.cancel(apiKey, signatureCreator, exchange.getNonceFactory(), uuid);
-
-    if (response.getSuccess()) {
-      return true;
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-
+  public String placeBittrexLimitOrder(LimitOrder limitOrder, TimeInForce type) throws IOException {
+    BittrexNewOrder bittrexNewOrder =
+        new BittrexNewOrder(
+            BittrexUtils.toPairString(limitOrder.getCurrencyPair()),
+            OrderType.BID.equals(limitOrder.getType())
+                ? BittrexConstants.BUY
+                : BittrexConstants.SELL,
+            BittrexConstants.LIMIT,
+            limitOrder.getRemainingAmount().toPlainString(),
+            null,
+            limitOrder.getLimitPrice().toPlainString(),
+            type.toString(),
+            null,
+            null);
+    return bittrexAuthenticated
+        .placeOrder(
+            apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, bittrexNewOrder)
+        .getId();
   }
 
-  public List<BittrexOpenOrder> getBittrexOpenOrders(OpenOrdersParams params) throws IOException {
-    String ccyPair = null;
-
-    if (params != null && params instanceof OpenOrdersParamCurrencyPair) {
-      CurrencyPair currencyPair = ((OpenOrdersParamCurrencyPair) params).getCurrencyPair();
-      if(currencyPair != null) {
-        ccyPair = BittrexUtils.toPairString(currencyPair);
-      }
-    }
-
-    BittrexOpenOrdersResponse response = bittrexAuthenticated.openorders(apiKey, signatureCreator, exchange.getNonceFactory(), ccyPair);
-
-    if (response.getSuccess()) {
-      return response.getBittrexOpenOrders();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
-
+  public String placeBittrexMarketOrder(MarketOrder marketOrder) throws IOException {
+    return placeBittrexMarketOrder(marketOrder, TimeInForce.GOOD_TIL_CANCELLED);
   }
 
-  public List<BittrexUserTrade> getBittrexTradeHistory(CurrencyPair currencyPair) throws IOException {
-    String ccyPair = null;
-    if (currencyPair != null)
-      ccyPair = BittrexUtils.toPairString(currencyPair);
-
-    BittrexTradeHistoryResponse response = bittrexAuthenticated.getorderhistory(apiKey, signatureCreator, exchange.getNonceFactory(), ccyPair);
-
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public String placeBittrexMarketOrder(MarketOrder marketOrder, TimeInForce type) throws IOException {
+    BittrexNewOrder bittrexNewOrder =
+            new BittrexNewOrder(
+                    BittrexUtils.toPairString(marketOrder.getCurrencyPair()),
+                    OrderType.BID.equals(marketOrder.getType())
+                            ? BittrexConstants.BUY
+                            : BittrexConstants.SELL,
+                    BittrexConstants.LIMIT,
+                    marketOrder.getRemainingAmount().toPlainString(),
+                    null,
+                    null,
+                    type.toString(),
+                    null,
+                    null);
+    return bittrexAuthenticated
+            .placeOrder(
+                    apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, bittrexNewOrder)
+            .getId();
   }
 
-  public BittrexOrder getBittrexOrder(String uuid) throws IOException {
-    BittrexOrderResponse response = bittrexAuthenticated.getOrder(apiKey, signatureCreator, exchange.getNonceFactory(), uuid);
+  public BittrexOrder cancelBittrexLimitOrder(String orderId) throws IOException {
+    return bittrexAuthenticated.cancelOrder(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, orderId);
+  }
 
-    if (response.getSuccess()) {
-      return response.getResult();
-    } else {
-      throw new ExchangeException(response.getMessage());
-    }
+  public List<BittrexOrder> getBittrexOpenOrders(OpenOrdersParams params) throws IOException {
+    return bittrexAuthenticated.getOpenOrders(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator);
+  }
+
+  public SequencedOpenOrders getBittrexSequencedOpenOrders(OpenOrdersParams params)
+      throws IOException {
+    BittrexOrders openOrders =
+        bittrexAuthenticated.getOpenOrders(
+            apiKey, System.currentTimeMillis(), contentCreator, signatureCreator);
+    return new SequencedOpenOrders(
+        openOrders.getSequence(), BittrexAdapters.adaptOpenOrders(openOrders));
+  }
+
+  public List<BittrexOrder> getBittrexUserTradeHistory(
+      CurrencyPair currencyPair, Date start, Date end) throws IOException {
+    return decorateApiCall(
+            () ->
+                bittrexAuthenticated.getClosedOrders(
+                    apiKey,
+                    System.currentTimeMillis(),
+                    contentCreator,
+                    signatureCreator,
+                    BittrexUtils.toPairString(currencyPair),
+                    200,
+                    start,
+                    end))
+        .withRetry(retry("getClosedOrders"))
+        .withRateLimiter(rateLimiter(GET_CLOSED_ORDERS_RATE_LIMITER))
+        .call();
+  }
+
+  public List<BittrexOrder> getBittrexUserTradeHistory(CurrencyPair currencyPair)
+      throws IOException {
+    return getBittrexUserTradeHistory(currencyPair, null, null);
+  }
+
+  public List<BittrexOrder> getBittrexUserTradeHistory() throws IOException {
+    return getBittrexUserTradeHistory(null);
+  }
+
+  public BittrexOrder getBittrexOrder(String orderId) throws IOException {
+    return bittrexAuthenticated.getOrder(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, orderId);
+  }
+
+  public BatchResponse[] executeOrdersBatch(BatchOrder[] batchOrders) throws IOException {
+    return bittrexAuthenticated.executeOrdersBatch(
+        apiKey, System.currentTimeMillis(), contentCreator, signatureCreator, batchOrders);
+  }
+
+  @AllArgsConstructor
+  @Getter
+  public static class SequencedOpenOrders {
+    private final String sequence;
+    private final List<LimitOrder> openOrders;
   }
 }

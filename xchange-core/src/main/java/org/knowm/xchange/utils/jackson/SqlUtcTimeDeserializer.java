@@ -1,19 +1,16 @@
 package org.knowm.xchange.utils.jackson;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-
-/**
- * @author Matija Mazi
- */
+/** @author Matija Mazi */
 public class SqlUtcTimeDeserializer extends JsonDeserializer<Date> {
 
   private SimpleDateFormat dateFormat;
@@ -30,7 +27,7 @@ public class SqlUtcTimeDeserializer extends JsonDeserializer<Date> {
     try {
       return dateFormat.parse(str);
     } catch (ParseException e) {
-      throw new InvalidFormatException("Error parsing as date", str, Date.class);
+      throw new InvalidFormatException(null, "Error parsing as date", str, Date.class);
     }
   }
 }

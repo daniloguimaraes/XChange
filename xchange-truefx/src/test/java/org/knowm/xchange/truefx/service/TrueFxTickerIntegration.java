@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-
 import org.junit.Test;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
@@ -17,7 +16,7 @@ public class TrueFxTickerIntegration {
 
   @Test
   public void fetchTickerTest() throws IOException {
-    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(TrueFxExchange.class.getName());
+    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(TrueFxExchange.class);
     MarketDataService service = exchange.getMarketDataService();
 
     Ticker ticker = service.getTicker(CurrencyPair.GBP_USD);

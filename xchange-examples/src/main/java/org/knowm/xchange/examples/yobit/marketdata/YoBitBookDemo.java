@@ -1,7 +1,6 @@
 package org.knowm.xchange.examples.yobit.marketdata;
 
 import java.io.IOException;
-
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -10,14 +9,12 @@ import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 import org.knowm.xchange.yobit.YoBitExchange;
 
-/**
- * Demonstrate requesting OrderBook from YoBit.
- */
+/** Demonstrate requesting OrderBook from YoBit. */
 public class YoBitBookDemo {
 
   public static void main(String[] args) throws IOException {
 
-    Exchange yoBitExchange = ExchangeFactory.INSTANCE.createExchange(YoBitExchange.class.getName());
+    Exchange yoBitExchange = ExchangeFactory.INSTANCE.createExchange(YoBitExchange.class);
 
     // Interested in the public market data feed (no authentication)
     MarketDataService marketDataService = yoBitExchange.getMarketDataService();
@@ -30,14 +27,25 @@ public class YoBitBookDemo {
     System.out.println("received data.");
 
     for (LimitOrder limitOrder : orderBook.getBids()) {
-      System.out.println(limitOrder.getType() + " " + limitOrder.getCurrencyPair() + " Limit price: " + limitOrder.getLimitPrice() + " Amount: "
-          + limitOrder.getOriginalAmount());
+      System.out.println(
+          limitOrder.getType()
+              + " "
+              + limitOrder.getCurrencyPair()
+              + " Limit price: "
+              + limitOrder.getLimitPrice()
+              + " Amount: "
+              + limitOrder.getOriginalAmount());
     }
 
     for (LimitOrder limitOrder : orderBook.getAsks()) {
-      System.out.println(limitOrder.getType() + " " + limitOrder.getCurrencyPair() + " Limit price: " + limitOrder.getLimitPrice() + " Amount: "
-          + limitOrder.getOriginalAmount());
+      System.out.println(
+          limitOrder.getType()
+              + " "
+              + limitOrder.getCurrencyPair()
+              + " Limit price: "
+              + limitOrder.getLimitPrice()
+              + " Amount: "
+              + limitOrder.getOriginalAmount());
     }
   }
-
 }

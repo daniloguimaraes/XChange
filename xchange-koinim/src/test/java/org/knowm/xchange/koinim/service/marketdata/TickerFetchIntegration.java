@@ -10,14 +10,12 @@ import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.koinim.KoinimExchange;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 
-/**
- * @author ahmetoz
- */
+/** @author ahmetoz */
 public class TickerFetchIntegration {
 
   @Test
   public void tickerFetchTest() throws Exception {
-    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(KoinimExchange.class.getName());
+    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(KoinimExchange.class);
     MarketDataService marketDataService = exchange.getMarketDataService();
     Ticker ticker = marketDataService.getTicker(new CurrencyPair("BTC", "TRY"));
     System.out.println(ticker.toString());
