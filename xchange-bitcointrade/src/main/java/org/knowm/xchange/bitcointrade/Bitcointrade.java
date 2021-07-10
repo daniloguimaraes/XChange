@@ -19,7 +19,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
  *
  * @author Danilo Guimaraes
  */
-@Path("v1/public/")
+@Path("v3/public/")
 @Produces(MediaType.APPLICATION_JSON)
 public interface Bitcointrade {
 
