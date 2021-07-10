@@ -2,16 +2,11 @@ package info.bitrich.xchangestream.ftx;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.collect.Streams;
 import info.bitrich.xchangestream.ftx.dto.FtxOrderbookResponse;
 import info.bitrich.xchangestream.ftx.dto.FtxTickerResponse;
 import info.bitrich.xchangestream.service.netty.StreamingObjectMapperHelper;
-import org.knowm.xchange.dto.Order;
-import org.knowm.xchange.dto.marketdata.OrderBook;
-import org.knowm.xchange.dto.marketdata.Ticker;
-import org.knowm.xchange.dto.trade.LimitOrder;
-import org.knowm.xchange.instrument.Instrument;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
@@ -19,7 +14,16 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.CRC32;
+import org.knowm.xchange.dto.Order;
+import org.knowm.xchange.dto.marketdata.OrderBook;
+import org.knowm.xchange.dto.marketdata.Ticker;
+import org.knowm.xchange.dto.marketdata.Trade;
+import org.knowm.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.ftx.FtxAdapters;
+import org.knowm.xchange.ftx.dto.marketdata.FtxTradeDto;
+import org.knowm.xchange.instrument.Instrument;
 
 public class FtxStreamingAdapters {
 
@@ -107,24 +111,25 @@ public class FtxStreamingAdapters {
   public static Long getOrderbookChecksum(List<LimitOrder> asks, List<LimitOrder> bids) {
     StringBuilder data = new StringBuilder(3072);
     for (int i = 0; i < 100; i++) {
-      if (bids.size() >= i) {
+      if (bids.size() > i) {
         data.append(df.format(bids.get(i).getLimitPrice()))
             .append(":")
-            .append(df.format(bids.get(i).getOriginalAmount()));
+            .append(df.format(bids.get(i).getOriginalAmount()))
+            .append(":");
       }
-      data.append(":");
-      if (asks.size() >= i) {
+
+      if (asks.size() > i) {
         data.append(df.format(asks.get(i).getLimitPrice()))
             .append(":")
-            .append(df.format(asks.get(i).getOriginalAmount()));
-      }
-      if (i != 99) {
-        data.append(":");
+            .append(df.format(asks.get(i).getOriginalAmount()))
+            .append(":");
       }
     }
-
+    
+    String s = data.length() > 0 ? data.substring(0, data.length() - 1) : data.toString(); // strip last :
+    
     CRC32 crc32 = new CRC32();
-    byte[] toBytes = data.toString().getBytes(StandardCharsets.UTF_8);
+    byte[] toBytes = s.getBytes(StandardCharsets.UTF_8);
     crc32.update(toBytes, 0, toBytes.length);
 
     return crc32.getValue();
@@ -144,5 +149,31 @@ public class FtxStreamingAdapters {
         .map(ftxTickerResponse -> ftxTickerResponse.toTicker(instrument))
         .findFirst()
         .orElse(new Ticker.Builder().build());
+  }
+
+  public static Iterable<Trade> adaptTradesMessage(Instrument instrument, JsonNode jsonNode) {
+    return Streams.stream(jsonNode)
+        .filter(JsonNode::isArray)
+        .map(res -> (ArrayNode) res)
+        .flatMap(Streams::stream)
+        .map(
+            tradeNode -> {
+              try {
+                return mapper.readValue(tradeNode.toString(), FtxTradeDto.class);
+              } catch (IOException e) {
+                throw new RuntimeException(e);
+              }
+            })
+        .map(
+            ftxTradeDto ->
+                new Trade.Builder()
+                    .timestamp(ftxTradeDto.getTime())
+                    .instrument(instrument)
+                    .id(ftxTradeDto.getId())
+                    .price(ftxTradeDto.getPrice())
+                    .type(FtxAdapters.adaptFtxOrderSideToOrderType(ftxTradeDto.getSide()))
+                    .originalAmount(ftxTradeDto.getSize())
+                    .build())
+        .collect(Collectors.toList());
   }
 }
