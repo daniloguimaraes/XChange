@@ -23,47 +23,48 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 @Produces(MediaType.APPLICATION_JSON)
 public interface Bitcointrade {
 
-  Integer DEFAULT_PAGE_SIZE = 200;
+  Integer DEFAULT_PAGE_SIZE = 20;
   Integer DEFAULT_CURRENT_PAGE = 1;
 
   /**
    * Get the Bitcointrade Exchange ticker
    *
+   * @param currencyPair the currency pair (eg. BRLBTC)
    * @return an instance of {@link BitcointradeTickerResponse}
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("{currency}/ticker")
-  BitcointradeTickerResponse getTicker(@PathParam("currency") String currency) throws BitcointradeException, IOException;
+  @Path("{currencyPair}/ticker")
+  BitcointradeTickerResponse getTicker(@PathParam("currencyPair") String currencyPair) throws BitcointradeException, IOException;
 
   /**
    * Get the public order book at Bitcointrade Exchange
    *
-   * @param currency the currency (eg. BTC)
+   * @param currencyPair the currency pair (eg. BRLBTC)
    * @return an instance of {@link BitcointradeOrderBook}
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("{currency}/orders")
-  BitcointradeOrderBookResponse getOrderBook(@PathParam("currency") String currency) throws BitcointradeException, IOException;
+  @Path("{currencyPair}/orders")
+  BitcointradeOrderBookResponse getOrderBook(@PathParam("currencyPair") String currencyPair) throws BitcointradeException, IOException;
 
   /**
    * List all public trades made at Bitcointrade Exchange.
    *
-   * @param currency the currency. BTC or LTC. Optional
+   * @param currencyPair the currency pair (eg. BRLBTC). Mandatory
    * @param startTime start trade time, in ISO-8601 date/time format. Optional
    * @param endTime end trade time, in ISO-8601 date/time format. Optional
-   * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
+   * @param pageSize the page size. Default: 20. Maximum: 250. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @return an array of {@link BitcointradePublicTradeResponse}
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("{currency}/trades")
-  BitcointradePublicTradeResponse getTrades(@PathParam("currency") String currency, @QueryParam("start_time") String startTime,
+  @Path("{currencyPair}/trades")
+  BitcointradePublicTradeResponse getTrades(@PathParam("currencyPair") String currencyPair, @QueryParam("start_time") String startTime,
       @QueryParam("end_time") String endTime, @QueryParam("page_size") Integer pageSize, @QueryParam("current_page") Integer currentPage)
       throws BitcointradeException, IOException;
 }
