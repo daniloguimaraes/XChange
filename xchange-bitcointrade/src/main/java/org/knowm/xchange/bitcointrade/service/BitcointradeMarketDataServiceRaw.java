@@ -1,5 +1,9 @@
 package org.knowm.xchange.bitcointrade.service;
 
+import static org.knowm.xchange.bitcointrade.BitcointradeConstants.DEFAULT_CURRENT_PAGE;
+import static org.knowm.xchange.bitcointrade.BitcointradeConstants.DEFAULT_PAGE_SIZE;
+import static org.knowm.xchange.bitcointrade.BitcointradeCurrencyPairNormalizer.normalize;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -19,9 +23,6 @@ import org.knowm.xchange.exceptions.ExchangeException;
  * @author Danilo Guimaraes
  */
 class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
-
-  private static final int DEFAULT_PAGE_SIZE = 200;
-  private static final int DEFAULT_CURRENT_PAGE = 1;
 
   /**
    * Constructor
@@ -55,7 +56,7 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * Get the BTC order book at Bitcointrade Exchange.
    *
    * <p>
-   * To get a different currency order book, use {@link #getBitcointradeOrderBook(Currency)}.
+   * To get a different currency order book, use {@link #getBitcointradeOrderBook(CurrencyPair)}.
    * </p>
    *
    * @return an instance of {@link BitcointradeOrderBookResponse}
@@ -63,20 +64,20 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    */
   BitcointradeOrderBookResponse getBitcointradeOrderBook() throws IOException {
 
-      return getBitcointradeOrderBook(Currency.BTC);
+      return getBitcointradeOrderBook(CurrencyPair.BTC_BRL);
   }
 
   /**
    * Get a specific currency order book at Bitcointrade Exchange.
    *
-   * @param currency the order book currency
+   * @param currencyPair the order book currency pair
    * @return an instance of {@link BitcointradeOrderBookResponse}
    * @throws IOException
    */
-  BitcointradeOrderBookResponse getBitcointradeOrderBook(Currency currency) throws IOException {
+  BitcointradeOrderBookResponse getBitcointradeOrderBook(CurrencyPair currencyPair) throws IOException {
 
     try {
-      return bitcointrade.getOrderBook(currency.toString());
+      return bitcointrade.getOrderBook(normalize(currencyPair));
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError(), e);
     } catch (IOException e) {
@@ -124,10 +125,8 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
   BitcointradePublicTradeResponse getBitcointradePublicTrades(CurrencyPair currencyPair, String startTime, String endTime, Integer pageSize,
         Integer currentPage) throws ExchangeException {
 
-    String currency = currencyPair.base.toString();
-
     try {
-      return bitcointrade.getTrades(currency, startTime, endTime, pageSize, currentPage);
+      return bitcointrade.getTrades(normalize(currencyPair), startTime, endTime, pageSize, currentPage);
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {

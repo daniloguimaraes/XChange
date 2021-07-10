@@ -23,9 +23,6 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 @Produces(MediaType.APPLICATION_JSON)
 public interface Bitcointrade {
 
-  Integer DEFAULT_PAGE_SIZE = 20;
-  Integer DEFAULT_CURRENT_PAGE = 1;
-
   /**
    * Get the Bitcointrade Exchange ticker
    *
