@@ -53,8 +53,16 @@ public final class BitcointradeAdapters {
     BigDecimal volume = ticker.getVolume();
     Date date = fromISODateStringQuietly(ticker.getDate());
 
-    return new Ticker.Builder().currencyPair(currencyPair).last(last).bid(bid).ask(ask).high(high).low(low).volume(volume)
-        .timestamp(date).build();
+    return new Ticker.Builder()
+        .instrument(currencyPair)
+        .last(last)
+        .bid(bid)
+        .ask(ask)
+        .high(high)
+        .low(low)
+        .volume(volume)
+        .timestamp(date)
+        .build();
   }
 
   public static OrderBook adaptBitcointradeOrderBook(BitcointradeOrderBook bitcointradeOrderBook, CurrencyPair currencyPair) {
@@ -109,8 +117,14 @@ public final class BitcointradeAdapters {
     OrderType type = BitcointradeOrderType.from(bitcointradeTrade.getType());
     Date timestamp = fromISODateStringQuietly(bitcointradeTrade.getDate());
 
-    return new Trade(type, bitcointradeTrade.getAmount(), currencyPair, bitcointradeTrade.getUnitPrice(), timestamp,
-        bitcointradeTrade.getActiveOrderCode());
+    return new Trade.Builder()
+        .type(type)
+        .originalAmount(bitcointradeTrade.getAmount())
+        .instrument(currencyPair)
+        .price(bitcointradeTrade.getUnitPrice())
+        .timestamp(timestamp)
+        .id(bitcointradeTrade.getActiveOrderCode())
+        .build();
   }
 
   private static Date fromISODateStringQuietly(String orderDate) {
