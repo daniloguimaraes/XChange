@@ -1,13 +1,16 @@
 package org.knowm.xchange.bitcointrade.service;
 
+import static org.knowm.xchange.bitcointrade.BitcointradeConstants.DEFAULT_CURRENT_PAGE;
+import static org.knowm.xchange.bitcointrade.BitcointradeConstants.DEFAULT_PAGE_SIZE;
+import static org.knowm.xchange.bitcointrade.BitcointradeCurrencyPairNormalizer.normalize;
+
 import java.io.IOException;
 
 import org.knowm.xchange.Exchange;
-import org.knowm.xchange.bitcointrade.Bitcointrade;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderStatus;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeUserOrdersResponse;
 import org.knowm.xchange.bitcointrade.service.trade.params.orders.BitcointradeOpenOrdersParamCurrencyPair;
-import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
 
 /**
@@ -32,7 +35,7 @@ public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService 
   public BitcointradeUserOrdersResponse returnOpenOrders(OpenOrdersParams params) throws IOException {
     BitcointradeOpenOrdersParamCurrencyPair bitcointradeOpenOrdersParamCurrencyPair = null;
 
-    if (params != null && params instanceof BitcointradeOpenOrdersParamCurrencyPair) {
+    if (params instanceof BitcointradeOpenOrdersParamCurrencyPair) {
       bitcointradeOpenOrdersParamCurrencyPair = (BitcointradeOpenOrdersParamCurrencyPair) params;
     }
 
@@ -40,10 +43,10 @@ public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService 
 
     String startTime = null;
     String endTime = null;
-    String currency = Currency.BTC.toString();
+    String currency = normalize(CurrencyPair.BTC_BRL);
     String type = null;
-    Integer pageSize = Bitcointrade.DEFAULT_PAGE_SIZE;
-    Integer currentPage = Bitcointrade.DEFAULT_CURRENT_PAGE;
+    Integer pageSize = DEFAULT_PAGE_SIZE;
+    Integer currentPage = DEFAULT_CURRENT_PAGE;
 
     if (bitcointradeOpenOrdersParamCurrencyPair != null) {
       startTime = bitcointradeOpenOrdersParamCurrencyPair.getStartTime();
