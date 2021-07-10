@@ -43,7 +43,7 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
   BitcointradeTickerResponse getBitcointradeTicker(CurrencyPair currencyPair) throws ExchangeException {
 
     try {
-      return bitcointrade.getTicker(currencyPair.base.toString());
+      return bitcointrade.getTicker(currencyPair.counter.toString().concat(currencyPair.base.toString()));
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {

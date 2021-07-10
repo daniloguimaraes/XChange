@@ -62,10 +62,10 @@ public class BitcointradeMarketDataServiceRawIntegration {
   public void testGetTickerWithAnInvalidCurrency() {
 
     exception.expect(ExchangeException.class);
-    exception.expectMessage("Moeda inválida");
+    exception.expectMessage("Código do par de moedas inválido");
 
-    // Bitcointrade doesn't trade Ripple (XRP), yet.
-    sut.getBitcointradeTicker(new CurrencyPair("XRP", "ABC"));
+    // Bitcointrade doesn't trade Tether (USDT), yet.
+    sut.getBitcointradeTicker(new CurrencyPair("USDT", "BRL"));
   }
 
 
