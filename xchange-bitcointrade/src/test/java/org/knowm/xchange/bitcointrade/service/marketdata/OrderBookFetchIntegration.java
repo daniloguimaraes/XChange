@@ -6,7 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
-import org.knowm.xchange.bitcointrade.BitcointradeExchange;
+import org.knowm.xchange.bitcointrade.BitcoinTradeExchange;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
@@ -27,7 +27,7 @@ public class OrderBookFetchIntegration {
   public static void setUp() throws Exception {
 
     Exchange exchange =
-        ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
+        ExchangeFactory.INSTANCE.createExchange(BitcoinTradeExchange.class.getName());
     exchange.remoteInit();
     MarketDataService marketDataService = exchange.getMarketDataService();
     orderBook = marketDataService.getOrderBook(new CurrencyPair(Currency.BTC, Currency.BRL));

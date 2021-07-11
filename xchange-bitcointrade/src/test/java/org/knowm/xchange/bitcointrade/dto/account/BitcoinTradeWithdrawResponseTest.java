@@ -1,0 +1,67 @@
+package org.knowm.xchange.bitcointrade.dto.account;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.knowm.xchange.bitcointrade.BitcoinTradeAdaptersTest;
+import org.knowm.xchange.bitcointrade.BitcoinTradeFeeType;
+import org.knowm.xchange.bitcointrade.BitcoinTradeWithdrawStatus;
+
+/**
+ * Tests {@lunk BitcointradeWithdrawResponse} class.
+ *
+ * @author Danilo Guimaraes
+ */
+public class BitcoinTradeWithdrawResponseTest {
+
+  public static BitcoinTradeWithdrawResponse sut;
+
+  @BeforeClass
+  public static void setUp() throws Exception {
+
+    sut = loadBitcointradeWithdrawFromExampleData();
+  }
+
+  private static BitcoinTradeWithdrawResponse loadBitcointradeWithdrawFromExampleData()
+      throws IOException {
+
+    InputStream is =
+        BitcoinTradeAdaptersTest.class.getResourceAsStream("/account/example-withdraw-data.json");
+
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.readValue(is, BitcoinTradeWithdrawResponse.class);
+  }
+
+  @Test
+  public void testWithdraw() throws Exception {
+
+    final SoftAssertions softly = new SoftAssertions();
+
+    BitcoinTradeWithdraw withdrawal = sut.getData();
+    softly.assertThat(withdrawal).isNotNull();
+    softly.assertThat(withdrawal.getCode()).isEqualTo("HJzpwYDrz");
+    softly
+        .assertThat(withdrawal.getOriginAddress())
+        .isEqualTo("mpe8FKtvDktBN12XJoFp5FRpdktySxD8wg");
+    softly
+        .assertThat(withdrawal.getDestinationAddress())
+        .isEqualTo("1AU4BoYaxSunkEWi4gMYXJ41c9bvQG6Wa2");
+    softly.assertThat(withdrawal.getAmount()).isEqualTo(new BigDecimal("0.0094963"));
+    softly.assertThat(withdrawal.getMinerFee()).isEqualTo(new BigDecimal("0.0005037"));
+    softly.assertThat(withdrawal.getMinerFeeType()).isEqualTo(BitcoinTradeFeeType.SLOW);
+    softly.assertThat(withdrawal.getTaxIndex()).isEqualTo(0);
+    softly.assertThat(withdrawal.getTaxIndexCalculated()).isEqualTo(0);
+    softly.assertThat(withdrawal.getTaxAmount()).isEqualTo("0");
+    softly.assertThat(withdrawal.getStatus()).isEqualTo(BitcoinTradeWithdrawStatus.PENDING);
+    softly.assertThat(withdrawal.getCreateDate()).isEqualTo("2018-01-25T16:37:15.443Z");
+    softly.assertThat(withdrawal.getUpdateDate()).isEqualTo("2018-01-25T16:37:15.017Z");
+    softly.assertThat(withdrawal.getTransactionId()).isNull();
+    softly.assertThat(withdrawal.getLink()).isNull();
+
+    softly.assertAll();
+  }
+}
