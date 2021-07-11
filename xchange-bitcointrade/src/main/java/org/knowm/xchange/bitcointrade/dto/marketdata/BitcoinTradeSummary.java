@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#9a20d5e9-056b-7427-5f22-35f571f60411">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#9a20d5e9-056b-7427-5f22-35f571f60411">BitcoinTrade
  *     API - Summary Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -1,7 +1,7 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
- * Bitcointrade Exchange Fee Type.
+ * BitcoinTrade Exchange Fee Type.
  *
  * @author Danilo Guimaraes
  */
@@ -23,7 +23,7 @@ public enum BitcoinTradeFeeType {
   }
 
   /**
-   * Create an instance of (@link BitcointradeFeeType} based on a String.
+   * Create an instance of (@link BitcoinTradeFeeType} based on a String.
    *
    * @param feeType the fee type
    * @return an instance of {@link BitcoinTradeFeeType} or {@code null}

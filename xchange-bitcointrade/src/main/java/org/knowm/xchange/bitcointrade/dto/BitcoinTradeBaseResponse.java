@@ -12,7 +12,7 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Base class for all responses at Bitcointrade Exchange API.
+ * Base class for all responses at BitcoinTrade Exchange API.
  *
  * <p>All success responses follow the pattern:
  *
@@ -34,7 +34,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * @param <T> the class representing the 'data' field
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#intro">Bitcointrade API Docs</a>
+ * @see <a href="https://apidocs.bitcointrade.com.br/#intro">BitcoinTrade API Docs</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"message", "data"})

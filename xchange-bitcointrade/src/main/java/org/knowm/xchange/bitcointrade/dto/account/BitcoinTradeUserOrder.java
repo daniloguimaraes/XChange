@@ -15,7 +15,7 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeOrderType;
 /**
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">BitcoinTrade
  *     API - User Orders Documentation (Brazilian Portuguese)</a>
  */
 public class BitcoinTradeUserOrder {

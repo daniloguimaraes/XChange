@@ -12,11 +12,11 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Bitcointrade Ticker itself.
+ * BitcoinTrade Ticker itself.
  *
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0">BitcoinTrade
  *     API - Ticker Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

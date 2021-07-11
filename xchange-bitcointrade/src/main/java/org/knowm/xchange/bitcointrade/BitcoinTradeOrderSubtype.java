@@ -1,7 +1,7 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
- * Bitcointrade Exchange order sub-type
+ * BitcoinTrade Exchange order sub-type
  *
  * @author Danilo Guimaraes
  */

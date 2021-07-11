@@ -5,7 +5,7 @@ import org.knowm.xchange.currency.CurrencyPair;
 /**
  * {@link CurrencyPair}'s default {@code toString} implementation returns 'base / counter'.
  *
- * <p>Unfortunately Bitcointrade's API works with a 'counterbase' format. For example: 'BTC/BRL'
+ * <p>Unfortunately BitcoinTrade's API works with a 'counterbase' format. For example: 'BTC/BRL'
  * becomes 'BRLBTC'.
  *
  * @see <a href="https://apidocs.bitcointrade.com.br/#pares-disponiveis">BitcoinTrade API - Pares
@@ -14,7 +14,7 @@ import org.knowm.xchange.currency.CurrencyPair;
 public final class BitcoinTradeCurrencyPairNormalizer {
 
   /**
-   * Normalize a instance of {@link CurrencyPair} with Bitcointrade's specific format.
+   * Normalize a instance of {@link CurrencyPair} with BitcoinTrade's specific format.
    *
    * @param currencyPair the currency pair
    * @return normalized currency pair or 'BRLBTC' if 'currencyPair' argument is null

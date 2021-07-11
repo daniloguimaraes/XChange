@@ -21,7 +21,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeEstimatedPriceR
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeSummaryResponse;
 
 /**
- * Bitcointrade Exchange authenticated end-points.
+ * BitcoinTrade Exchange authenticated end-points.
  *
  * @author Danilo Guimaraes
  */
@@ -32,9 +32,9 @@ public interface BitcoinTradeAuthenticated {
   /**
    * Get the summary (aka ticker)
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param currency the currency (eg. BTC)
-   * @return an instance of (@link BitcointradeSummaryResponse}
+   * @return an instance of (@link BitcoinTradeSummaryResponse}
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
    */
@@ -47,7 +47,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * Create a new order
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param currency the currency
    * @param type the order type (buy or sell)
    * @param amount the amount
@@ -69,7 +69,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * Get user orders
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param status the order statys
    * @param startDate start deposit date, in ISO-8601 date format. Optional
    * @param endDate end deposit date, in ISO-8601 date format. Optional
@@ -97,7 +97,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * Cancel an order.
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param orderId the order id
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
@@ -110,7 +110,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * The estimated price of a cryptocurrency
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param amount the amount
    * @param pair the currency pair (eg. BRLBTC)
    * @param type the type (buy or sell)
@@ -130,7 +130,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * Withdraw estimated fee
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @return an instance of {@link BitcoinTradeWithdrawListResponse}
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
@@ -141,7 +141,7 @@ public interface BitcoinTradeAuthenticated {
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken) throws BitcoinTradeException, IOException;
 
   /**
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @param orderStatus the order status
@@ -165,7 +165,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * Create a new withdraw.
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param address the destination address
    * @param fee the fee
    * @param feeType the fee type
@@ -187,7 +187,7 @@ public interface BitcoinTradeAuthenticated {
   /**
    * The list of deposits.
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @param status the deposit status

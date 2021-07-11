@@ -8,7 +8,7 @@ import org.knowm.xchange.utils.nonce.AtomicLongIncrementalTime2013NonceFactory;
 import si.mazi.rescu.SynchronizedValueFactory;
 
 /**
- * The Bitcointrade Exchange represantation itself.
+ * The BitcoinTrade Exchange represantation itself.
  *
  * @author Danilo Guimaraes
  */
@@ -30,8 +30,8 @@ public class BitcoinTradeExchange extends BaseExchange implements Exchange {
     exchangeSpecification.setSslUri("https://api.bitcointrade.com.br/");
     exchangeSpecification.setHost("www.bitcointrade.com.br");
     exchangeSpecification.setPort(443);
-    exchangeSpecification.setExchangeName("Bitcointrade");
-    exchangeSpecification.setExchangeDescription("Bitcointrade is a Brazilian bitcoin exchange.");
+    exchangeSpecification.setExchangeName("BitcoinTrade");
+    exchangeSpecification.setExchangeDescription("BitcoinTrade is a Brazilian bitcoin exchange.");
     return exchangeSpecification;
   }
 

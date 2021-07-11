@@ -1,7 +1,7 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
- * Bitcointrade Exchange withdraw status
+ * BitcoinTrade Exchange withdraw status
  *
  * @author Danilo Guimaraes
  */

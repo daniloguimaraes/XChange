@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.knowm.xchange.bitcointrade.dto.BitcoinTradeBaseResponse;
 
 /**
- * Bitcointrade Exchange Order Book response representation.
+ * BitcoinTrade Exchange Order Book response representation.
  *
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#dc3695f5-6129-e35c-153d-c629aee8fd48">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#dc3695f5-6129-e35c-153d-c629aee8fd48">BitcoinTrade
  *     API - Trades Documentation (Brazilian Portuguese)</a>
  */
 public class BitcoinTradeOrderBookResponse extends BitcoinTradeBaseResponse<BitcoinTradeOrderBook> {

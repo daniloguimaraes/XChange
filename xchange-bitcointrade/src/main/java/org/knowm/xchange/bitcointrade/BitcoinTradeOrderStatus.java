@@ -3,7 +3,7 @@ package org.knowm.xchange.bitcointrade;
 import org.knowm.xchange.dto.Order;
 
 /**
- * Bitcointrade Exchange order status.
+ * BitcoinTrade Exchange order status.
  *
  * @author Danilo Guimaraes
  */

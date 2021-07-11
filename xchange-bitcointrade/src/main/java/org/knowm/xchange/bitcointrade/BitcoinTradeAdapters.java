@@ -26,7 +26,7 @@ import org.knowm.xchange.dto.trade.OpenOrders;
 import org.knowm.xchange.utils.DateUtils;
 
 /**
- * Bitcointrade adapter class.
+ * BitcoinTrade adapter class.
  *
  * @author Danilo Guimaraes
  */
@@ -36,13 +36,13 @@ public final class BitcoinTradeAdapters {
     // Static use only
   }
 
-  public static Ticker adaptBitcointradeTicker(
+  public static Ticker adaptBitcoinTradeTicker(
       BitcoinTradeTickerResponse bitcointradeTickerResponse, CurrencyPair currencyPair) {
 
-    return adaptBitcointradeTicker(bitcointradeTickerResponse.getData(), currencyPair);
+    return adaptBitcoinTradeTicker(bitcointradeTickerResponse.getData(), currencyPair);
   }
 
-  static Ticker adaptBitcointradeTicker(BitcoinTradeTicker ticker, CurrencyPair currencyPair) {
+  static Ticker adaptBitcoinTradeTicker(BitcoinTradeTicker ticker, CurrencyPair currencyPair) {
 
     BigDecimal last = ticker.getLast();
     BigDecimal bid = ticker.getBuy();
@@ -64,18 +64,18 @@ public final class BitcoinTradeAdapters {
         .build();
   }
 
-  public static OrderBook adaptBitcointradeOrderBook(
+  public static OrderBook adaptBitcoinTradeOrderBook(
       BitcoinTradeOrderBook bitcointradeOrderBook, CurrencyPair currencyPair) {
 
     List<LimitOrder> asks =
-        adaptBitcointradePublicOrders(bitcointradeOrderBook.getAsks(), OrderType.ASK, currencyPair);
+        adaptBitcoinTradePublicOrders(bitcointradeOrderBook.getAsks(), OrderType.ASK, currencyPair);
     List<LimitOrder> bids =
-        adaptBitcointradePublicOrders(bitcointradeOrderBook.getBids(), OrderType.BID, currencyPair);
+        adaptBitcoinTradePublicOrders(bitcointradeOrderBook.getBids(), OrderType.BID, currencyPair);
 
     return new OrderBook(null, asks, bids);
   }
 
-  static List<LimitOrder> adaptBitcointradePublicOrders(
+  static List<LimitOrder> adaptBitcoinTradePublicOrders(
       List<BitcoinTradeOrderBook.BidsAndAsks> list,
       OrderType orderType,
       CurrencyPair currencyPair) {
@@ -95,7 +95,7 @@ public final class BitcoinTradeAdapters {
     return orders;
   }
 
-  public static Trades adaptBitcointradePublicTrades(
+  public static Trades adaptBitcoinTradePublicTrades(
       BitcoinTradePublicTradeResponse bitcointradePublicTradeResponse, CurrencyPair currencyPair) {
 
     List<Trade> trades = new ArrayList<>();
@@ -110,7 +110,7 @@ public final class BitcoinTradeAdapters {
       if (bitcointradePublicTradeResponse.getData() != null) {
         for (BitcoinTradePublicTrade bitcointradeTrade :
             bitcointradePublicTradeResponse.getData().getTrades()) {
-          trades.add(adaptBitcointradePublicTrade(bitcointradeTrade, currencyPair));
+          trades.add(adaptBitcoinTradePublicTrade(bitcointradeTrade, currencyPair));
         }
       }
     }
@@ -118,7 +118,7 @@ public final class BitcoinTradeAdapters {
     return new Trades(trades, TradeSortType.SortByTimestamp);
   }
 
-  private static Trade adaptBitcointradePublicTrade(
+  private static Trade adaptBitcoinTradePublicTrade(
       BitcoinTradePublicTrade bitcointradeTrade, CurrencyPair currencyPair) {
 
     OrderType type = BitcoinTradeOrderType.from(bitcointradeTrade.getType());
@@ -143,7 +143,7 @@ public final class BitcoinTradeAdapters {
     }
   }
 
-  public static OpenOrders adaptBitcointradeOpenOrders(
+  public static OpenOrders adaptBitcoinTradeOpenOrders(
       BitcoinTradeUserOrdersResponse bitcointradeUserOrdersResponse) {
 
     return null;

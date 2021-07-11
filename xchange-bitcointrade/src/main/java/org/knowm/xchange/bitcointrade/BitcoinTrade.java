@@ -13,7 +13,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradePublicTradeResp
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeTickerResponse;
 
 /**
- * Bitcointrade Exchange public end-points.
+ * BitcoinTrade Exchange public end-points.
  *
  * @author Danilo Guimaraes
  */
@@ -22,7 +22,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeTickerResponse;
 public interface BitcoinTrade {
 
   /**
-   * Get the Bitcointrade Exchange ticker
+   * Get the BitcoinTrade Exchange ticker
    *
    * @param currencyPair the currency pair (eg. BRLBTC)
    * @return an instance of {@link BitcoinTradeTickerResponse}
@@ -35,7 +35,7 @@ public interface BitcoinTrade {
       throws BitcoinTradeException, IOException;
 
   /**
-   * Get the public order book at Bitcointrade Exchange
+   * Get the public order book at BitcoinTrade Exchange
    *
    * @param currencyPair the currency pair (eg. BRLBTC)
    * @return an instance of {@link BitcoinTradeOrderBook}
@@ -48,7 +48,7 @@ public interface BitcoinTrade {
       throws BitcoinTradeException, IOException;
 
   /**
-   * List all public trades made at Bitcointrade Exchange.
+   * List all public trades made at BitcoinTrade Exchange.
    *
    * @param currencyPair the currency pair (eg. BRLBTC). Mandatory
    * @param startTime start trade time, in ISO-8601 date/time format. Optional

@@ -6,7 +6,7 @@ public final class BitcoinTradeConstants {
   public static final int DEFAULT_CURRENT_PAGE = 1;
 
   /**
-   * Bitcointrade's API Token Header Name ({@code x-api-key})
+   * BitcoinTrade's API Token Header Name ({@code x-api-key})
    *
    * @see <a href="https://apidocs.bitcointrade.com.br/#section/Authentication">
    *   BitoinTrade API Documentation - Authentication</a>

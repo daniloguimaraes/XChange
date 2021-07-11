@@ -15,7 +15,7 @@ import org.knowm.xchange.exceptions.ExchangeException;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 
 /**
- * {@link MarketDataService} implementation for Bitcointrade Exchange.
+ * {@link MarketDataService} implementation for BitcoinTrade Exchange.
  *
  * @author Danilo Guimaraes
  */
@@ -25,7 +25,7 @@ public class BitcoinTradeMarketDataService extends BitcoinTradeMarketDataService
   /**
    * Constructor
    *
-   * @param exchange the Bitcointrade Exchange
+   * @param exchange the BitcoinTrade Exchange
    */
   public BitcoinTradeMarketDataService(BitcoinTradeExchange exchange) {
 
@@ -35,16 +35,16 @@ public class BitcoinTradeMarketDataService extends BitcoinTradeMarketDataService
   @Override
   public Ticker getTicker(CurrencyPair currencyPair, Object... args) throws IOException {
 
-    BitcoinTradeTickerResponse bitcointradeTickerResponse = getBitcointradeTicker(currencyPair);
-    return BitcoinTradeAdapters.adaptBitcointradeTicker(bitcointradeTickerResponse, currencyPair);
+    BitcoinTradeTickerResponse bitcointradeTickerResponse = getBitcoinTradeTicker(currencyPair);
+    return BitcoinTradeAdapters.adaptBitcoinTradeTicker(bitcointradeTickerResponse, currencyPair);
   }
 
   @Override
   public OrderBook getOrderBook(CurrencyPair currencyPair, Object... args)
       throws ExchangeException, IOException {
 
-    BitcoinTradeOrderBookResponse ob = getBitcointradeOrderBook();
-    return BitcoinTradeAdapters.adaptBitcointradeOrderBook(ob.getData(), currencyPair);
+    BitcoinTradeOrderBookResponse ob = getBitcoinTradeOrderBook();
+    return BitcoinTradeAdapters.adaptBitcoinTradeOrderBook(ob.getData(), currencyPair);
   }
 
   @Override
@@ -78,17 +78,17 @@ public class BitcoinTradeMarketDataService extends BitcoinTradeMarketDataService
     }
     BitcoinTradePublicTradeResponse bitcointradePublicTradeResponse;
     if (startTime == null && endTime == null) {
-      bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair);
+      bitcointradePublicTradeResponse = getBitcoinTradePublicTrades(currencyPair);
     } else {
       bitcointradePublicTradeResponse =
-          getBitcointradePublicTrades(currencyPair, startTime, endTime, pageSize, currentPage);
+          getBitcoinTradePublicTrades(currencyPair, startTime, endTime, pageSize, currentPage);
     }
-    return BitcoinTradeAdapters.adaptBitcointradePublicTrades(
+    return BitcoinTradeAdapters.adaptBitcoinTradePublicTrades(
         bitcointradePublicTradeResponse, currencyPair);
   }
 
   /**
-   * Get a {@code currencyPair} estimated price at Bitcointrade Exchange.
+   * Get a {@code currencyPair} estimated price at BitcoinTrade Exchange.
    *
    * @param amount the amount
    * @param pair the currency pair (eg. BRLBTC)

@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.knowm.xchange.bitcointrade.dto.BitcoinTradeBaseResponse;
 
 /**
- * Bitcointrade Exchange Ticker response representation
+ * BitcoinTrade Exchange Ticker response representation
  *
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0">BitcoinTrade
  *     API - Ticker Documentation (Brazilian Portuguese)</a>
  */
 public class BitcoinTradeTickerResponse extends BitcoinTradeBaseResponse<BitcoinTradeTicker> {

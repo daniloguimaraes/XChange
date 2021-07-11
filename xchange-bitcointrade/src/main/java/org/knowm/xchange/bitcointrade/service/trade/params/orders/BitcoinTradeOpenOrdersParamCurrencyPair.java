@@ -59,7 +59,7 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
     return currentPage;
   }
 
-  /** Internal BitcointradeOpenOrdersParamCurrencyPai builder */
+  /** Internal BitcoinTradeOpenOrdersParamCurrencyPai builder */
   public static class Builder {
 
     private final CurrencyPair currencyPair;

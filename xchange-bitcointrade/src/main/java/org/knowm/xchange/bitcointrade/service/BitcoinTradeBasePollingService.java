@@ -8,9 +8,9 @@ import org.knowm.xchange.service.BaseService;
 import si.mazi.rescu.RestProxyFactory;
 
 /**
- * Bitcointrade base polling service.
+ * BitcoinTrade base polling service.
  *
- * <p>In the near future, when Bitcointrade launches trade API, this class will be responsible for
+ * <p>In the near future, when BitcoinTrade launches trade API, this class will be responsible for
  * managing credentials
  *
  * @author Danilo Guimaraes
@@ -25,7 +25,7 @@ public class BitcoinTradeBasePollingService extends BaseExchangeService<BitcoinT
   /**
    * Constructor
    *
-   * @param exchange the Bitcointrade Exchange
+   * @param exchange the BitcoinTrade Exchange
    */
   BitcoinTradeBasePollingService(BitcoinTradeExchange exchange) {
 

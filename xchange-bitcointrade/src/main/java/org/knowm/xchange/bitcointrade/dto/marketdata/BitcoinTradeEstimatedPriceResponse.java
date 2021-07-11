@@ -9,7 +9,7 @@ import org.knowm.xchange.bitcointrade.dto.BitcoinTradeBaseResponse;
 /**
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#c3fbdb41-fdd6-108c-753d-5efcfeff7a7e">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#c3fbdb41-fdd6-108c-753d-5efcfeff7a7e">BitcoinTrade
  *     API - Estimated Price Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

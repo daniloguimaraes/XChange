@@ -17,7 +17,7 @@ import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.exceptions.ExchangeException;
 
 /**
- * MarketDataService raw implementation for Bitcointrade Exchange.
+ * MarketDataService raw implementation for BitcoinTrade Exchange.
  *
  * @author Danilo Guimaraes
  */
@@ -26,7 +26,7 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
   /**
    * Constructor
    *
-   * @param exchange the Bitcointrade Exchange
+   * @param exchange the BitcoinTrade Exchange
    */
   BitcoinTradeMarketDataServiceRaw(BitcoinTradeExchange exchange) {
 
@@ -34,13 +34,13 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
   }
 
   /**
-   * Get the Bitcointrade Exchange ticker
+   * Get the BitcoinTrade Exchange ticker
    *
    * @param currencyPair the currency pair
    * @return an instance of {@link BitcoinTradeTickerResponse}
    * @throws ExchangeException
    */
-  BitcoinTradeTickerResponse getBitcointradeTicker(CurrencyPair currencyPair)
+  BitcoinTradeTickerResponse getBitcoinTradeTicker(CurrencyPair currencyPair)
       throws ExchangeException {
 
     try {
@@ -54,26 +54,26 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
   }
 
   /**
-   * Get the BTC order book at Bitcointrade Exchange.
+   * Get the BTC order book at BitcoinTrade Exchange.
    *
-   * <p>To get a different currency order book, use {@link #getBitcointradeOrderBook(CurrencyPair)}.
+   * <p>To get a different currency order book, use {@link #getBitcoinTradeOrderBook(CurrencyPair)}.
    *
    * @return an instance of {@link BitcoinTradeOrderBookResponse}
    * @throws IOException
    */
-  BitcoinTradeOrderBookResponse getBitcointradeOrderBook() throws IOException {
+  BitcoinTradeOrderBookResponse getBitcoinTradeOrderBook() throws IOException {
 
-    return getBitcointradeOrderBook(CurrencyPair.BTC_BRL);
+    return getBitcoinTradeOrderBook(CurrencyPair.BTC_BRL);
   }
 
   /**
-   * Get a specific currency order book at Bitcointrade Exchange.
+   * Get a specific currency order book at BitcoinTrade Exchange.
    *
    * @param currencyPair the order book currency pair
    * @return an instance of {@link BitcoinTradeOrderBookResponse}
    * @throws IOException
    */
-  BitcoinTradeOrderBookResponse getBitcointradeOrderBook(CurrencyPair currencyPair)
+  BitcoinTradeOrderBookResponse getBitcoinTradeOrderBook(CurrencyPair currencyPair)
       throws IOException {
 
     try {
@@ -86,20 +86,20 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
   }
 
   /**
-   * List all public trades made at Bitcointrade Exchange.
+   * List all public trades made at BitcoinTrade Exchange.
    *
    * @param currencyPair the trade currency pair
    * @return an instance of {@link BitcoinTradePublicTradeResponse}
    * @throws ExchangeException
    */
-  BitcoinTradePublicTradeResponse getBitcointradePublicTrades(CurrencyPair currencyPair)
+  BitcoinTradePublicTradeResponse getBitcoinTradePublicTrades(CurrencyPair currencyPair)
       throws ExchangeException {
 
-    return getBitcointradePublicTrades(currencyPair, null, null);
+    return getBitcoinTradePublicTrades(currencyPair, null, null);
   }
 
   /**
-   * List all public trades made at Bitcointrade Exchange.
+   * List all public trades made at BitcoinTrade Exchange.
    *
    * @param currencyPair the trade currency pair
    * @param startTime the oldest trade filter
@@ -107,15 +107,15 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
    * @return an instance of {@link BitcoinTradePublicTradeResponse}
    * @throws ExchangeException
    */
-  BitcoinTradePublicTradeResponse getBitcointradePublicTrades(
+  BitcoinTradePublicTradeResponse getBitcoinTradePublicTrades(
       CurrencyPair currencyPair, String startTime, String endTime) throws ExchangeException {
 
-    return getBitcointradePublicTrades(
+    return getBitcoinTradePublicTrades(
         currencyPair, startTime, endTime, DEFAULT_PAGE_SIZE, DEFAULT_CURRENT_PAGE);
   }
 
   /**
-   * List all public trades made at Bitcointrade Exchange.
+   * List all public trades made at BitcoinTrade Exchange.
    *
    * @param currencyPair the trade currency pair
    * @param startTime the oldest trade filter
@@ -125,7 +125,7 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
    * @return an instance of {@link BitcoinTradePublicTradeResponse}
    * @throws ExchangeException
    */
-  BitcoinTradePublicTradeResponse getBitcointradePublicTrades(
+  BitcoinTradePublicTradeResponse getBitcoinTradePublicTrades(
       CurrencyPair currencyPair,
       String startTime,
       String endTime,
@@ -144,7 +144,7 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
   }
 
   /**
-   * Get the Bitcoin (BTC) estimated price at Bitcointrade Exchange.
+   * Get the Bitcoin (BTC) estimated price at BitcoinTrade Exchange.
    *
    * @param amount the amount
    * @param type the type (buy or sell)
@@ -156,7 +156,7 @@ class BitcoinTradeMarketDataServiceRaw extends BitcoinTradeBasePollingService {
   }
 
   /**
-   * Get a {@code currency} estimated price at Bitcointrade Exchange.
+   * Get a {@code currency} estimated price at BitcoinTrade Exchange.
    *
    * @param amount the amount
    * @param pair the currency pair (eg. BRLBTC)

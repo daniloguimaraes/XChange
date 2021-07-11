@@ -1,7 +1,7 @@
 package org.knowm.xchange.bitcointrade;
 
 /**
- * Bitcointrade Exchange deposit status
+ * BitcoinTrade Exchange deposit status
  *
  * @author Danilo Guimaraes
  */

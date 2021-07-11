@@ -12,11 +12,11 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeFeeType;
 import org.knowm.xchange.bitcointrade.BitcoinTradeWithdrawStatus;
 
 /**
- * Bitcointrade Exchange Withdraw representation.
+ * BitcoinTrade Exchange Withdraw representation.
  *
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#2f4b6643-ae82-d9a3-8cb9-d025e92982fe">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#2f4b6643-ae82-d9a3-8cb9-d025e92982fe">BitcoinTrade
  *     API - Withdraw List Documentation (Brazilian Portuguese)</a>
  */
 public class BitcoinTradeWithdraw {

@@ -3,7 +3,7 @@ package org.knowm.xchange.bitcointrade;
 import org.knowm.xchange.dto.Order;
 
 /**
- * Bitcointrade Exchange order type
+ * BitcoinTrade Exchange order type
  *
  * @author Danilo Guimaraes
  */

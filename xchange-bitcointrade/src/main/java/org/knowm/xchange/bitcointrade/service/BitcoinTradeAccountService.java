@@ -16,7 +16,7 @@ import org.knowm.xchange.service.trade.params.TradeHistoryParams;
 import org.knowm.xchange.service.trade.params.WithdrawFundsParams;
 
 /**
- * {@link AccountService} implementation for Bitcointrade Exchange.
+ * {@link AccountService} implementation for BitcoinTrade Exchange.
  *
  * @author Danilo Guimaraes
  */
@@ -26,7 +26,7 @@ public class BitcoinTradeAccountService extends BitcoinTradeAccountServiceRaw
   /**
    * Constructor
    *
-   * @param exchange the Bitcointrade Exchange
+   * @param exchange the BitcoinTrade Exchange
    */
   BitcoinTradeAccountService(BitcoinTradeExchange exchange) {
 

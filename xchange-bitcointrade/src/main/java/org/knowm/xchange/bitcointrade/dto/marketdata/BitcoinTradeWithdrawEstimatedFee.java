@@ -11,7 +11,7 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeFeeType;
 /**
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#cd0b440a-109b-80b3-9df6-8f3a0b10e32f">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#cd0b440a-109b-80b3-9df6-8f3a0b10e32f">BitcoinTrade
  *     API - Withdraw fee estimate Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

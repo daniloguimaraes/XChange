@@ -17,7 +17,7 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
   /**
    * Constructor
    *
-   * @param exchange the Bitcointrade Exchange
+   * @param exchange the BitcoinTrade Exchange
    */
   BitcoinTradeAccountServiceRaw(BitcoinTradeExchange exchange) {
 

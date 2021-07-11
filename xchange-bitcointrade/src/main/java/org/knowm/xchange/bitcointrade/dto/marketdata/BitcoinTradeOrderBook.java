@@ -10,11 +10,11 @@ import javax.annotation.Generated;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Bitcointrade Exchange Order book representation.
+ * BitcoinTrade Exchange Order book representation.
  *
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#dc3695f5-6129-e35c-153d-c629aee8fd48">Bitcointrade
+ *     href="https://apidocs.bitcointrade.com.br/#dc3695f5-6129-e35c-153d-c629aee8fd48">BitcoinTrade
  *     API - Trades Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
