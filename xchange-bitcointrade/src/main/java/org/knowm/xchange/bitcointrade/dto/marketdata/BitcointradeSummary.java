@@ -20,31 +20,39 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "unit_price_24h", "volume_24h", "last_transaction_unit_price", "currency" })
+@JsonPropertyOrder({ "unit_price_24h", "volume_24h", "last_transaction_unit_price", "pair", "max_price", "min_price" })
 public class BitcointradeSummary {
 
   private final BigDecimal unitPrice24h;
   private final BigDecimal volume24h;
   private final BigDecimal lastTransactionUnitPrice;
-  private final String currency;
+  private final String pair;
+  private final BigDecimal maxPrice;
+  private final BigDecimal minPrice;
   @JsonIgnore
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
-   *
    * @param volume24h
    * @param lastTransactionUnitPrice
-   * @param currency
+   * @param pair
    * @param unitPrice24h
    */
-  public BitcointradeSummary(@JsonProperty("unit_price_24h") BigDecimal unitPrice24h, @JsonProperty("volume_24h")BigDecimal volume24h,
-      @JsonProperty("last_transaction_unit_price") BigDecimal lastTransactionUnitPrice, @JsonProperty("currency") String currency) {
+  public BitcointradeSummary(
+      @JsonProperty("unit_price_24h") BigDecimal unitPrice24h,
+      @JsonProperty("volume_24h") BigDecimal volume24h,
+      @JsonProperty("last_transaction_unit_price") BigDecimal lastTransactionUnitPrice,
+      @JsonProperty("pair") String pair,
+      @JsonProperty("max_price") BigDecimal maxPrice,
+      @JsonProperty("min_price") BigDecimal minPrice) {
 
     super();
     this.unitPrice24h = unitPrice24h;
     this.volume24h = volume24h;
     this.lastTransactionUnitPrice = lastTransactionUnitPrice;
-    this.currency = currency;
+    this.pair = pair;
+    this.maxPrice = maxPrice;
+    this.minPrice = minPrice;
   }
 
   public BigDecimal getUnitPrice24h() {
@@ -62,9 +70,17 @@ public class BitcointradeSummary {
     return lastTransactionUnitPrice;
   }
 
-  public String getCurrency() {
+  public String getPair() {
 
-    return currency;
+    return pair;
+  }
+
+  public BigDecimal getMaxPrice() {
+    return maxPrice;
+  }
+
+  public BigDecimal getMinPrice() {
+    return minPrice;
   }
 
   @JsonAnyGetter
@@ -82,7 +98,15 @@ public class BitcointradeSummary {
   @Override
   public String toString() {
 
-    return new ToStringBuilder(this).append("unitPrice24h", unitPrice24h).append("volume24h", volume24h).append("lastTransactionUnitPrice", lastTransactionUnitPrice).append("currency", currency).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this)
+        .append("unitPrice24h", unitPrice24h)
+        .append("volume24h", volume24h)
+        .append("lastTransactionUnitPrice", lastTransactionUnitPrice)
+        .append("pair", pair)
+        .append("maxPrice", maxPrice)
+        .append("minPrice", minPrice)
+        .append("additionalProperties", additionalProperties)
+        .toString();
   }
 
 }

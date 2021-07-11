@@ -45,7 +45,9 @@ public class BitcointradeSummaryResponseTest {
     softly.assertThat(summary.getUnitPrice24h()).isEqualTo(new BigDecimal("54049"));
     softly.assertThat(summary.getVolume24h()).isEqualTo(new BigDecimal("0"));
     softly.assertThat(summary.getLastTransactionUnitPrice()).isEqualTo(new BigDecimal("54049"));
-    softly.assertThat(summary.getCurrency()).isEqualTo("BTC");
+    softly.assertThat(summary.getPair()).isEqualTo("BRLBTC");
+    softly.assertThat(summary.getMaxPrice()).isEqualTo(new BigDecimal("54049"));
+    softly.assertThat(summary.getMinPrice()).isEqualTo(new BigDecimal("54049"));
 
     softly.assertAll();
   }
