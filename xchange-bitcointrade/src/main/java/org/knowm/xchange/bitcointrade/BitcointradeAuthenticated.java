@@ -115,7 +115,7 @@ public interface BitcointradeAuthenticated {
    * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
    *     {apiToken}}
    * @param amount the amount
-   * @param currency the currency (eg. BTC)
+   * @param pair the currency pair (eg. BRLBTC)
    * @param type the type (buy or sell)
    * @return an instance of {@link BitcointradeEstimatedPriceResponse}
    * @throws BitcointradeException
@@ -126,7 +126,7 @@ public interface BitcointradeAuthenticated {
   BitcointradeEstimatedPriceResponse estimatedPrice(
       @HeaderParam("Authorization") String apiToken,
       @QueryParam("amount") BigDecimal amount,
-      @QueryParam("currency") String currency,
+      @QueryParam("pair") String pair,
       @QueryParam("type") String type)
       throws BitcointradeException, IOException;
 

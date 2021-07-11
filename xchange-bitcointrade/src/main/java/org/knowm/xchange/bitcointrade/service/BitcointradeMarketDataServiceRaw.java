@@ -159,16 +159,16 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * Get a {@code currency} estimated price at Bitcointrade Exchange.
    *
    * @param amount the amount
-   * @param currency the currency (eg. BTC)
+   * @param pair the currency pair (eg. BRLBTC)
    * @param type the type (buy or sell)
-   * @return the currency price or {@code null}
+   * @return the currency pair price or {@code null}
    * @throws ExchangeException
    */
-  BigDecimal estimatedPrice(BigDecimal amount, String currency, String type)
+  BigDecimal estimatedPrice(BigDecimal amount, String pair, String type)
       throws ExchangeException {
     try {
       final BitcointradeEstimatedPriceResponse response =
-          bitcointradeAuthenticated.estimatedPrice(apiToken, amount, currency, type);
+          bitcointradeAuthenticated.estimatedPrice(apiToken, amount, pair, type);
 
       if (response != null) {
         if (response.getData() != null) {

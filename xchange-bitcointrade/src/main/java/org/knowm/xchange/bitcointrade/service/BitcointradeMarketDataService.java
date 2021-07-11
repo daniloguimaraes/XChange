@@ -88,14 +88,14 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
   }
 
   /**
-   * Get a {@code currency} estimated price at Bitcointrade Exchange.
+   * Get a {@code currencyPair} estimated price at Bitcointrade Exchange.
    *
    * @param amount the amount
-   * @param currency the currency (eg. BTC)
+   * @param pair the currency pair (eg. BRLBTC)
    * @param type the type (buy or sell)
-   * @return the currency price or {@code null}
+   * @return the currency pair price or {@code null}
    */
-  public BigDecimal getEstimatedPrice(BigDecimal amount, String currency, String type) {
-    return estimatedPrice(amount, currency, type);
+  public BigDecimal getEstimatedPrice(BigDecimal amount, String pair, String type) {
+    return estimatedPrice(amount, pair, type);
   }
 }
