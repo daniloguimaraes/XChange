@@ -1,8 +1,8 @@
 package org.knowm.xchange.bitcointrade.service;
 
-import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.Bitcointrade;
 import org.knowm.xchange.bitcointrade.BitcointradeAuthenticated;
+import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.service.BaseExchangeService;
 import org.knowm.xchange.service.BaseService;
 
@@ -17,7 +17,7 @@ import si.mazi.rescu.RestProxyFactory;
  *
  * @author Danilo Guimaraes
  */
-public class BitcointradeBasePollingService extends BaseExchangeService implements BaseService {
+public class BitcointradeBasePollingService extends BaseExchangeService<BitcointradeExchange> implements BaseService {
 
   protected final Bitcointrade bitcointrade;
   protected final BitcointradeAuthenticated bitcointradeAuthenticated;
@@ -28,7 +28,7 @@ public class BitcointradeBasePollingService extends BaseExchangeService implemen
    *
    * @param exchange the Bitcointrade Exchange
    */
-  BitcointradeBasePollingService(Exchange exchange) {
+  BitcointradeBasePollingService(BitcointradeExchange exchange) {
 
     super(exchange);
 

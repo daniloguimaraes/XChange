@@ -7,8 +7,8 @@ import static org.knowm.xchange.bitcointrade.BitcointradeCurrencyPairNormalizer.
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeException;
+import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeEstimatedPriceResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
@@ -29,7 +29,7 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    *
    * @param exchange the Bitcointrade Exchange
    */
-  BitcointradeMarketDataServiceRaw(Exchange exchange) {
+  BitcointradeMarketDataServiceRaw(BitcointradeExchange exchange) {
 
     super(exchange);
   }

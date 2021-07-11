@@ -3,9 +3,8 @@ package org.knowm.xchange.bitcointrade.service;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeAdapters;
-import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeEstimatedPriceResponse;
+import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
@@ -28,7 +27,7 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
    *
    * @param exchange the Bitcointrade Exchange
    */
-  public BitcointradeMarketDataService(Exchange exchange) {
+  public BitcointradeMarketDataService(BitcointradeExchange exchange) {
 
     super(exchange);
   }

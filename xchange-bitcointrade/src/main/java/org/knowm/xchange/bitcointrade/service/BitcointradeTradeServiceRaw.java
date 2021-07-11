@@ -6,7 +6,7 @@ import static org.knowm.xchange.bitcointrade.BitcointradeCurrencyPairNormalizer.
 
 import java.io.IOException;
 
-import org.knowm.xchange.Exchange;
+import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderStatus;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeUserOrdersResponse;
 import org.knowm.xchange.bitcointrade.service.trade.params.orders.BitcointradeOpenOrdersParamCurrencyPair;
@@ -23,7 +23,7 @@ public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService 
    *
    * @param exchange the Bitcointrade Exchange
    */
-  BitcointradeTradeServiceRaw(Exchange exchange) {
+  BitcointradeTradeServiceRaw(BitcointradeExchange exchange) {
 
     super(exchange);
   }

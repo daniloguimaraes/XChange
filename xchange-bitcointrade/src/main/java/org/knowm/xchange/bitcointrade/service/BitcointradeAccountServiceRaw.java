@@ -1,7 +1,7 @@
 package org.knowm.xchange.bitcointrade.service;
 
-import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeException;
+import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeDepositListResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeWithdrawListResponse;
@@ -24,7 +24,7 @@ public class BitcointradeAccountServiceRaw extends BitcointradeBasePollingServic
      *
      * @param exchange the Bitcointrade Exchange
      */
-    BitcointradeAccountServiceRaw(Exchange exchange) {
+    BitcointradeAccountServiceRaw(BitcointradeExchange exchange) {
 
         super(exchange);
     }

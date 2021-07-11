@@ -1,7 +1,7 @@
 package org.knowm.xchange.bitcointrade.service;
 
-import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitcointrade.BitcointradeAdapters;
+import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.dto.account.FundingRecord;
@@ -28,7 +28,7 @@ public class BitcointradeAccountService extends BitcointradeAccountServiceRaw im
      *
      * @param exchange the Bitcointrade Exchange
      */
-    BitcointradeAccountService(Exchange exchange) {
+    BitcointradeAccountService(BitcointradeExchange exchange) {
 
         super(exchange);
     }

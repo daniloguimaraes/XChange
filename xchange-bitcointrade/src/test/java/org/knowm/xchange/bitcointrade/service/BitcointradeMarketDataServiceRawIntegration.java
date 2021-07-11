@@ -8,7 +8,6 @@ import org.junit.rules.ExpectedException;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
-import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTicker;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeTickerResponse;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -28,7 +27,7 @@ public class BitcointradeMarketDataServiceRawIntegration {
 
     Exchange bitcointradeExchange = ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
     bitcointradeExchange.remoteInit();
-    sut = new BitcointradeMarketDataService(bitcointradeExchange);
+    sut = new BitcointradeMarketDataService((BitcointradeExchange) bitcointradeExchange);
   }
 
   @Test
