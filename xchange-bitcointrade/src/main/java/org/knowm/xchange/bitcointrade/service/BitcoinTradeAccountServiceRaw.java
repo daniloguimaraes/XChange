@@ -24,20 +24,22 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
     super(exchange);
   }
 
-  String withdraw(String address, BigDecimal amount) throws ExchangeException {
-    return withdraw(address, amount, null, BitcoinTradeFeeType.REGULAR);
+  String withdraw(String destination, BigDecimal amount) throws ExchangeException {
+    return withdraw("btc", destination, amount, null, BitcoinTradeFeeType.REGULAR);
   }
 
-  String withdraw(String address, BigDecimal amount, BigDecimal fee) throws ExchangeException {
-    return withdraw(address, amount, fee, null);
+  String withdraw(String destination, BigDecimal amount, BigDecimal fee) throws ExchangeException {
+    return withdraw("btc", destination, amount, fee, null);
   }
 
-  String withdraw(String address, BigDecimal amount, BigDecimal fee, BitcoinTradeFeeType feeType)
+  String withdraw(String currency, String destination, BigDecimal amount, BigDecimal fee,
+      BitcoinTradeFeeType feeType)
       throws ExchangeException {
 
     try {
       final BitcoinTradeWithdrawResponse withdrawResponse =
-          bitcointradeAuthenticated.withdraw(apiToken, address, fee, feeType, amount);
+          bitcointradeAuthenticated.withdraw(
+              apiToken, currency, null, null, feeType, amount, destination);
 
       if (withdrawResponse != null && withdrawResponse.getData() != null) {
         return withdrawResponse.getData().getCode();
@@ -52,7 +54,8 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
 
   BitcoinTradeWithdrawListResponse withdrawals(TradeHistoryParams params) {
     try {
-      return bitcointradeAuthenticated.getWithdrawList(apiToken, null, null, null, null, null);
+      return bitcointradeAuthenticated.getWithdrawList(
+          apiToken, "btc", null, null, null, null, null);
     } catch (BitcoinTradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {
@@ -62,7 +65,7 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
 
   BitcoinTradeDepositListResponse deposits(TradeHistoryParams params) {
     try {
-      return bitcointradeAuthenticated.getDepositList(apiToken, null, null, null, null, null);
+      return bitcointradeAuthenticated.getDepositList(apiToken, null, null, null, null, null, null);
     } catch (BitcoinTradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {

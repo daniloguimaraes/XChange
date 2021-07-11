@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -131,17 +132,23 @@ public interface BitcoinTradeAuthenticated {
    * Withdraw estimated fee
    *
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param currency currency. Available options: "bch", "bitcoin", "bitcoincash", "brl", "btc",
+   *                "dai", "eos", "eth", "ethereum", "litecoin", "ltc", "ripple" and "xrp"
    * @return an instance of {@link BitcoinTradeWithdrawListResponse}
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("bitcoin/withdraw/fee")
+  @Path("{currency}/withdraw/fee")
   BitcoinTradeWithdrawListResponse getWithdrawEstimatedFee(
-      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken) throws BitcoinTradeException, IOException;
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
+      @PathParam("currency") String currency)
+      throws BitcoinTradeException, IOException;
 
   /**
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param currency currency. Available options: "bch", "bitcoin", "bitcoincash", "brl", "btc",
+   *                 "dai", "eos", "eth", "ethereum", "litecoin", "ltc", "ripple" and "xrp"
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @param orderStatus the order status
@@ -152,9 +159,10 @@ public interface BitcoinTradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("bitcoin/withdraw")
+  @Path("{currency}/withdraw")
   BitcoinTradeWithdrawListResponse getWithdrawList(
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
+      @PathParam("currency") String currency,
       @FormParam("page_size") Integer pageSize,
       @FormParam("current_page") Integer currentPage,
       @FormParam("status") BitcoinTradeOrderStatus orderStatus,
@@ -166,28 +174,35 @@ public interface BitcoinTradeAuthenticated {
    * Create a new withdraw.
    *
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
-   * @param address the destination address
-   * @param fee the fee
+   * @param currency currency. Available options: "bch", "bitcoin", "bitcoincash", "brl", "btc",
+   *                 "dai", "eos", "eth", "ethereum", "litecoin", "ltc", "ripple" and "xrp"
+   * @param tag destination address identifier
+   * @param memo destination address identifier
    * @param feeType the fee type
    * @param amount the withdraw amount
+   * @param destination the destination address
    * @return an instance of {@link BitcoinTradeWithdrawResponse}
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
    */
   @POST
-  @Path("bitcoin/withdraw")
+  @Path("{currency}/withdraw")
   BitcoinTradeWithdrawResponse withdraw(
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
-      @FormParam("destination") String address,
-      @FormParam("fee") BigDecimal fee,
+      @PathParam("currency") String currency,
+      @FormParam("tag") String tag,
+      @FormParam("memo") String memo,
       @FormParam("fee_type") BitcoinTradeFeeType feeType,
-      @FormParam("amount") BigDecimal amount)
+      @FormParam("amount") BigDecimal amount,
+      @FormParam("destination") String destination)
       throws BitcoinTradeException, IOException;
 
   /**
    * The list of deposits.
    *
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param currency currency. Available options: "bch", "bitcoin", "bitcoincash", "brl", "btc",
+   *                 "dai", "eos", "eth", "ethereum", "litecoin", "ltc", "ripple" and "xrp"
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @param status the deposit status
@@ -198,9 +213,10 @@ public interface BitcoinTradeAuthenticated {
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("bitcoin/deposits")
+  @Path("{currency}/deposits")
   BitcoinTradeDepositListResponse getDepositList(
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
+      @PathParam("currency") String currency,
       @QueryParam("page_size") Integer pageSize,
       @QueryParam("current_page") Integer currentPage,
       @QueryParam("status") BitcoinTradeDepositStatus status,
