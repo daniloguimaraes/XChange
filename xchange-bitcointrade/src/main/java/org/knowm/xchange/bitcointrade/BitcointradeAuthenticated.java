@@ -1,5 +1,7 @@
 package org.knowm.xchange.bitcointrade;
 
+import static org.knowm.xchange.bitcointrade.BitcointradeConstants.API_TOKEN_HEADER_NAME;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import javax.ws.rs.DELETE;
@@ -30,8 +32,7 @@ public interface BitcointradeAuthenticated {
   /**
    * Get the summary (aka ticker)
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param currency the currency (eg. BTC)
    * @return an instance of (@link BitcointradeSummaryResponse}
    * @throws BitcointradeException
@@ -40,14 +41,13 @@ public interface BitcointradeAuthenticated {
   @GET
   @Path("market/summary")
   BitcointradeSummaryResponse getSummary(
-      @HeaderParam("Authorization") String apiToken, @QueryParam("currency") String currency)
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken, @QueryParam("currency") String currency)
       throws BitcointradeException, IOException;
 
   /**
    * Create a new order
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param currency the currency
    * @param type the order type (buy or sell)
    * @param amount the amount
@@ -58,7 +58,7 @@ public interface BitcointradeAuthenticated {
   @POST
   @Path("market/create_order")
   void createOrder(
-      @HeaderParam("Authorization") String apiToken,
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @FormParam("currency") String currency,
       @FormParam("type") String type,
       @FormParam("subtype") String subtype,
@@ -69,8 +69,7 @@ public interface BitcointradeAuthenticated {
   /**
    * Get user orders
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param status the order statys
    * @param startDate start deposit date, in ISO-8601 date format. Optional
    * @param endDate end deposit date, in ISO-8601 date format. Optional
@@ -85,7 +84,7 @@ public interface BitcointradeAuthenticated {
   @GET
   @Path("market/user_orders")
   BitcointradeUserOrdersResponse getUserOrders(
-      @HeaderParam("Authorization") String apiToken,
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @QueryParam("status") BitcointradeOrderStatus status,
       @QueryParam("start_date") String startDate,
       @QueryParam("end_date") String endDate,
@@ -98,22 +97,20 @@ public interface BitcointradeAuthenticated {
   /**
    * Cancel an order.
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param orderId the order id
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
    */
   @DELETE
   @Path("market/user_orders")
-  String cancelOrder(@HeaderParam("Authorization") String apiToken, @FormParam("id") String orderId)
+  String cancelOrder(@HeaderParam(API_TOKEN_HEADER_NAME) String apiToken, @FormParam("id") String orderId)
       throws BitcointradeException, IOException;
 
   /**
    * The estimated price of a cryptocurrency
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param amount the amount
    * @param pair the currency pair (eg. BRLBTC)
    * @param type the type (buy or sell)
@@ -124,7 +121,7 @@ public interface BitcointradeAuthenticated {
   @GET
   @Path("market/estimated_price")
   BitcointradeEstimatedPriceResponse estimatedPrice(
-      @HeaderParam("Authorization") String apiToken,
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @QueryParam("amount") BigDecimal amount,
       @QueryParam("pair") String pair,
       @QueryParam("type") String type)
@@ -133,8 +130,7 @@ public interface BitcointradeAuthenticated {
   /**
    * Withdraw estimated fee
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @return an instance of {@link BitcointradeWithdrawListResponse}
    * @throws BitcointradeException
    * @throws IOException general I/O Exception
@@ -142,11 +138,10 @@ public interface BitcointradeAuthenticated {
   @GET
   @Path("bitcoin/withdraw/fee")
   BitcointradeWithdrawListResponse getWithdrawEstimatedFee(
-      @HeaderParam("Authorization") String apiToken) throws BitcointradeException, IOException;
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken) throws BitcointradeException, IOException;
 
   /**
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @param orderStatus the order status
@@ -159,7 +154,7 @@ public interface BitcointradeAuthenticated {
   @GET
   @Path("bitcoin/withdraw")
   BitcointradeWithdrawListResponse getWithdrawList(
-      @HeaderParam("Authorization") String apiToken,
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @FormParam("page_size") Integer pageSize,
       @FormParam("current_page") Integer currentPage,
       @FormParam("status") BitcointradeOrderStatus orderStatus,
@@ -170,8 +165,7 @@ public interface BitcointradeAuthenticated {
   /**
    * Create a new withdraw.
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param address the destination address
    * @param fee the fee
    * @param feeType the fee type
@@ -183,7 +177,7 @@ public interface BitcointradeAuthenticated {
   @POST
   @Path("bitcoin/withdraw")
   BitcointradeWithdrawResponse withdraw(
-      @HeaderParam("Authorization") String apiToken,
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @FormParam("destination") String address,
       @FormParam("fee") BigDecimal fee,
       @FormParam("fee_type") BitcointradeFeeType feeType,
@@ -193,8 +187,7 @@ public interface BitcointradeAuthenticated {
   /**
    * The list of deposits.
    *
-   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code Authorization: ApiToken
-   *     {apiToken}}
+   * @param apiToken the Bitcointrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @param status the deposit status
@@ -207,7 +200,7 @@ public interface BitcointradeAuthenticated {
   @GET
   @Path("bitcoin/deposits")
   BitcointradeDepositListResponse getDepositList(
-      @HeaderParam("Authorization") String apiToken,
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @QueryParam("page_size") Integer pageSize,
       @QueryParam("current_page") Integer currentPage,
       @QueryParam("status") BitcointradeDepositStatus status,
