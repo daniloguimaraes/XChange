@@ -8,7 +8,6 @@ import org.knowm.xchange.dto.Order;
  * @author Danilo Guimaraes
  */
 public enum BitcointradeOrderStatus {
-
   EXECUTED_COMPLETELY("executed_completely"),
   EXECUTED_PARTIALLY("executed_partially"),
   WAITING("waiting"),

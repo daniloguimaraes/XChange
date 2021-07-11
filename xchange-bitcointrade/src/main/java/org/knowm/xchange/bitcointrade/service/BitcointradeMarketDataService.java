@@ -2,7 +2,6 @@ package org.knowm.xchange.bitcointrade.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-
 import org.knowm.xchange.bitcointrade.BitcointradeAdapters;
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
@@ -20,7 +19,8 @@ import org.knowm.xchange.service.marketdata.MarketDataService;
  *
  * @author Danilo Guimaraes
  */
-public class BitcointradeMarketDataService extends BitcointradeMarketDataServiceRaw implements MarketDataService {
+public class BitcointradeMarketDataService extends BitcointradeMarketDataServiceRaw
+    implements MarketDataService {
 
   /**
    * Constructor
@@ -40,14 +40,16 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
   }
 
   @Override
-  public OrderBook getOrderBook(CurrencyPair currencyPair, Object... args) throws ExchangeException, IOException {
+  public OrderBook getOrderBook(CurrencyPair currencyPair, Object... args)
+      throws ExchangeException, IOException {
 
     BitcointradeOrderBookResponse ob = getBitcointradeOrderBook();
     return BitcointradeAdapters.adaptBitcointradeOrderBook(ob.getData(), currencyPair);
   }
 
   @Override
-  public Trades getTrades(CurrencyPair currencyPair, Object... args) throws ExchangeException, IOException {
+  public Trades getTrades(CurrencyPair currencyPair, Object... args)
+      throws ExchangeException, IOException {
 
     String startTime = null;
     String endTime = null;
@@ -72,15 +74,17 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
           if (args[0] != null && args[0] instanceof String) {
             startTime = (String) args[0];
           }
-        }
+      }
     }
     BitcointradePublicTradeResponse bitcointradePublicTradeResponse;
     if (startTime == null && endTime == null) {
       bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair);
     } else {
-      bitcointradePublicTradeResponse = getBitcointradePublicTrades(currencyPair, startTime, endTime, pageSize, currentPage);
+      bitcointradePublicTradeResponse =
+          getBitcointradePublicTrades(currencyPair, startTime, endTime, pageSize, currentPage);
     }
-    return BitcointradeAdapters.adaptBitcointradePublicTrades(bitcointradePublicTradeResponse, currencyPair);
+    return BitcointradeAdapters.adaptBitcointradePublicTrades(
+        bitcointradePublicTradeResponse, currencyPair);
   }
 
   /**
@@ -88,11 +92,10 @@ public class BitcointradeMarketDataService extends BitcointradeMarketDataService
    *
    * @param amount the amount
    * @param currency the currency (eg. BTC)
-   * @param type the type  (buy or sell)
+   * @param type the type (buy or sell)
    * @return the currency price or {@code null}
    */
   public BigDecimal getEstimatedPrice(BigDecimal amount, String currency, String type) {
     return estimatedPrice(amount, currency, type);
   }
-
 }

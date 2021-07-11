@@ -1,12 +1,12 @@
 package org.knowm.xchange.bitcointrade;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.TimeZone;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,8 +20,6 @@ import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.dto.trade.LimitOrder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Tests the {@link BitcointradeAdapters} class.
@@ -39,11 +37,14 @@ public class BitcointradeAdaptersTest {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    BitcointradeOrderBookResponse bitcointradeOrderBookResponse = loadBitcointradeOrderBookFromExampleData();
+    BitcointradeOrderBookResponse bitcointradeOrderBookResponse =
+        loadBitcointradeOrderBookFromExampleData();
     bitcointradeOrderBook = bitcointradeOrderBookResponse.getData();
 
     BitcointradeTickerResponseTest.setUp();
-    ticker = BitcointradeAdapters.adaptBitcointradeTicker(BitcointradeTickerResponseTest.sut, CurrencyPair.BTC_BRL);
+    ticker =
+        BitcointradeAdapters.adaptBitcointradeTicker(
+            BitcointradeTickerResponseTest.sut, CurrencyPair.BTC_BRL);
   }
 
   @Test
@@ -55,7 +56,9 @@ public class BitcointradeAdaptersTest {
 
     List<LimitOrder> bidsLimitOrders = orderBook.getBids();
     softly.assertThat(bidsLimitOrders.size()).isEqualTo(950);
-    softly.assertThat(bidsLimitOrders.get(300).getOriginalAmount()).isEqualTo(new BigDecimal("0.00175412"));
+    softly
+        .assertThat(bidsLimitOrders.get(300).getOriginalAmount())
+        .isEqualTo(new BigDecimal("0.00175412"));
 
     List<LimitOrder> asksLimitOrders = orderBook.getAsks();
     softly.assertThat(asksLimitOrders.size()).isEqualTo(2585);
@@ -71,11 +74,17 @@ public class BitcointradeAdaptersTest {
 
     final SoftAssertions softly = new SoftAssertions();
 
-    List<LimitOrder> bidsOrders = BitcointradeAdapters.adaptBitcointradePublicOrders(bitcointradeOrderBook.getBids(), Order.OrderType.BID, null);
+    List<LimitOrder> bidsOrders =
+        BitcointradeAdapters.adaptBitcointradePublicOrders(
+            bitcointradeOrderBook.getBids(), Order.OrderType.BID, null);
     softly.assertThat(bidsOrders.size()).isEqualTo(950);
-    softly.assertThat(bidsOrders.get(300).getOriginalAmount()).isEqualTo(new BigDecimal("0.00175412"));
+    softly
+        .assertThat(bidsOrders.get(300).getOriginalAmount())
+        .isEqualTo(new BigDecimal("0.00175412"));
 
-    List<LimitOrder> asksOrders = BitcointradeAdapters.adaptBitcointradePublicOrders(bitcointradeOrderBook.getAsks(), Order.OrderType.ASK, null);
+    List<LimitOrder> asksOrders =
+        BitcointradeAdapters.adaptBitcointradePublicOrders(
+            bitcointradeOrderBook.getAsks(), Order.OrderType.ASK, null);
     softly.assertThat(asksOrders.size()).isEqualTo(2585);
     softly.assertThat(asksOrders.get(300).getLimitPrice()).isEqualTo(new BigDecimal("39000"));
 
@@ -104,36 +113,42 @@ public class BitcointradeAdaptersTest {
   @Test
   public void testPublicTradesAdapter() throws Exception {
 
-//    final SoftAssertions softly = new SoftAssertions();
+    //    final SoftAssertions softly = new SoftAssertions();
 
-//    softly.assertThat(bitcointradePublicTradeResponses).isNotNull();
+    //    softly.assertThat(bitcointradePublicTradeResponses).isNotNull();
 
-//    softly.assertAll();
+    //    softly.assertAll();
   }
 
-  private static BitcointradeOrderBookResponse loadBitcointradeOrderBookFromExampleData() throws IOException {
+  private static BitcointradeOrderBookResponse loadBitcointradeOrderBookFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-orderbook-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream(
+            "/marketdata/example-orderbook-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradeOrderBookResponse.class);
   }
 
-  private static BitcointradeTickerResponse loadBitcointradeTickerFromExampleData() throws IOException {
+  private static BitcointradeTickerResponse loadBitcointradeTickerFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-ticker-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-ticker-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradeTickerResponse.class);
   }
 
-  private static BitcointradePublicTradeResponse[] loadBitcointoyouPublicTradesFromExampleData() throws IOException {
+  private static BitcointradePublicTradeResponse[] loadBitcointoyouPublicTradesFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-public-trades-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream(
+            "/marketdata/example-public-trades-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradePublicTradeResponse[].class);
-
   }
-
 }

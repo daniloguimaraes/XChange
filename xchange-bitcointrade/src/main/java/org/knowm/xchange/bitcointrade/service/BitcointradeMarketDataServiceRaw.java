@@ -6,7 +6,6 @@ import static org.knowm.xchange.bitcointrade.BitcointradeCurrencyPairNormalizer.
 
 import java.io.IOException;
 import java.math.BigDecimal;
-
 import org.knowm.xchange.bitcointrade.BitcointradeException;
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeEstimatedPriceResponse;
@@ -41,10 +40,12 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * @return an instance of {@link BitcointradeTickerResponse}
    * @throws ExchangeException
    */
-  BitcointradeTickerResponse getBitcointradeTicker(CurrencyPair currencyPair) throws ExchangeException {
+  BitcointradeTickerResponse getBitcointradeTicker(CurrencyPair currencyPair)
+      throws ExchangeException {
 
     try {
-      return bitcointrade.getTicker(currencyPair.counter.toString().concat(currencyPair.base.toString()));
+      return bitcointrade.getTicker(
+          currencyPair.counter.toString().concat(currencyPair.base.toString()));
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {
@@ -55,16 +56,14 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
   /**
    * Get the BTC order book at Bitcointrade Exchange.
    *
-   * <p>
-   * To get a different currency order book, use {@link #getBitcointradeOrderBook(CurrencyPair)}.
-   * </p>
+   * <p>To get a different currency order book, use {@link #getBitcointradeOrderBook(CurrencyPair)}.
    *
    * @return an instance of {@link BitcointradeOrderBookResponse}
    * @throws IOException
    */
   BitcointradeOrderBookResponse getBitcointradeOrderBook() throws IOException {
 
-      return getBitcointradeOrderBook(CurrencyPair.BTC_BRL);
+    return getBitcointradeOrderBook(CurrencyPair.BTC_BRL);
   }
 
   /**
@@ -74,7 +73,8 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * @return an instance of {@link BitcointradeOrderBookResponse}
    * @throws IOException
    */
-  BitcointradeOrderBookResponse getBitcointradeOrderBook(CurrencyPair currencyPair) throws IOException {
+  BitcointradeOrderBookResponse getBitcointradeOrderBook(CurrencyPair currencyPair)
+      throws IOException {
 
     try {
       return bitcointrade.getOrderBook(normalize(currencyPair));
@@ -92,9 +92,10 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * @return an instance of {@link BitcointradePublicTradeResponse}
    * @throws ExchangeException
    */
-  BitcointradePublicTradeResponse getBitcointradePublicTrades(CurrencyPair currencyPair) throws ExchangeException {
+  BitcointradePublicTradeResponse getBitcointradePublicTrades(CurrencyPair currencyPair)
+      throws ExchangeException {
 
-      return getBitcointradePublicTrades(currencyPair, null, null);
+    return getBitcointradePublicTrades(currencyPair, null, null);
   }
 
   /**
@@ -106,9 +107,11 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * @return an instance of {@link BitcointradePublicTradeResponse}
    * @throws ExchangeException
    */
-  BitcointradePublicTradeResponse getBitcointradePublicTrades(CurrencyPair currencyPair, String startTime, String endTime) throws ExchangeException {
+  BitcointradePublicTradeResponse getBitcointradePublicTrades(
+      CurrencyPair currencyPair, String startTime, String endTime) throws ExchangeException {
 
-    return getBitcointradePublicTrades(currencyPair, startTime, endTime, DEFAULT_PAGE_SIZE, DEFAULT_CURRENT_PAGE);
+    return getBitcointradePublicTrades(
+        currencyPair, startTime, endTime, DEFAULT_PAGE_SIZE, DEFAULT_CURRENT_PAGE);
   }
 
   /**
@@ -122,11 +125,17 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * @return an instance of {@link BitcointradePublicTradeResponse}
    * @throws ExchangeException
    */
-  BitcointradePublicTradeResponse getBitcointradePublicTrades(CurrencyPair currencyPair, String startTime, String endTime, Integer pageSize,
-        Integer currentPage) throws ExchangeException {
+  BitcointradePublicTradeResponse getBitcointradePublicTrades(
+      CurrencyPair currencyPair,
+      String startTime,
+      String endTime,
+      Integer pageSize,
+      Integer currentPage)
+      throws ExchangeException {
 
     try {
-      return bitcointrade.getTrades(normalize(currencyPair), startTime, endTime, pageSize, currentPage);
+      return bitcointrade.getTrades(
+          normalize(currencyPair), startTime, endTime, pageSize, currentPage);
     } catch (BitcointradeException e) {
       throw new ExchangeException(e.getError());
     } catch (IOException e) {
@@ -138,7 +147,7 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    * Get the Bitcoin (BTC) estimated price at Bitcointrade Exchange.
    *
    * @param amount the amount
-   * @param type the type  (buy or sell)
+   * @param type the type (buy or sell)
    * @return the currency price or {@code null}
    * @throws ExchangeException
    */
@@ -151,13 +160,15 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
    *
    * @param amount the amount
    * @param currency the currency (eg. BTC)
-   * @param type the type  (buy or sell)
+   * @param type the type (buy or sell)
    * @return the currency price or {@code null}
    * @throws ExchangeException
    */
-  BigDecimal estimatedPrice(BigDecimal amount, String currency, String type) throws ExchangeException {
+  BigDecimal estimatedPrice(BigDecimal amount, String currency, String type)
+      throws ExchangeException {
     try {
-      final BitcointradeEstimatedPriceResponse response = bitcointradeAuthenticated.estimatedPrice(apiToken, amount, currency, type);
+      final BitcointradeEstimatedPriceResponse response =
+          bitcointradeAuthenticated.estimatedPrice(apiToken, amount, currency, type);
 
       if (response != null) {
         if (response.getData() != null) {
@@ -174,5 +185,4 @@ class BitcointradeMarketDataServiceRaw extends BitcointradeBasePollingService {
       throw new ExchangeException(e.getMessage());
     }
   }
-
 }

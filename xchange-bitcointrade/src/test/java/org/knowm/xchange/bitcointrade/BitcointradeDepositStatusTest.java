@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/**
- * @author Danilo Guimaraes
- */
+/** @author Danilo Guimaraes */
 public class BitcointradeDepositStatusTest {
 
   @Test
@@ -47,5 +45,4 @@ public class BitcointradeDepositStatusTest {
 
     assertNull(BitcointradeDepositStatus.from(""));
   }
-
 }

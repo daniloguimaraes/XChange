@@ -6,7 +6,6 @@ package org.knowm.xchange.bitcointrade;
  * @author Danilo Guimaraes
  */
 public enum BitcointradeDepositStatus {
-
   CONFIRMATION_PENDING("confirmation_pending"),
   CONFIRMED("confirmed"),
   CANCELED("canceled");

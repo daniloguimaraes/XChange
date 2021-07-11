@@ -1,10 +1,10 @@
 package org.knowm.xchange.bitcointrade.dto.account;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,8 +12,6 @@ import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
 import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
 import org.knowm.xchange.bitcointrade.BitcointradeWithdrawStatus;
 import org.knowm.xchange.bitcointrade.dto.PaginatedTest;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Tests {@link BitcointradeWithdrawListResponse} class.
@@ -30,9 +28,12 @@ public class BitcointradeWithdrawListResponseTest extends PaginatedTest {
     sut = loadBitcointradeWithdrawListFromExampleData();
   }
 
-  private static BitcointradeWithdrawListResponse loadBitcointradeWithdrawListFromExampleData() throws IOException {
+  private static BitcointradeWithdrawListResponse loadBitcointradeWithdrawListFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/account/example-withdraw-list-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream(
+            "/account/example-withdraw-list-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradeWithdrawListResponse.class);
@@ -57,8 +58,12 @@ public class BitcointradeWithdrawListResponseTest extends PaginatedTest {
     BitcointradeWithdraw withdrawal = trades.get(0);
     softly.assertThat(withdrawal).isNotNull();
     softly.assertThat(withdrawal.getCode()).isEqualTo("HJzpwYDrz");
-    softly.assertThat(withdrawal.getOriginAddress()).isEqualTo("mpe8FKtvDktBN1FGToFpYN2pdktySxD8wg");
-    softly.assertThat(withdrawal.getDestinationAddress()).isEqualTo("1AU4BoYaxSunkFTTEMYXJ41c9bvQG6Wa2");
+    softly
+        .assertThat(withdrawal.getOriginAddress())
+        .isEqualTo("mpe8FKtvDktBN1FGToFpYN2pdktySxD8wg");
+    softly
+        .assertThat(withdrawal.getDestinationAddress())
+        .isEqualTo("1AU4BoYaxSunkFTTEMYXJ41c9bvQG6Wa2");
     softly.assertThat(withdrawal.getAmount()).isEqualTo(new BigDecimal("0.0094963"));
     softly.assertThat(withdrawal.getMinerFee()).isEqualTo(new BigDecimal("0.0005037"));
     softly.assertThat(withdrawal.getMinerFeeType()).isEqualTo(BitcointradeFeeType.SLOW);
@@ -73,5 +78,4 @@ public class BitcointradeWithdrawListResponseTest extends PaginatedTest {
 
     softly.assertAll();
   }
-
 }

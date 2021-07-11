@@ -5,7 +5,6 @@ import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeSpecification;
 import org.knowm.xchange.bitcointrade.service.BitcointradeMarketDataService;
 import org.knowm.xchange.utils.nonce.AtomicLongIncrementalTime2013NonceFactory;
-
 import si.mazi.rescu.SynchronizedValueFactory;
 
 /**
@@ -15,7 +14,8 @@ import si.mazi.rescu.SynchronizedValueFactory;
  */
 public class BitcointradeExchange extends BaseExchange implements Exchange {
 
-  private final SynchronizedValueFactory<Long> nonceFactory = new AtomicLongIncrementalTime2013NonceFactory();
+  private final SynchronizedValueFactory<Long> nonceFactory =
+      new AtomicLongIncrementalTime2013NonceFactory();
 
   @Override
   protected void initServices() {

@@ -6,7 +6,6 @@ package org.knowm.xchange.bitcointrade;
  * @author Danilo Guimaraes
  */
 public enum BitcointradeWithdrawStatus {
-
   PENDING("pending"),
   CONFIRMED("confirmed"),
   CANCELED("canceled");

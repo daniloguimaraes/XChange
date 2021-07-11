@@ -1,22 +1,21 @@
 package org.knowm.xchange.bitcointrade.dto.account;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.knowm.xchange.bitcointrade.BitcointradeDepositStatus;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.knowm.xchange.bitcointrade.BitcointradeDepositStatus;
 
 /**
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#34810ae9-69e0-8c83-5c61-01d81162be10">Bitcointrade API - Deposit List Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#34810ae9-69e0-8c83-5c61-01d81162be10">Bitcointrade
+ *     API - Deposit List Documentation (Brazilian Portuguese)</a>
  */
 public class BitcointradeDeposit {
 
@@ -26,12 +25,15 @@ public class BitcointradeDeposit {
   private final BitcointradeDepositStatus status;
   private final String createDate;
   private final String confirmationDate;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonCreator
-  public BitcointradeDeposit(@JsonProperty("code") String code, @JsonProperty("hash") String hash, @JsonProperty("amount") BigDecimal amount,
-      @JsonProperty("status") String status, @JsonProperty("create_date") String createDate,
+  public BitcointradeDeposit(
+      @JsonProperty("code") String code,
+      @JsonProperty("hash") String hash,
+      @JsonProperty("amount") BigDecimal amount,
+      @JsonProperty("status") String status,
+      @JsonProperty("create_date") String createDate,
       @JsonProperty("confirmation_date") String confirmationDate) {
 
     this.code = code;
@@ -87,8 +89,14 @@ public class BitcointradeDeposit {
   @Override
   public String toString() {
 
-    return new ToStringBuilder(this).append("code", code).append("hash", hash).append("amount", amount).append("status", status)
-        .append("createDate", createDate).append("confirmationDate", confirmationDate).append("additionalProperties", additionalProperties)
+    return new ToStringBuilder(this)
+        .append("code", code)
+        .append("hash", hash)
+        .append("amount", amount)
+        .append("status", status)
+        .append("createDate", createDate)
+        .append("confirmationDate", confirmationDate)
+        .append("additionalProperties", additionalProperties)
         .toString();
   }
 }

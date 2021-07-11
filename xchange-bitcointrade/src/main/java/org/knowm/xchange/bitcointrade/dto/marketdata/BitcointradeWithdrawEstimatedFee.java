@@ -1,22 +1,21 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-import java.math.BigDecimal;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.math.BigDecimal;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
 
 /**
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#cd0b440a-109b-80b3-9df6-8f3a0b10e32f">Bitcointrade API - Withdraw fee estimate Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#cd0b440a-109b-80b3-9df6-8f3a0b10e32f">Bitcointrade
+ *     API - Withdraw fee estimate Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "name", "amount" })
+@JsonPropertyOrder({"name", "amount"})
 public class BitcointradeWithdrawEstimatedFee {
 
   private final BitcointradeFeeType name;
@@ -24,7 +23,8 @@ public class BitcointradeWithdrawEstimatedFee {
   private final BigDecimal amount;
 
   @JsonCreator
-  public BitcointradeWithdrawEstimatedFee(@JsonProperty("name") String name, @JsonProperty("amount") BigDecimal amount) {
+  public BitcointradeWithdrawEstimatedFee(
+      @JsonProperty("name") String name, @JsonProperty("amount") BigDecimal amount) {
 
     super();
     this.name = BitcointradeFeeType.from(name);
@@ -51,5 +51,4 @@ public class BitcointradeWithdrawEstimatedFee {
 
     return new ToStringBuilder(this).append("name", name).append("amount", amount).toString();
   }
-
 }

@@ -63,5 +63,4 @@ public class BitcointradeOrderTypeTest {
   public void testFromUsingNullOrderTypeMustReturnNull() throws Exception {
     assertNull(BitcointradeOrderType.from((BitcointradeOrderType) null));
   }
-
 }

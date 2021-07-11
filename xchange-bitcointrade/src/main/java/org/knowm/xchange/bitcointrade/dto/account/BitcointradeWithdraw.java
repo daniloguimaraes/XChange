@@ -1,24 +1,23 @@
 package org.knowm.xchange.bitcointrade.dto.account;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
-import org.knowm.xchange.bitcointrade.BitcointradeWithdrawStatus;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
+import org.knowm.xchange.bitcointrade.BitcointradeWithdrawStatus;
 
 /**
  * Bitcointrade Exchange Withdraw representation.
  *
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#2f4b6643-ae82-d9a3-8cb9-d025e92982fe">Bitcointrade API - Withdraw List Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#2f4b6643-ae82-d9a3-8cb9-d025e92982fe">Bitcointrade
+ *     API - Withdraw List Documentation (Brazilian Portuguese)</a>
  */
 public class BitcointradeWithdraw {
 
@@ -36,15 +35,23 @@ public class BitcointradeWithdraw {
   private final String updateDate;
   private final Object transactionId;
   private final Object link;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
-  public BitcointradeWithdraw(@JsonProperty("code") String code, @JsonProperty("origin_address") String originAddress,
-      @JsonProperty("destination_address") String destinationAddress, @JsonProperty("amount") BigDecimal amount,
-      @JsonProperty("miner_fee") BigDecimal minerFee, @JsonProperty("miner_fee_type") String minerFeeType,
-      @JsonProperty("tax_index") Integer taxIndex, @JsonProperty("tax_index_calculated") Integer taxIndexCalculated,
-      @JsonProperty("tax_amount") BigDecimal taxAmount, @JsonProperty("status") String status, @JsonProperty("create_date") String createDate,
-      @JsonProperty("update_date") String updateDate, @JsonProperty("transaction_id") Object transactionId, @JsonProperty("link") Object link) {
+  public BitcointradeWithdraw(
+      @JsonProperty("code") String code,
+      @JsonProperty("origin_address") String originAddress,
+      @JsonProperty("destination_address") String destinationAddress,
+      @JsonProperty("amount") BigDecimal amount,
+      @JsonProperty("miner_fee") BigDecimal minerFee,
+      @JsonProperty("miner_fee_type") String minerFeeType,
+      @JsonProperty("tax_index") Integer taxIndex,
+      @JsonProperty("tax_index_calculated") Integer taxIndexCalculated,
+      @JsonProperty("tax_amount") BigDecimal taxAmount,
+      @JsonProperty("status") String status,
+      @JsonProperty("create_date") String createDate,
+      @JsonProperty("update_date") String updateDate,
+      @JsonProperty("transaction_id") Object transactionId,
+      @JsonProperty("link") Object link) {
 
     this.code = code;
     this.originAddress = originAddress;
@@ -146,11 +153,22 @@ public class BitcointradeWithdraw {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("code", code).append("originAddress", originAddress)
-        .append("destinationAddress", destinationAddress).append("amount", amount).append("minerFee", minerFee)
-        .append("minerFeeType", minerFeeType).append("taxIndex", taxIndex)
-        .append("taxIndexCalculated", taxIndexCalculated).append("taxAmount", taxAmount).append("status", status)
-        .append("createDate", createDate).append("updateDate", updateDate).append("transactionId", transactionId)
-        .append("link", link).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this)
+        .append("code", code)
+        .append("originAddress", originAddress)
+        .append("destinationAddress", destinationAddress)
+        .append("amount", amount)
+        .append("minerFee", minerFee)
+        .append("minerFeeType", minerFeeType)
+        .append("taxIndex", taxIndex)
+        .append("taxIndexCalculated", taxIndexCalculated)
+        .append("taxAmount", taxAmount)
+        .append("status", status)
+        .append("createDate", createDate)
+        .append("updateDate", updateDate)
+        .append("transactionId", transactionId)
+        .append("link", link)
+        .append("additionalProperties", additionalProperties)
+        .toString();
   }
 }

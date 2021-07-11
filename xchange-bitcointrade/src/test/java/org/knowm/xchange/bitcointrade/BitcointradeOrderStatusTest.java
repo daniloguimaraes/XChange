@@ -51,7 +51,8 @@ public class BitcointradeOrderStatusTest {
   @Test
   public void testFromOrderStatusExecutedCompletelyMustReturnFilled() throws Exception {
     Order.OrderStatus expected = Order.OrderStatus.FILLED;
-    Order.OrderStatus actual = BitcointradeOrderStatus.from(BitcointradeOrderStatus.EXECUTED_COMPLETELY);
+    Order.OrderStatus actual =
+        BitcointradeOrderStatus.from(BitcointradeOrderStatus.EXECUTED_COMPLETELY);
 
     assertEquals(expected, actual);
   }
@@ -59,7 +60,8 @@ public class BitcointradeOrderStatusTest {
   @Test
   public void testFromOrderStatusExecutedPartiallyMustReturnFilled() throws Exception {
     Order.OrderStatus expected = Order.OrderStatus.PARTIALLY_FILLED;
-    Order.OrderStatus actual = BitcointradeOrderStatus.from(BitcointradeOrderStatus.EXECUTED_PARTIALLY);
+    Order.OrderStatus actual =
+        BitcointradeOrderStatus.from(BitcointradeOrderStatus.EXECUTED_PARTIALLY);
 
     assertEquals(expected, actual);
   }
@@ -71,7 +73,6 @@ public class BitcointradeOrderStatusTest {
 
     assertEquals(expected, actual);
   }
-
 
   @Test
   public void testFromOrderStatusCanceledMustReturnCanceled() throws Exception {
@@ -98,5 +99,4 @@ public class BitcointradeOrderStatusTest {
 
     assertNull(BitcointradeOrderStatus.from((BitcointradeOrderStatus) null));
   }
-
 }

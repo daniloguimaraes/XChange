@@ -1,27 +1,26 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Bitcointrade Ticker itself.
  *
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0">Bitcointrade API - Ticker Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0">Bitcointrade
+ *     API - Ticker Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "high", "low", "volume", "trades_quantity", "last", "buy", "sell", "date" })
+@JsonPropertyOrder({"high", "low", "volume", "trades_quantity", "last", "buy", "sell", "date"})
 public class BitcointradeTicker {
 
   private final BigDecimal high;
@@ -32,8 +31,7 @@ public class BitcointradeTicker {
   private final BigDecimal buy;
   private final BigDecimal sell;
   private final String date;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * Constructor
@@ -47,9 +45,15 @@ public class BitcointradeTicker {
    * @param sell
    * @param date
    */
-  public BitcointradeTicker(@JsonProperty("high") BigDecimal high, @JsonProperty("low") BigDecimal low, @JsonProperty("volume") BigDecimal volume,
-      @JsonProperty("trades_quantity") Integer tradesQuantity, @JsonProperty("last") BigDecimal last, @JsonProperty("buy") BigDecimal buy,
-      @JsonProperty("sell") BigDecimal sell, @JsonProperty("date") String date) {
+  public BitcointradeTicker(
+      @JsonProperty("high") BigDecimal high,
+      @JsonProperty("low") BigDecimal low,
+      @JsonProperty("volume") BigDecimal volume,
+      @JsonProperty("trades_quantity") Integer tradesQuantity,
+      @JsonProperty("last") BigDecimal last,
+      @JsonProperty("buy") BigDecimal buy,
+      @JsonProperty("sell") BigDecimal sell,
+      @JsonProperty("date") String date) {
 
     super();
     this.high = high;
@@ -117,9 +121,16 @@ public class BitcointradeTicker {
   @Override
   public String toString() {
 
-    return new ToStringBuilder(this).append("high", high).append("low", low).append("volume", volume).append("tradesQuantity", tradesQuantity)
-        .append("last", last).append("buy", buy).append("sell", sell).append("date", date).append("additionalProperties", additionalProperties)
+    return new ToStringBuilder(this)
+        .append("high", high)
+        .append("low", low)
+        .append("volume", volume)
+        .append("tradesQuantity", tradesQuantity)
+        .append("last", last)
+        .append("buy", buy)
+        .append("sell", sell)
+        .append("date", date)
+        .append("additionalProperties", additionalProperties)
         .toString();
   }
-
 }

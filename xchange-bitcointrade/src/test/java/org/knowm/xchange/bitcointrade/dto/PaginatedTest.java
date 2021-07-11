@@ -9,7 +9,8 @@ import org.assertj.core.api.SoftAssertions;
  */
 public class PaginatedTest {
 
-  protected void testPagination(Pagination pagination, int totalPages, int currentPage, int pageSize, int registersCount) {
+  protected void testPagination(
+      Pagination pagination, int totalPages, int currentPage, int pageSize, int registersCount) {
     final SoftAssertions softly = new SoftAssertions();
 
     softly.assertThat(pagination).isNotNull();

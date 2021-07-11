@@ -23,13 +23,14 @@ public class BitcointradeOpenOrdersParamCurrencyPairTest {
   @Before
   public void setUp() throws Exception {
 
-     sut = new BitcointradeOpenOrdersParamCurrencyPair.Builder(CurrencyPair.BTC_BRL)
-        .startTime(START_TIME)
-        .endTime(END_TIME)
-        .type(TYPE)
-        .pageSize(PAGE_SIZE)
-        .currentPage(CURRENT_PAGE)
-        .build();
+    sut =
+        new BitcointradeOpenOrdersParamCurrencyPair.Builder(CurrencyPair.BTC_BRL)
+            .startTime(START_TIME)
+            .endTime(END_TIME)
+            .type(TYPE)
+            .pageSize(PAGE_SIZE)
+            .currentPage(CURRENT_PAGE)
+            .build();
   }
 
   @Test

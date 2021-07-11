@@ -49,5 +49,4 @@ public class BitcointradeWithdrawStatusTest {
 
     assertNull(BitcointradeWithdrawStatus.from(""));
   }
-
 }

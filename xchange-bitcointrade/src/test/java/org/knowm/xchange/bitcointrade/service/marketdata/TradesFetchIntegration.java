@@ -1,7 +1,6 @@
 package org.knowm.xchange.bitcointrade.service.marketdata;
 
 import java.util.List;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,7 +25,8 @@ public class TradesFetchIntegration {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
+    Exchange exchange =
+        ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
     exchange.remoteInit();
     MarketDataService marketDataService = exchange.getMarketDataService();
     trades = marketDataService.getTrades(new CurrencyPair(Currency.BTC, Currency.BRL), null);

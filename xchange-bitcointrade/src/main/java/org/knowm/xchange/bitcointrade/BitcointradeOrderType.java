@@ -8,7 +8,6 @@ import org.knowm.xchange.dto.Order;
  * @author Danilo Guimaraes
  */
 public enum BitcointradeOrderType {
-
   BUY("buy"),
   SELL("sell");
 
@@ -49,9 +48,10 @@ public enum BitcointradeOrderType {
   public static Order.OrderType from(BitcointradeOrderType orderType) {
 
     if (orderType != null) {
-      return orderType.getOrderType().equalsIgnoreCase("buy") ? Order.OrderType.BID : Order.OrderType.ASK;
+      return orderType.getOrderType().equalsIgnoreCase("buy")
+          ? Order.OrderType.BID
+          : Order.OrderType.ASK;
     }
     return null;
   }
 }
-

@@ -1,13 +1,5 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.knowm.xchange.bitcointrade.dto.BitcointradeBaseResponse;
-import org.knowm.xchange.bitcointrade.dto.Pagination;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,17 +7,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.knowm.xchange.bitcointrade.dto.BitcointradeBaseResponse;
+import org.knowm.xchange.bitcointrade.dto.Pagination;
 
 /**
  * Bitcointrade Exchange Public Trades response representation.
  *
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#9fe41816-3d20-e53e-9273-643c95279dc4">Bitcointrade API - Trades Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#9fe41816-3d20-e53e-9273-643c95279dc4">Bitcointrade
+ *     API - Trades Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "message", "data" })
-public class BitcointradePublicTradeResponse extends BitcointradeBaseResponse<BitcointradePublicTradeResponse.Data> {
+@JsonPropertyOrder({"message", "data"})
+public class BitcointradePublicTradeResponse
+    extends BitcointradeBaseResponse<BitcointradePublicTradeResponse.Data> {
 
   /**
    * Constructor
@@ -34,22 +34,20 @@ public class BitcointradePublicTradeResponse extends BitcointradeBaseResponse<Bi
    * @param data the data containing trade information
    */
   @JsonCreator
-  public BitcointradePublicTradeResponse(@JsonProperty("message") Object message, @JsonProperty("data") Data data) {
+  public BitcointradePublicTradeResponse(
+      @JsonProperty("message") Object message, @JsonProperty("data") Data data) {
 
     super(message, data);
   }
 
-  /**
-   *
-   */
+  /** */
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @JsonPropertyOrder({ "pagination", "trades" })
+  @JsonPropertyOrder({"pagination", "trades"})
   public static class Data {
 
     private final Pagination pagination;
     private final List<BitcointradePublicTrade> trades;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
     /**
      * Constructor
@@ -57,7 +55,9 @@ public class BitcointradePublicTradeResponse extends BitcointradeBaseResponse<Bi
      * @param pagination
      * @param trades
      */
-    public Data(@JsonProperty("pagination") Pagination pagination, @JsonProperty("trades") List<BitcointradePublicTrade> trades) {
+    public Data(
+        @JsonProperty("pagination") Pagination pagination,
+        @JsonProperty("trades") List<BitcointradePublicTrade> trades) {
 
       super();
       this.pagination = pagination;
@@ -89,11 +89,11 @@ public class BitcointradePublicTradeResponse extends BitcointradeBaseResponse<Bi
     @Override
     public String toString() {
 
-      return new ToStringBuilder(this).append("pagination", pagination).append("trades", trades)
-          .append("additionalProperties", additionalProperties).toString();
-
+      return new ToStringBuilder(this)
+          .append("pagination", pagination)
+          .append("trades", trades)
+          .append("additionalProperties", additionalProperties)
+          .toString();
     }
-
   }
-
 }

@@ -6,7 +6,6 @@ package org.knowm.xchange.bitcointrade;
  * @author Danilo Guimaraes
  */
 public enum BitcointradeOrderSubtype {
-
   LIMITED("limited"),
   MARKET("market");
 

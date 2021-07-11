@@ -1,26 +1,31 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- *
- *
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#9a20d5e9-056b-7427-5f22-35f571f60411">Bitcointrade API - Summary Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#9a20d5e9-056b-7427-5f22-35f571f60411">Bitcointrade
+ *     API - Summary Documentation (Brazilian Portuguese)</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "unit_price_24h", "volume_24h", "last_transaction_unit_price", "pair", "max_price", "min_price" })
+@JsonPropertyOrder({
+  "unit_price_24h",
+  "volume_24h",
+  "last_transaction_unit_price",
+  "pair",
+  "max_price",
+  "min_price"
+})
 public class BitcointradeSummary {
 
   private final BigDecimal unitPrice24h;
@@ -29,8 +34,7 @@ public class BitcointradeSummary {
   private final String pair;
   private final BigDecimal maxPrice;
   private final BigDecimal minPrice;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * @param volume24h
@@ -108,5 +112,4 @@ public class BitcointradeSummary {
         .append("additionalProperties", additionalProperties)
         .toString();
   }
-
 }

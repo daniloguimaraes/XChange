@@ -1,17 +1,15 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
 import org.knowm.xchange.bitcointrade.BitcointradeFeeType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Tests {@link BitcointradeWithdrawEstimatedFeeResponse} class.
@@ -28,9 +26,12 @@ public class BitcointradeWithdrawEstimatedFeeResponseTest {
     sut = loadBitcointradeTickerFromExampleData();
   }
 
-  private static BitcointradeWithdrawEstimatedFeeResponse loadBitcointradeTickerFromExampleData() throws IOException {
+  private static BitcointradeWithdrawEstimatedFeeResponse loadBitcointradeTickerFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-withdraw-fee-estimate-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream(
+            "/marketdata/example-withdraw-fee-estimate-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradeWithdrawEstimatedFeeResponse.class);
@@ -58,5 +59,4 @@ public class BitcointradeWithdrawEstimatedFeeResponseTest {
 
     softly.assertAll();
   }
-
 }

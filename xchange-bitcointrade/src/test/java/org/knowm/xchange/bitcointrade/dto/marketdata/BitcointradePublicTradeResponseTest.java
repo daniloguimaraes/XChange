@@ -1,18 +1,16 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderType;
 import org.knowm.xchange.bitcointrade.dto.PaginatedTest;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Tests {@link BitcointradeTickerResponse} class.
@@ -29,9 +27,12 @@ public class BitcointradePublicTradeResponseTest extends PaginatedTest {
     sut = loadBitcointradePublicTradeFromExampleData();
   }
 
-  private static BitcointradePublicTradeResponse loadBitcointradePublicTradeFromExampleData() throws IOException {
+  private static BitcointradePublicTradeResponse loadBitcointradePublicTradeFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-public-trades-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream(
+            "/marketdata/example-public-trades-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradePublicTradeResponse.class);

@@ -5,7 +5,6 @@ import static org.knowm.xchange.bitcointrade.BitcointradeConstants.DEFAULT_PAGE_
 import static org.knowm.xchange.bitcointrade.BitcointradeCurrencyPairNormalizer.normalize;
 
 import java.io.IOException;
-
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderStatus;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeUserOrdersResponse;
@@ -13,9 +12,7 @@ import org.knowm.xchange.bitcointrade.service.trade.params.orders.BitcointradeOp
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
 
-/**
- * @author Danilo Guimaraes
- */
+/** @author Danilo Guimaraes */
 public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService {
 
   /**
@@ -32,7 +29,8 @@ public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService 
     return Boolean.parseBoolean(bitcointradeAuthenticated.cancelOrder(apiToken, orderId));
   }
 
-  public BitcointradeUserOrdersResponse returnOpenOrders(OpenOrdersParams params) throws IOException {
+  public BitcointradeUserOrdersResponse returnOpenOrders(OpenOrdersParams params)
+      throws IOException {
     BitcointradeOpenOrdersParamCurrencyPair bitcointradeOpenOrdersParamCurrencyPair = null;
 
     if (params instanceof BitcointradeOpenOrdersParamCurrencyPair) {
@@ -57,6 +55,7 @@ public class BitcointradeTradeServiceRaw extends BitcointradeBasePollingService 
       currentPage = bitcointradeOpenOrdersParamCurrencyPair.getCurrentPage();
     }
 
-    return bitcointradeAuthenticated.getUserOrders(apiToken, status, startTime, endTime, currency, type, pageSize, currentPage);
+    return bitcointradeAuthenticated.getUserOrders(
+        apiToken, status, startTime, endTime, currency, type, pageSize, currentPage);
   }
 }

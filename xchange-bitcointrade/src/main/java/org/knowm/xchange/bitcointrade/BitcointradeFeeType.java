@@ -6,7 +6,6 @@ package org.knowm.xchange.bitcointrade;
  * @author Danilo Guimaraes
  */
 public enum BitcointradeFeeType {
-
   FAST("fast"),
   REGULAR("regular"),
   SLOW("slow");

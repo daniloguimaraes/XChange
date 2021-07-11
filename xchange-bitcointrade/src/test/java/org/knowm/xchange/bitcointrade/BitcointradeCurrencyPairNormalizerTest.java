@@ -34,5 +34,4 @@ public class BitcointradeCurrencyPairNormalizerTest {
 
     assertThat(actual).isEqualTo("BRLETH");
   }
-
 }

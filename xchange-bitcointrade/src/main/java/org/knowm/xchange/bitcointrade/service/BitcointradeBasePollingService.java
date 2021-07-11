@@ -5,19 +5,18 @@ import org.knowm.xchange.bitcointrade.BitcointradeAuthenticated;
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.service.BaseExchangeService;
 import org.knowm.xchange.service.BaseService;
-
 import si.mazi.rescu.RestProxyFactory;
 
 /**
  * Bitcointrade base polling service.
  *
- * <p>
- *   In the near future, when Bitcointrade launches trade API, this class will be responsible for managing credentials
- * </p>
+ * <p>In the near future, when Bitcointrade launches trade API, this class will be responsible for
+ * managing credentials
  *
  * @author Danilo Guimaraes
  */
-public class BitcointradeBasePollingService extends BaseExchangeService<BitcointradeExchange> implements BaseService {
+public class BitcointradeBasePollingService extends BaseExchangeService<BitcointradeExchange>
+    implements BaseService {
 
   protected final Bitcointrade bitcointrade;
   protected final BitcointradeAuthenticated bitcointradeAuthenticated;
@@ -33,8 +32,11 @@ public class BitcointradeBasePollingService extends BaseExchangeService<Bitcoint
     super(exchange);
 
     this.apiToken = "ApiToken " + exchange.getExchangeSpecification().getSecretKey();
-    this.bitcointrade = RestProxyFactory.createProxy(Bitcointrade.class, exchange.getExchangeSpecification().getSslUri());
-    this.bitcointradeAuthenticated = RestProxyFactory.createProxy(BitcointradeAuthenticated.class, exchange.getExchangeSpecification().getSslUri());
+    this.bitcointrade =
+        RestProxyFactory.createProxy(
+            Bitcointrade.class, exchange.getExchangeSpecification().getSslUri());
+    this.bitcointradeAuthenticated =
+        RestProxyFactory.createProxy(
+            BitcointradeAuthenticated.class, exchange.getExchangeSpecification().getSslUri());
   }
-
 }

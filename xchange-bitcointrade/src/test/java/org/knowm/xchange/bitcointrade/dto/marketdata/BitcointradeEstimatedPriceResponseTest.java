@@ -1,15 +1,13 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Tests {@link BitcointradeEstimatedPriceResponse} class.
@@ -26,14 +24,16 @@ public class BitcointradeEstimatedPriceResponseTest {
     sut = loadBitcointradeEstimatedPriceFromExampleData();
   }
 
-  private static BitcointradeEstimatedPriceResponse loadBitcointradeEstimatedPriceFromExampleData() throws IOException {
+  private static BitcointradeEstimatedPriceResponse loadBitcointradeEstimatedPriceFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-estimated-price-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream(
+            "/marketdata/example-estimated-price-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradeEstimatedPriceResponse.class);
   }
-
 
   @Test
   public void testEstimatedPrice() throws Exception {
@@ -46,5 +46,4 @@ public class BitcointradeEstimatedPriceResponseTest {
 
     softly.assertAll();
   }
-
 }

@@ -1,10 +1,5 @@
 package org.knowm.xchange.bitcointrade.dto;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -12,13 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Base class for all responses at Bitcointrade Exchange API.
  *
- * <p>
- * All success responses follow the pattern:
- * </p>
+ * <p>All success responses follow the pattern:
  *
  * <pre>
  *   {
@@ -27,9 +23,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *   }
  * </pre>
  *
- * <p>
- * And all error responses follow:
- * </p>
+ * <p>And all error responses follow:
  *
  * <pre>
  *   {
@@ -43,16 +37,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * @see <a href="https://apidocs.bitcointrade.com.br/#intro">Bitcointrade API Docs</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "message", "data" })
+@JsonPropertyOrder({"message", "data"})
 public abstract class BitcointradeBaseResponse<T> {
 
   protected final Object message;
   protected final T data;
-  @JsonIgnore
-  protected Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore protected Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonCreator
-  public BitcointradeBaseResponse(@JsonProperty("message") Object message, @JsonProperty("data") T data) {
+  public BitcointradeBaseResponse(
+      @JsonProperty("message") Object message, @JsonProperty("data") T data) {
 
     this.message = message;
     this.data = data;
@@ -81,6 +75,10 @@ public abstract class BitcointradeBaseResponse<T> {
   @Override
   public String toString() {
 
-    return new ToStringBuilder(this).append("message", message).append("data", data).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this)
+        .append("message", message)
+        .append("data", data)
+        .append("additionalProperties", additionalProperties)
+        .toString();
   }
 }

@@ -1,23 +1,22 @@
 package org.knowm.xchange.bitcointrade.dto.account;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderStatus;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderSubtype;
 import org.knowm.xchange.bitcointrade.BitcointradeOrderType;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * @author Danilo Guimaraes
- * @see <a href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">Bitcointrade API - User Orders Documentation
- * (Brazilian Portuguese)</a>
+ * @see <a
+ *     href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">Bitcointrade
+ *     API - User Orders Documentation (Brazilian Portuguese)</a>
  */
 public class BitcointradeUserOrder {
 
@@ -35,8 +34,7 @@ public class BitcointradeUserOrder {
   private final BigDecimal totalPrice;
   private final BigDecimal executedAmount;
   private final BigDecimal remainingPrice;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * Constructor
@@ -56,12 +54,21 @@ public class BitcointradeUserOrder {
    * @param executedAmount executed amonut
    * @param remainingPrice remaining price
    */
-  public BitcointradeUserOrder(@JsonProperty("id") String id, @JsonProperty("code") String code, @JsonProperty("type") String type,
-      @JsonProperty("subtype") String subtype, @JsonProperty("requested_amount") BigDecimal requestedAmount,
-      @JsonProperty("remaining_amount") BigDecimal remainingAmount, @JsonProperty("unit_price") BigDecimal unitPrice,
-      @JsonProperty("status") String status, @JsonProperty("create_date") String createDate, @JsonProperty("update_date") String updateDate,
-      @JsonProperty("currencyCode") String currencyCode, @JsonProperty("total_price") BigDecimal totalPrice,
-      @JsonProperty("executed_amount") BigDecimal executedAmount, @JsonProperty("remaining_price") BigDecimal remainingPrice) {
+  public BitcointradeUserOrder(
+      @JsonProperty("id") String id,
+      @JsonProperty("code") String code,
+      @JsonProperty("type") String type,
+      @JsonProperty("subtype") String subtype,
+      @JsonProperty("requested_amount") BigDecimal requestedAmount,
+      @JsonProperty("remaining_amount") BigDecimal remainingAmount,
+      @JsonProperty("unit_price") BigDecimal unitPrice,
+      @JsonProperty("status") String status,
+      @JsonProperty("create_date") String createDate,
+      @JsonProperty("update_date") String updateDate,
+      @JsonProperty("currencyCode") String currencyCode,
+      @JsonProperty("total_price") BigDecimal totalPrice,
+      @JsonProperty("executed_amount") BigDecimal executedAmount,
+      @JsonProperty("remaining_price") BigDecimal remainingPrice) {
 
     super();
     this.id = id;
@@ -162,11 +169,25 @@ public class BitcointradeUserOrder {
     this.additionalProperties.put(name, value);
   }
 
-
   @Override
   public String toString() {
 
-    return new ToStringBuilder(this).append("id", id).append("code", code).append("type", type).append("subtype", subtype).append("requestedAmount", requestedAmount).append("remainingAmount", remainingAmount).append("unitPrice", unitPrice).append("status", status).append("createDate", createDate).append("updateDate", updateDate).append("currencyCode", currencyCode).append("totalPrice", totalPrice).append("executedAmount", executedAmount).append("remainingPrice", remainingPrice).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("code", code)
+        .append("type", type)
+        .append("subtype", subtype)
+        .append("requestedAmount", requestedAmount)
+        .append("remainingAmount", remainingAmount)
+        .append("unitPrice", unitPrice)
+        .append("status", status)
+        .append("createDate", createDate)
+        .append("updateDate", updateDate)
+        .append("currencyCode", currencyCode)
+        .append("totalPrice", totalPrice)
+        .append("executedAmount", executedAmount)
+        .append("remainingPrice", remainingPrice)
+        .append("additionalProperties", additionalProperties)
+        .toString();
   }
-  
 }

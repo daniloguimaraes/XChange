@@ -1,15 +1,13 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.knowm.xchange.bitcointrade.BitcointradeAdaptersTest;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Tests {@link BitcointradeSummaryResponse} class.
@@ -26,9 +24,11 @@ public class BitcointradeSummaryResponseTest {
     sut = loadBitcointradeSummaryFromExampleData();
   }
 
-  private static BitcointradeSummaryResponse loadBitcointradeSummaryFromExampleData() throws IOException {
+  private static BitcointradeSummaryResponse loadBitcointradeSummaryFromExampleData()
+      throws IOException {
 
-    InputStream is = BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-summary-data.json");
+    InputStream is =
+        BitcointradeAdaptersTest.class.getResourceAsStream("/marketdata/example-summary-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcointradeSummaryResponse.class);

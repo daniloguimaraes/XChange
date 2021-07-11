@@ -25,7 +25,8 @@ public class BitcointradeMarketDataServiceRawIntegration {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    Exchange bitcointradeExchange = ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
+    Exchange bitcointradeExchange =
+        ExchangeFactory.INSTANCE.createExchange(BitcointradeExchange.class.getName());
     bitcointradeExchange.remoteInit();
     sut = new BitcointradeMarketDataService((BitcointradeExchange) bitcointradeExchange);
   }
@@ -33,7 +34,8 @@ public class BitcointradeMarketDataServiceRawIntegration {
   @Test
   public void testValidTicker() throws Exception {
 
-    BitcointradeTickerResponse bitcointradeTickerResponse = sut.getBitcointradeTicker(new CurrencyPair("BTC", "BRL"));
+    BitcointradeTickerResponse bitcointradeTickerResponse =
+        sut.getBitcointradeTicker(new CurrencyPair("BTC", "BRL"));
 
     final SoftAssertions softly = new SoftAssertions();
 
@@ -54,8 +56,7 @@ public class BitcointradeMarketDataServiceRawIntegration {
     softly.assertAll();
   }
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
+  @Rule public ExpectedException exception = ExpectedException.none();
 
   @Test
   public void testGetTickerWithAnInvalidCurrency() {
@@ -66,6 +67,4 @@ public class BitcointradeMarketDataServiceRawIntegration {
     // Bitcointrade doesn't trade Tether (USDT), yet.
     sut.getBitcointradeTicker(new CurrencyPair("USDT", "BRL"));
   }
-
-
 }

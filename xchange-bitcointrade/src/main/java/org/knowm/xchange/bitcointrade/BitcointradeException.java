@@ -2,9 +2,7 @@ package org.knowm.xchange.bitcointrade;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * @author Danilo Guimaraes
- */
+/** @author Danilo Guimaraes */
 @SuppressWarnings("serial")
 public class BitcointradeException extends RuntimeException {
 
@@ -21,7 +19,4 @@ public class BitcointradeException extends RuntimeException {
 
     return message;
   }
-
-
 }
-

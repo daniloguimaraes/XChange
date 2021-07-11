@@ -1,14 +1,12 @@
 package org.knowm.xchange.bitcointrade;
 
 import java.io.IOException;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBook;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcointradePublicTradeResponse;
@@ -33,7 +31,8 @@ public interface Bitcointrade {
    */
   @GET
   @Path("{currencyPair}/ticker")
-  BitcointradeTickerResponse getTicker(@PathParam("currencyPair") String currencyPair) throws BitcointradeException, IOException;
+  BitcointradeTickerResponse getTicker(@PathParam("currencyPair") String currencyPair)
+      throws BitcointradeException, IOException;
 
   /**
    * Get the public order book at Bitcointrade Exchange
@@ -45,7 +44,8 @@ public interface Bitcointrade {
    */
   @GET
   @Path("{currencyPair}/orders")
-  BitcointradeOrderBookResponse getOrderBook(@PathParam("currencyPair") String currencyPair) throws BitcointradeException, IOException;
+  BitcointradeOrderBookResponse getOrderBook(@PathParam("currencyPair") String currencyPair)
+      throws BitcointradeException, IOException;
 
   /**
    * List all public trades made at Bitcointrade Exchange.
@@ -61,7 +61,11 @@ public interface Bitcointrade {
    */
   @GET
   @Path("{currencyPair}/trades")
-  BitcointradePublicTradeResponse getTrades(@PathParam("currencyPair") String currencyPair, @QueryParam("start_time") String startTime,
-      @QueryParam("end_time") String endTime, @QueryParam("page_size") Integer pageSize, @QueryParam("current_page") Integer currentPage)
+  BitcointradePublicTradeResponse getTrades(
+      @PathParam("currencyPair") String currencyPair,
+      @QueryParam("start_time") String startTime,
+      @QueryParam("end_time") String endTime,
+      @QueryParam("page_size") Integer pageSize,
+      @QueryParam("current_page") Integer currentPage)
       throws BitcointradeException, IOException;
 }

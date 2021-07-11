@@ -2,7 +2,6 @@ package org.knowm.xchange.bitcointrade.service;
 
 import java.io.IOException;
 import java.util.Collection;
-
 import org.knowm.xchange.bitcointrade.BitcointradeAdapters;
 import org.knowm.xchange.bitcointrade.BitcointradeExchange;
 import org.knowm.xchange.bitcointrade.dto.account.BitcointradeUserOrdersResponse;

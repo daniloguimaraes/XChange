@@ -1,31 +1,22 @@
 package org.knowm.xchange.bitcointrade.dto.marketdata;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-/**
- * @author Danilo Guimaraes
- */
+/** @author Danilo Guimaraes */
 public class BitcointradeEstimatedPrice {
 
   private final BigDecimal price;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonIgnore private Map<String, Object> additionalProperties = new HashMap<>();
 
-
-  /**
-   *
-   * @param price
-   */
-  public BitcointradeEstimatedPrice(@JsonProperty("price")BigDecimal price) {
+  /** @param price */
+  public BitcointradeEstimatedPrice(@JsonProperty("price") BigDecimal price) {
 
     super();
     this.price = price;
@@ -51,7 +42,9 @@ public class BitcointradeEstimatedPrice {
   @Override
   public String toString() {
 
-    return new ToStringBuilder(this).append("price", price).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this)
+        .append("price", price)
+        .append("additionalProperties", additionalProperties)
+        .toString();
   }
-
 }
