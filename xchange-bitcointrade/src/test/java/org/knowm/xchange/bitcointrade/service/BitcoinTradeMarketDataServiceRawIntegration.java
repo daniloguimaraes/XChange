@@ -35,7 +35,7 @@ public class BitcoinTradeMarketDataServiceRawIntegration {
   public void testValidTicker() throws Exception {
 
     BitcoinTradeTickerResponse bitcointradeTickerResponse =
-        sut.getBitcointradeTicker(new CurrencyPair("BTC", "BRL"));
+        sut.getBitcoinTradeTicker(new CurrencyPair("BTC", "BRL"));
 
     final SoftAssertions softly = new SoftAssertions();
 
@@ -65,6 +65,6 @@ public class BitcoinTradeMarketDataServiceRawIntegration {
     exception.expectMessage("Código do par de moedas inválido");
 
     // Bitcointrade doesn't trade Tether (USDT), yet.
-    sut.getBitcointradeTicker(new CurrencyPair("USDT", "BRL"));
+    sut.getBitcoinTradeTicker(new CurrencyPair("USDT", "BRL"));
   }
 }

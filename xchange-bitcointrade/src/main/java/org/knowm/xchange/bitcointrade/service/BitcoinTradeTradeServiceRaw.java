@@ -7,6 +7,8 @@ import static org.knowm.xchange.bitcointrade.BitcoinTradeCurrencyPairNormalizer.
 import java.io.IOException;
 import org.knowm.xchange.bitcointrade.BitcoinTradeExchange;
 import org.knowm.xchange.bitcointrade.BitcoinTradeOrderStatus;
+import org.knowm.xchange.bitcointrade.BitcoinTradeOrderSubtype;
+import org.knowm.xchange.bitcointrade.BitcoinTradeOrderType;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeUserOrdersResponse;
 import org.knowm.xchange.bitcointrade.service.trade.params.orders.BitcoinTradeOpenOrdersParamCurrencyPair;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -38,11 +40,13 @@ public class BitcoinTradeTradeServiceRaw extends BitcoinTradeBasePollingService 
     }
 
     BitcoinTradeOrderStatus status = BitcoinTradeOrderStatus.WAITING;
-
+    String orderId = null;
+    String orderCode = null;
     String startTime = null;
     String endTime = null;
     String currency = normalize(CurrencyPair.BTC_BRL);
-    String type = null;
+    BitcoinTradeOrderType type = null;
+    BitcoinTradeOrderSubtype subtype = null;
     Integer pageSize = DEFAULT_PAGE_SIZE;
     Integer currentPage = DEFAULT_CURRENT_PAGE;
 
@@ -56,6 +60,16 @@ public class BitcoinTradeTradeServiceRaw extends BitcoinTradeBasePollingService 
     }
 
     return bitcointradeAuthenticated.getUserOrders(
-        apiToken, status, startTime, endTime, currency, type, pageSize, currentPage);
+        apiToken,
+        orderId,
+        orderCode,
+        status,
+        startTime,
+        endTime,
+        currency,
+        type,
+        subtype,
+        pageSize,
+        currentPage);
   }
 }

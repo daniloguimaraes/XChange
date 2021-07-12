@@ -34,7 +34,7 @@ public interface BitcoinTradeAuthenticated {
    * Get the summary (aka ticker)
    *
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
-   * @param currency the currency (eg. BTC)
+   * @param pair the currency pair (eg. BRLBTC)
    * @return an instance of (@link BitcoinTradeSummaryResponse}
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
@@ -42,15 +42,16 @@ public interface BitcoinTradeAuthenticated {
   @GET
   @Path("market/summary")
   BitcoinTradeSummaryResponse getSummary(
-      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken, @QueryParam("currency") String currency)
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken, @QueryParam("pair") String pair)
       throws BitcoinTradeException, IOException;
 
   /**
    * Create a new order
    *
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
-   * @param currency the currency
+   * @param pair the currency pair (eg. BRLBTC)
    * @param type the order type (buy or sell)
+   * @param subtype the order subtype (limited or market)
    * @param amount the amount
    * @param unitPrice the unit price
    * @throws BitcoinTradeException
@@ -60,37 +61,43 @@ public interface BitcoinTradeAuthenticated {
   @Path("market/create_order")
   void createOrder(
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
-      @FormParam("currency") String currency,
-      @FormParam("type") String type,
-      @FormParam("subtype") String subtype,
+      @FormParam("pair") String pair,
+      @FormParam("type") BitcoinTradeOrderType type,
+      @FormParam("subtype") BitcoinTradeOrderSubtype subtype,
       @FormParam("amount") BigDecimal amount,
-      @FormParam("unit_price") Integer unitPrice)
+      @FormParam("unit_price") BigDecimal unitPrice)
       throws BitcoinTradeException, IOException;
 
   /**
    * Get user orders
    *
    * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
-   * @param status the order statys
+   * @param orderId the order ID
+   * @param orderCode the order code
+   * @param status the order status
    * @param startDate start deposit date, in ISO-8601 date format. Optional
    * @param endDate end deposit date, in ISO-8601 date format. Optional
    * @param currency the order currency (eg. BTC)
    * @param type the order type (buy or sell)
-   * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
+   * @param subtype the order subtype (limited or market)
+   * @param pageSize the page size. Default: 20. Maximum: 250. Optional
    * @param currentPage the current page. Default: 1. Optional
    * @return an instance of {@link BitcoinTradeUserOrdersResponse}
    * @throws BitcoinTradeException
    * @throws IOException general I/O Exception
    */
   @GET
-  @Path("market/user_orders")
+  @Path("market/user_orders/list")
   BitcoinTradeUserOrdersResponse getUserOrders(
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
+      @QueryParam("order_id") String orderId,
+      @QueryParam("order_code") String orderCode,
       @QueryParam("status") BitcoinTradeOrderStatus status,
       @QueryParam("start_date") String startDate,
       @QueryParam("end_date") String endDate,
       @QueryParam("currency") String currency,
-      @QueryParam("type") String type,
+      @QueryParam("type") BitcoinTradeOrderType type,
+      @QueryParam("subtype") BitcoinTradeOrderSubtype subtype,
       @QueryParam("page_size") Integer pageSize,
       @QueryParam("current_page") Integer currentPage)
       throws BitcoinTradeException, IOException;
@@ -160,7 +167,7 @@ public interface BitcoinTradeAuthenticated {
    */
   @GET
   @Path("{currency}/withdraw")
-  BitcoinTradeWithdrawListResponse getWithdrawList(
+  BitcoinTradeWithdrawListResponse getWithdrawalsList(
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @PathParam("currency") String currency,
       @FormParam("page_size") Integer pageSize,
@@ -205,7 +212,7 @@ public interface BitcoinTradeAuthenticated {
    *                 "dai", "eos", "eth", "ethereum", "litecoin", "ltc", "ripple" and "xrp"
    * @param pageSize the page size. Default: 200. Maximum: 1000. Optional
    * @param currentPage the current page. Default: 1. Optional
-   * @param status the deposit status
+   * @param status the deposit status. Required
    * @param startDate start deposit date, in ISO-8601 date format. Optional
    * @param endDate end deposit date, in ISO-8601 date format. Optional
    * @return an instance of {@link BitcoinTradeDepositListResponse}
@@ -223,4 +230,23 @@ public interface BitcoinTradeAuthenticated {
       @QueryParam("start_date") String startDate,
       @QueryParam("end_date") String endDate)
       throws BitcoinTradeException, IOException;
+
+  /**
+   * Synchronize a cryptocurrency transatcion.
+   *
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @param currency currency. Available options: "bch", "bitcoin", "bitcoincash", "brl", "btc",
+   * @param hash the transaction hash. Required
+   *
+   * @throws BitcoinTradeException
+   * @throws IOException
+   */
+  @POST
+  @Path("{currency}/sync_transaction")
+  void synchronizeTransaction(
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
+      @PathParam("currency") String currency,
+      @FormParam("hash") String hash)
+      throws BitcoinTradeException, IOException;
+
 }

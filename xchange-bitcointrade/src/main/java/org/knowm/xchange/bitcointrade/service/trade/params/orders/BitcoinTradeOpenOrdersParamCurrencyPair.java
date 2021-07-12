@@ -1,5 +1,7 @@
 package org.knowm.xchange.bitcointrade.service.trade.params.orders;
 
+import org.knowm.xchange.bitcointrade.BitcoinTradeOrderSubtype;
+import org.knowm.xchange.bitcointrade.BitcoinTradeOrderType;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
 
@@ -9,7 +11,8 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
   private final CurrencyPair pair;
   private final String startTime;
   private final String endTime;
-  private final String type;
+  private final BitcoinTradeOrderType type;
+  private final BitcoinTradeOrderSubtype subtype;
   private final Integer pageSize;
   private final Integer currentPage;
 
@@ -17,13 +20,15 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
       CurrencyPair pair,
       String startTime,
       String endTime,
-      String type,
+      BitcoinTradeOrderType type,
+      BitcoinTradeOrderSubtype subtype,
       Integer pageSize,
       Integer currentPage) {
     this.pair = pair;
     this.startTime = startTime;
     this.endTime = endTime;
     this.type = type;
+    this.subtype = subtype;
     this.pageSize = pageSize;
     this.currentPage = currentPage;
   }
@@ -47,8 +52,12 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
     return endTime;
   }
 
-  public String getType() {
+  public BitcoinTradeOrderType getType() {
     return type;
+  }
+
+  public BitcoinTradeOrderSubtype getSubtype() {
+    return subtype;
   }
 
   public Integer getPageSize() {
@@ -65,7 +74,8 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
     private final CurrencyPair currencyPair;
     private String startTime;
     private String endTime;
-    private String type;
+    private BitcoinTradeOrderType type;
+    private BitcoinTradeOrderSubtype subtype;
     private Integer pageSize;
     private Integer currentPage;
 
@@ -84,7 +94,7 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
 
       BitcoinTradeOpenOrdersParamCurrencyPair orderParams =
           new BitcoinTradeOpenOrdersParamCurrencyPair(
-              currencyPair, startTime, endTime, type, pageSize, currentPage);
+              currencyPair, startTime, endTime, type, subtype, pageSize, currentPage);
 
       isBuilt = true;
 
@@ -110,7 +120,7 @@ public class BitcoinTradeOpenOrdersParamCurrencyPair implements OpenOrdersParamC
       return this;
     }
 
-    Builder type(String type) {
+    Builder type(BitcoinTradeOrderType type) {
 
       this.type = type;
       return this;

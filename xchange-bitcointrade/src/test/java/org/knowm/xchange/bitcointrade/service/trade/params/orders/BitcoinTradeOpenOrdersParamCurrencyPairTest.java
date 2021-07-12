@@ -3,6 +3,7 @@ package org.knowm.xchange.bitcointrade.service.trade.params.orders;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.knowm.xchange.bitcointrade.BitcoinTradeOrderType;
 import org.knowm.xchange.currency.CurrencyPair;
 
 /**
@@ -14,7 +15,7 @@ public class BitcoinTradeOpenOrdersParamCurrencyPairTest {
 
   private static final String START_TIME = "2018-01-05";
   private static final String END_TIME = "2018-02-05";
-  private static final String TYPE = "buy";
+  private static final BitcoinTradeOrderType TYPE = BitcoinTradeOrderType.BUY;
   private static final int PAGE_SIZE = 200;
   private static final int CURRENT_PAGE = 1;
 
