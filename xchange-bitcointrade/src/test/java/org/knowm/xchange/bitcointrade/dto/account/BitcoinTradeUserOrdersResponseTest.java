@@ -1,5 +1,7 @@
 package org.knowm.xchange.bitcointrade.dto.account;
 
+import static org.knowm.xchange.bitcointrade.BitcoinTradeCurrencyPairNormalizer.normalize;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +15,7 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeOrderStatus;
 import org.knowm.xchange.bitcointrade.BitcoinTradeOrderSubtype;
 import org.knowm.xchange.bitcointrade.BitcoinTradeOrderType;
 import org.knowm.xchange.bitcointrade.dto.PaginatedTest;
-import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
 
 /**
  * Tests {@link BitcoinTradeUserOrdersResponse} class.
@@ -71,7 +73,7 @@ public class BitcoinTradeUserOrdersResponseTest extends PaginatedTest {
         .isEqualTo(BitcoinTradeOrderStatus.EXECUTED_COMPLETELY);
     softly.assertThat(withdrawal.getCreateDate()).isEqualTo("2017-12-08T23:42:54.960Z");
     softly.assertThat(withdrawal.getUpdateDate()).isEqualTo("2017-12-13T21:48:48.817Z");
-    softly.assertThat(withdrawal.getCurrencyCode()).isEqualTo(Currency.BTC.toString());
+    softly.assertThat(withdrawal.getPair()).isEqualTo(normalize(CurrencyPair.BTC_BRL));
     softly.assertThat(withdrawal.getTotalPrice()).isEqualTo(new BigDecimal("1000"));
     softly.assertThat(withdrawal.getExecutedAmount()).isEqualTo(new BigDecimal("0.02347418"));
     softly.assertThat(withdrawal.getRemainingPrice()).isEqualTo(new BigDecimal("0"));

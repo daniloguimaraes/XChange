@@ -15,7 +15,7 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeOrderType;
 /**
  * @author Danilo Guimaraes
  * @see <a
- *     href="https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43">BitcoinTrade
+ *     href="https://apidocs.bitcointrade.com.br/#operation/GetUserOrders">BitcoinTrade
  *     API - User Orders Documentation (Brazilian Portuguese)</a>
  */
 public class BitcoinTradeUserOrder {
@@ -30,7 +30,7 @@ public class BitcoinTradeUserOrder {
   private final BitcoinTradeOrderStatus status;
   private final String createDate;
   private final String updateDate;
-  private final String currencyCode;
+  private final String pair;
   private final BigDecimal totalPrice;
   private final BigDecimal executedAmount;
   private final BigDecimal remainingPrice;
@@ -49,7 +49,7 @@ public class BitcoinTradeUserOrder {
    * @param status the order status
    * @param createDate the order creation date
    * @param updateDate the order update date
-   * @param currencyCode the currency code (e.g. BTC)
+   * @param pair the currency pair (e.g. BRLBTC)
    * @param totalPrice the total price (requestedAmount times unitPrice)
    * @param executedAmount executed amonut
    * @param remainingPrice remaining price
@@ -65,7 +65,7 @@ public class BitcoinTradeUserOrder {
       @JsonProperty("status") String status,
       @JsonProperty("create_date") String createDate,
       @JsonProperty("update_date") String updateDate,
-      @JsonProperty("currencyCode") String currencyCode,
+      @JsonProperty("pair") String pair,
       @JsonProperty("total_price") BigDecimal totalPrice,
       @JsonProperty("executed_amount") BigDecimal executedAmount,
       @JsonProperty("remaining_price") BigDecimal remainingPrice) {
@@ -81,7 +81,7 @@ public class BitcoinTradeUserOrder {
     this.status = BitcoinTradeOrderStatus.from(status);
     this.createDate = createDate;
     this.updateDate = updateDate;
-    this.currencyCode = currencyCode;
+    this.pair = pair;
     this.totalPrice = totalPrice;
     this.executedAmount = executedAmount;
     this.remainingPrice = remainingPrice;
@@ -137,9 +137,9 @@ public class BitcoinTradeUserOrder {
     return updateDate;
   }
 
-  public String getCurrencyCode() {
+  public String getPair() {
 
-    return currencyCode;
+    return pair;
   }
 
   public BigDecimal getTotalPrice() {
@@ -183,7 +183,7 @@ public class BitcoinTradeUserOrder {
         .append("status", status)
         .append("createDate", createDate)
         .append("updateDate", updateDate)
-        .append("currencyCode", currencyCode)
+        .append("pair", pair)
         .append("totalPrice", totalPrice)
         .append("executedAmount", executedAmount)
         .append("remainingPrice", remainingPrice)

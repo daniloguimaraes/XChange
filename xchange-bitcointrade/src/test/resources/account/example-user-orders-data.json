@@ -19,7 +19,7 @@
         "status": "executed_completely",
         "create_date": "2017-12-08T23:42:54.960Z",
         "update_date": "2017-12-13T21:48:48.817Z",
-        "currencyCode": "BTC",
+        "pair": "BRLBTC",
         "total_price": 1000,
         "executed_amount": 0.02347418,
         "remaining_price": 0
@@ -35,7 +35,7 @@
         "status": "executed_completely",
         "create_date": "2017-10-20T17:56:10.080Z",
         "update_date": "2017-10-20T17:56:10.210Z",
-        "currencyCode": "BTC",
+        "pair": "BRLBTC",
         "total_price": 97.96333474,
         "executed_amount": 0.00497407,
         "remaining_price": 0
@@ -51,7 +51,7 @@
         "status": "executed_completely",
         "create_date": "2017-10-20T00:27:10.630Z",
         "update_date": "2017-10-20T00:27:10.640Z",
-        "currencyCode": "BTC",
+        "pair": "BRLBTC",
         "total_price": 8.1845631,
         "executed_amount": 0.00050052,
         "remaining_price": 0
@@ -67,7 +67,7 @@
         "status": "executed_completely",
         "create_date": "2017-10-20T00:26:54.913Z",
         "update_date": "2017-10-20T00:26:54.933Z",
-        "currencyCode": "BTC",
+        "pair": "BRLBTC",
         "total_price": 7.30923412,
         "executed_amount": 0.00044699,
         "remaining_price": 0
@@ -83,7 +83,7 @@
         "status": "executed_completely",
         "create_date": "2017-10-20T00:26:40.403Z",
         "update_date": "2017-10-20T00:26:40.467Z",
-        "currencyCode": "BTC",
+        "pair": "BRLBTC",
         "total_price": 5.48090358,
         "executed_amount": 0.00033518,
         "remaining_price": 0
