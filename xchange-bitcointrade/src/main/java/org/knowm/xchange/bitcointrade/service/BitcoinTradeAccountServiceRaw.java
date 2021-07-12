@@ -54,7 +54,7 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
 
   BitcoinTradeWithdrawListResponse withdrawals(TradeHistoryParams params) {
     try {
-      return bitcointradeAuthenticated.getWithdrawList(
+      return bitcointradeAuthenticated.getWithdrawalsList(
           apiToken, "btc", null, null, null, null, null);
     } catch (BitcoinTradeException e) {
       throw new ExchangeException(e.getError());
