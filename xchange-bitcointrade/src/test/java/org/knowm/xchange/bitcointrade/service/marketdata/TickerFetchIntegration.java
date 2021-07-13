@@ -12,7 +12,7 @@ import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 
 /**
- * Integration tests for Bitcointrade Ticker
+ * Integration tests for BitcoinTrade Ticker
  *
  * @author Danilo Guimaraes
  */

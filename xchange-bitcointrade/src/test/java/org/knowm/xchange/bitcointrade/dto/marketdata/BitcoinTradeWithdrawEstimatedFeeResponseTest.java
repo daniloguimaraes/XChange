@@ -23,10 +23,10 @@ public class BitcoinTradeWithdrawEstimatedFeeResponseTest {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    sut = loadBitcointradeTickerFromExampleData();
+    sut = loadBitcoinTradeTickerFromExampleData();
   }
 
-  private static BitcoinTradeWithdrawEstimatedFeeResponse loadBitcointradeTickerFromExampleData()
+  private static BitcoinTradeWithdrawEstimatedFeeResponse loadBitcoinTradeTickerFromExampleData()
       throws IOException {
 
     InputStream is =

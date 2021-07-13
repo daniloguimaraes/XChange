@@ -41,7 +41,7 @@ public class BitcoinTradeAdaptersTest {
   public static void setUp() throws Exception {
 
     BitcoinTradeOrderBookResponse bitcointradeOrderBookResponse =
-        loadBitcointradeOrderBookFromExampleData();
+        loadBitcoinTradeOrderBookFromExampleData();
     bitcointradeOrderBook = bitcointradeOrderBookResponse.getData();
 
     bitcoinTradeWalletBalanceResponse = loadBitcoinTradeWalletBalanceFromExampleData();
@@ -136,7 +136,7 @@ public class BitcoinTradeAdaptersTest {
     });
   }
 
-  private static BitcoinTradeOrderBookResponse loadBitcointradeOrderBookFromExampleData()
+  private static BitcoinTradeOrderBookResponse loadBitcoinTradeOrderBookFromExampleData()
       throws IOException {
 
     InputStream is =
@@ -147,7 +147,7 @@ public class BitcoinTradeAdaptersTest {
     return mapper.readValue(is, BitcoinTradeOrderBookResponse.class);
   }
 
-  private static BitcoinTradeTickerResponse loadBitcointradeTickerFromExampleData()
+  private static BitcoinTradeTickerResponse loadBitcoinTradeTickerFromExampleData()
       throws IOException {
 
     InputStream is =

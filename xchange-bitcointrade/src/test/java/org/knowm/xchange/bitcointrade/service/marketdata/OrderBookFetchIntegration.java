@@ -15,7 +15,7 @@ import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 
 /**
- * Integration tests for Bitcointrade Order Book
+ * Integration tests for BitcoinTrade Order Book
  *
  * @author Danilo Guimaraes
  */

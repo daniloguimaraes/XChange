@@ -64,7 +64,7 @@ public class BitcoinTradeMarketDataServiceRawIntegration {
     exception.expect(ExchangeException.class);
     exception.expectMessage("Código do par de moedas inválido");
 
-    // Bitcointrade doesn't trade Tether (USDT), yet.
+    // BitcoinTrade doesn't trade Tether (USDT), yet.
     sut.getBitcoinTradeTicker(new CurrencyPair("USDT", "BRL"));
   }
 }

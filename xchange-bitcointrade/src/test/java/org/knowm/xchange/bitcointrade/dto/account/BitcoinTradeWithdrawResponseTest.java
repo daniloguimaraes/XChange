@@ -12,7 +12,7 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeFeeType;
 import org.knowm.xchange.bitcointrade.BitcoinTradeWithdrawStatus;
 
 /**
- * Tests {@lunk BitcointradeWithdrawResponse} class.
+ * Tests {@link BitcoinTradeWithdrawResponse} class.
  *
  * @author Danilo Guimaraes
  */
@@ -23,10 +23,10 @@ public class BitcoinTradeWithdrawResponseTest {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    sut = loadBitcointradeWithdrawFromExampleData();
+    sut = loadBitcoinTradeWithdrawFromExampleData();
   }
 
-  private static BitcoinTradeWithdrawResponse loadBitcointradeWithdrawFromExampleData()
+  private static BitcoinTradeWithdrawResponse loadBitcoinTradeWithdrawFromExampleData()
       throws IOException {
 
     InputStream is =

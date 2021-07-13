@@ -29,10 +29,10 @@ public class BitcoinTradeUserOrdersResponseTest extends PaginatedTest {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    sut = loadBitcointradeUserOrdersFromExampleData();
+    sut = loadBitcoinTradeUserOrdersFromExampleData();
   }
 
-  private static BitcoinTradeUserOrdersResponse loadBitcointradeUserOrdersFromExampleData()
+  private static BitcoinTradeUserOrdersResponse loadBitcoinTradeUserOrdersFromExampleData()
       throws IOException {
 
     InputStream is =

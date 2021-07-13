@@ -14,7 +14,7 @@ import org.knowm.xchange.dto.marketdata.Trades;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 
 /**
- * Integration tests for Bitcointrade Trades
+ * Integration tests for BitcoinTrade Trades
  *
  * @author Danilo Guimaraes
  */

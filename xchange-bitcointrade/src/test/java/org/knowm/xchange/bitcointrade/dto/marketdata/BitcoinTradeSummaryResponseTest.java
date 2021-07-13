@@ -21,10 +21,10 @@ public class BitcoinTradeSummaryResponseTest {
   @BeforeClass
   public static void setUp() throws Exception {
 
-    sut = loadBitcointradeSummaryFromExampleData();
+    sut = loadBitcoinTradeSummaryFromExampleData();
   }
 
-  private static BitcoinTradeSummaryResponse loadBitcointradeSummaryFromExampleData()
+  private static BitcoinTradeSummaryResponse loadBitcoinTradeSummaryFromExampleData()
       throws IOException {
 
     InputStream is =
