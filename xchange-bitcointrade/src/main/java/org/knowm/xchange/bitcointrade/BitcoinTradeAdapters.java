@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWalletBalance;
+import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWalletBalanceResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeDepositListResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeUserOrdersResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWithdrawListResponse;
@@ -15,7 +17,10 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeTicker;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeTickerResponse;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.account.AccountInfo;
+import org.knowm.xchange.dto.account.Balance;
 import org.knowm.xchange.dto.account.FundingRecord;
+import org.knowm.xchange.dto.account.Wallet;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.dto.marketdata.Trade;
@@ -153,5 +158,24 @@ public final class BitcoinTradeAdapters {
       BitcoinTradeDepositListResponse deposits, BitcoinTradeWithdrawListResponse withdrawals) {
 
     return null;
+  }
+
+  public static AccountInfo adaptAccountInfo(
+      BitcoinTradeWalletBalanceResponse bitcoinTradeWalletBalanceResponse) {
+
+    final List<Balance> balances = new ArrayList<>();
+
+    for (BitcoinTradeWalletBalance bitcoinTradeWalletBalance :
+        bitcoinTradeWalletBalanceResponse.getData()) {
+      Balance balance =
+          Balance.Builder.from(Balance.zero(bitcoinTradeWalletBalance.getCurrencyCode()))
+              .available(bitcoinTradeWalletBalance.getAvailableAmount())
+              .frozen(bitcoinTradeWalletBalance.getLockedAmount())
+              .build();
+
+      balances.add(balance);
+    }
+
+    return new AccountInfo(Wallet.Builder.from(balances).build());
   }
 }

@@ -36,7 +36,7 @@ public class BitcoinTradeAccountService extends BitcoinTradeAccountServiceRaw
   @Override
   public AccountInfo getAccountInfo() throws IOException {
 
-    throw new NotAvailableFromExchangeException();
+    return BitcoinTradeAdapters.adaptAccountInfo(walletBalance());
   }
 
   @Override

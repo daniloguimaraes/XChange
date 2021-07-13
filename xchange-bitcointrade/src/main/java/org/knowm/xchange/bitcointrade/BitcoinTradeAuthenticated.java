@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeDepositListResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeUserOrdersResponse;
+import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWalletBalanceResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWithdrawListResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWithdrawResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeEstimatedPriceResponse;
@@ -247,6 +248,19 @@ public interface BitcoinTradeAuthenticated {
       @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken,
       @PathParam("currency") String currency,
       @FormParam("hash") String hash)
+      throws BitcoinTradeException, IOException;
+
+
+  /**
+   * Get wallet balance.
+   *
+   * @param apiToken the BitcoinTrade Exchange API Token, HTTP Header {@code x-api-key: {apiToken}}
+   * @return an instance of {@link BitcoinTradeWalletBalanceResponse}
+   * @throws BitcoinTradeException
+   * @throws IOException
+   */
+  BitcoinTradeWalletBalanceResponse getWalletBalance(
+      @HeaderParam(API_TOKEN_HEADER_NAME) String apiToken)
       throws BitcoinTradeException, IOException;
 
 }

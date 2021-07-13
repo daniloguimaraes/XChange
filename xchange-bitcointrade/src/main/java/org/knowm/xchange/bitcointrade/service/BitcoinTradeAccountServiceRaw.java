@@ -6,6 +6,7 @@ import org.knowm.xchange.bitcointrade.BitcoinTradeException;
 import org.knowm.xchange.bitcointrade.BitcoinTradeExchange;
 import org.knowm.xchange.bitcointrade.BitcoinTradeFeeType;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeDepositListResponse;
+import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWalletBalanceResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWithdrawListResponse;
 import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWithdrawResponse;
 import org.knowm.xchange.exceptions.ExchangeException;
@@ -32,7 +33,11 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
     return withdraw("btc", destination, amount, fee, null);
   }
 
-  String withdraw(String currency, String destination, BigDecimal amount, BigDecimal fee,
+  String withdraw(
+      String currency,
+      String destination,
+      BigDecimal amount,
+      BigDecimal fee,
       BitcoinTradeFeeType feeType)
       throws ExchangeException {
 
@@ -72,4 +77,15 @@ public class BitcoinTradeAccountServiceRaw extends BitcoinTradeBasePollingServic
       throw new ExchangeException(e.getMessage());
     }
   }
+
+  BitcoinTradeWalletBalanceResponse walletBalance() {
+    try {
+      return bitcointradeAuthenticated.getWalletBalance(apiToken);
+    } catch (BitcoinTradeException e) {
+      throw new ExchangeException(e.getError());
+    } catch (IOException e) {
+      throw new ExchangeException(e.getMessage());
+    }
+  }
+
 }

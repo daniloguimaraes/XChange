@@ -10,6 +10,7 @@ import java.util.TimeZone;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.knowm.xchange.bitcointrade.dto.account.BitcoinTradeWalletBalanceResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeOrderBook;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeOrderBookResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradePublicTradeResponse;
@@ -17,6 +18,7 @@ import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeTickerResponse;
 import org.knowm.xchange.bitcointrade.dto.marketdata.BitcoinTradeTickerResponseTest;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
+import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.dto.trade.LimitOrder;
@@ -30,6 +32,7 @@ public class BitcoinTradeAdaptersTest {
 
   private static BitcoinTradeOrderBook bitcointradeOrderBook;
   private static BitcoinTradePublicTradeResponse bitcointradePublicTradeResponses;
+  private static BitcoinTradeWalletBalanceResponse bitcoinTradeWalletBalanceResponse;
 
   private static OrderBook orderBook;
   private static Ticker ticker;
@@ -41,16 +44,18 @@ public class BitcoinTradeAdaptersTest {
         loadBitcointradeOrderBookFromExampleData();
     bitcointradeOrderBook = bitcointradeOrderBookResponse.getData();
 
+    bitcoinTradeWalletBalanceResponse = loadBitcoinTradeWalletBalanceFromExampleData();
+
     BitcoinTradeTickerResponseTest.setUp();
     ticker =
-        BitcoinTradeAdapters.adaptBitcointradeTicker(
+        BitcoinTradeAdapters.adaptBitcoinTradeTicker(
             BitcoinTradeTickerResponseTest.sut, CurrencyPair.BTC_BRL);
   }
 
   @Test
   public void testOrderBookAdapter() throws Exception {
 
-    orderBook = BitcoinTradeAdapters.adaptBitcointradeOrderBook(bitcointradeOrderBook, null);
+    orderBook = BitcoinTradeAdapters.adaptBitcoinTradeOrderBook(bitcointradeOrderBook, null);
 
     final SoftAssertions softly = new SoftAssertions();
 
@@ -75,7 +80,7 @@ public class BitcoinTradeAdaptersTest {
     final SoftAssertions softly = new SoftAssertions();
 
     List<LimitOrder> bidsOrders =
-        BitcoinTradeAdapters.adaptBitcointradePublicOrders(
+        BitcoinTradeAdapters.adaptBitcoinTradePublicOrders(
             bitcointradeOrderBook.getBids(), Order.OrderType.BID, null);
     softly.assertThat(bidsOrders.size()).isEqualTo(950);
     softly
@@ -83,7 +88,7 @@ public class BitcoinTradeAdaptersTest {
         .isEqualTo(new BigDecimal("0.00175412"));
 
     List<LimitOrder> asksOrders =
-        BitcoinTradeAdapters.adaptBitcointradePublicOrders(
+        BitcoinTradeAdapters.adaptBitcoinTradePublicOrders(
             bitcointradeOrderBook.getAsks(), Order.OrderType.ASK, null);
     softly.assertThat(asksOrders.size()).isEqualTo(2585);
     softly.assertThat(asksOrders.get(300).getLimitPrice()).isEqualTo(new BigDecimal("39000"));
@@ -120,6 +125,17 @@ public class BitcoinTradeAdaptersTest {
     //    softly.assertAll();
   }
 
+  @Test
+  public void testBitcoinTradeWalletBalance() {
+    final AccountInfo accountInfo = BitcoinTradeAdapters
+        .adaptAccountInfo(bitcoinTradeWalletBalanceResponse);
+
+    SoftAssertions.assertSoftly((softly) -> {
+      softly.assertThat(accountInfo.getWallets()).hasSize(1);
+      softly.assertThat(accountInfo.getWallets().get(null).getBalances()).hasSize(8);
+    });
+  }
+
   private static BitcoinTradeOrderBookResponse loadBitcointradeOrderBookFromExampleData()
       throws IOException {
 
@@ -150,5 +166,16 @@ public class BitcoinTradeAdaptersTest {
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradePublicTradeResponse[].class);
+  }
+
+  private static BitcoinTradeWalletBalanceResponse loadBitcoinTradeWalletBalanceFromExampleData()
+      throws IOException {
+
+    InputStream is =
+        BitcoinTradeAdaptersTest.class.getResourceAsStream(
+            "/account/example-wallets-balance-data.json");
+
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.readValue(is, BitcoinTradeWalletBalanceResponse.class);
   }
 }

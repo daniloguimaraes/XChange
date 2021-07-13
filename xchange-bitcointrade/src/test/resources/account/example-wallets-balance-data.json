@@ -1,0 +1,46 @@
+{
+  "code": null,
+  "message": null,
+  "data": [
+    {
+      "available_amount": 0,
+      "currency_code": "BRL",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "BTC",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "ETH",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "LTC",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "BCH",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "XRP",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "EOS",
+      "locked_amount": 0
+    },
+    {
+      "available_amount": 0,
+      "currency_code": "DAI",
+      "locked_amount": 0
+    }
+  ]
+}
