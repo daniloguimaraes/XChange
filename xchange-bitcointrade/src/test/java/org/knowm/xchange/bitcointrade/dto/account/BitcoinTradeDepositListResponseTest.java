@@ -32,7 +32,7 @@ public class BitcoinTradeDepositListResponseTest extends PaginatedTest {
 
     InputStream is =
         BitcoinTradeAdaptersTest.class.getResourceAsStream(
-            "/account/example-deposit-list-data.json");
+            "/org/knowm/xchange/bitcointrade/dto/account/example-deposit-list-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeDepositListResponse.class);

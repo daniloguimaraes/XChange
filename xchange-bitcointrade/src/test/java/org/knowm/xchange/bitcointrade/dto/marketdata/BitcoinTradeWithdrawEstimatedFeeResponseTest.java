@@ -31,7 +31,7 @@ public class BitcoinTradeWithdrawEstimatedFeeResponseTest {
 
     InputStream is =
         BitcoinTradeAdaptersTest.class.getResourceAsStream(
-            "/marketdata/example-withdraw-fee-estimate-data.json");
+            "/org/knowm/xchange/bitcointrade/dto/marketdata/example-withdraw-fee-estimate-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeWithdrawEstimatedFeeResponse.class);

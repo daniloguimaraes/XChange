@@ -29,7 +29,7 @@ public class BitcoinTradeEstimatedPriceResponseTest {
 
     InputStream is =
         BitcoinTradeAdaptersTest.class.getResourceAsStream(
-            "/marketdata/example-estimated-price-data.json");
+            "/org/knowm/xchange/bitcointrade/dto/marketdata/example-estimated-price-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeEstimatedPriceResponse.class);

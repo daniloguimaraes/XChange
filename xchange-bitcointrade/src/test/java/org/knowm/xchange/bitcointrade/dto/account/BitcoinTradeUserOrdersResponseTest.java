@@ -37,7 +37,7 @@ public class BitcoinTradeUserOrdersResponseTest extends PaginatedTest {
 
     InputStream is =
         BitcoinTradeAdaptersTest.class.getResourceAsStream(
-            "/account/example-user-orders-data.json");
+            "/org/knowm/xchange/bitcointrade/dto/account/example-user-orders-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeUserOrdersResponse.class);

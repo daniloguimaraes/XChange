@@ -30,7 +30,8 @@ public class BitcoinTradeWithdrawResponseTest {
       throws IOException {
 
     InputStream is =
-        BitcoinTradeAdaptersTest.class.getResourceAsStream("/account/example-withdraw-data.json");
+        BitcoinTradeAdaptersTest.class.getResourceAsStream(
+            "/org/knowm/xchange/bitcointrade/dto/account/example-withdraw-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeWithdrawResponse.class);

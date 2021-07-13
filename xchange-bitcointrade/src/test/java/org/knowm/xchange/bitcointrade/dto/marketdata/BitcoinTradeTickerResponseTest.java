@@ -28,7 +28,8 @@ public class BitcoinTradeTickerResponseTest {
       throws IOException {
 
     InputStream is =
-        BitcoinTradeAdaptersTest.class.getResourceAsStream("/marketdata/example-ticker-data.json");
+        BitcoinTradeAdaptersTest.class.getResourceAsStream(
+            "/org/knowm/xchange/bitcointrade/dto/marketdata/example-ticker-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeTickerResponse.class);

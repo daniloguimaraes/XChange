@@ -32,7 +32,7 @@ public class BitcoinTradePublicTradeResponseTest extends PaginatedTest {
 
     InputStream is =
         BitcoinTradeAdaptersTest.class.getResourceAsStream(
-            "/marketdata/example-public-trades-data.json");
+            "/org/knowm/xchange/bitcointrade/dto/marketdata/example-public-trades-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradePublicTradeResponse.class);

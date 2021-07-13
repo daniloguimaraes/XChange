@@ -33,7 +33,7 @@ public class BitcoinTradeWithdrawListResponseTest extends PaginatedTest {
 
     InputStream is =
         BitcoinTradeAdaptersTest.class.getResourceAsStream(
-            "/account/example-withdraw-list-data.json");
+            "/org/knowm/xchange/bitcointrade/dto/account/example-withdraw-list-data.json");
 
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(is, BitcoinTradeWithdrawListResponse.class);
